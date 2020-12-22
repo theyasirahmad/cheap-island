@@ -11,7 +11,7 @@ import GasStations from '../screens/gasStation';
 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Fontisto'
-import { Fonts } from '../constants/theme';
+// import { Fonts } from '../constants/theme';
 
 const Tab = createBottomTabNavigator();
 
@@ -24,7 +24,7 @@ const BottomTabNavigator = (props) => {
       <Tab.Screen name={'Restaurant'} component={Restaurants} />
       <Tab.Screen name={'Hotel'} component={Hotels} />
       <Tab.Screen name={'Offer'} component={Offers} />
-      <Tab.Screen name={'setting'} component={Settings} />
+      <Tab.Screen name={'Settings'} component={Settings} />
     </Tab.Navigator>
   );
 };

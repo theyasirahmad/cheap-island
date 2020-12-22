@@ -1,47 +1,43 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react'
 import { View, Text, StyleSheet, TouchableOpacity, StatusBar, ImageBackground } from 'react-native';
 import GlobalHeader from '../../Components/GlobalHeader';
 import SettingOption from '../../Components/SettingOption';
 import Linear from 'expo-linear-gradient';
 import { Colors } from '../../constants/theme';
 
-const Settings = ({navigation}) => {
-  return (
-    <View style={styles.container}>
-      {/* <StatusBar backgroundColor={Colors.LinearBlue1} /> */}
-      <GlobalHeader
-        backgroundColor="#42B1F8"
-        headingText="SETTINGS"
-        headingMargin={1}
-        fontSize={18}
-        color="#fff"
-      />
-      <View style={styles.viewTop}>
-        <Text style={{ color: '#fff', fontSize: 18 }}>
-          Gunnluger Geir Getsson
-        </Text>
-      </View>
-      <View style={styles.viewOptionContainer}>
-        <SettingOption optionTxt={'Option 1'} baseline={true} />
-        <SettingOption optionTxt={'Option 2'} baseline={true} />
-        <SettingOption optionTxt={'Option 3'} baseline={true} />
-        <SettingOption optionTxt={'Option 4'} baseline={false} />
-      </View>
-      <TouchableOpacity style={styles.btnLogout}>
-        <Linear colors={[Colors.LinearBlue1, Colors.LinearBlue2]} style={styles.linearStyle}>
-          <Text style={{ color: '#fff', fontSize: 16 }}>Log Out</Text>
-        </Linear>
+const Setting = () => {
+  return <View style={styles.container}>
+    <GlobalHeader
+      backgroundColor="#42B1F8"
+      headingText="SETTINGS"
+      headingMargin={1}
+      fontSize={18}
+      color="#fff"
+    />
+       <View style={styles.viewTop}>
+         <Text style={{ color: '#fff', fontSize: 18 }}>
+           Gunnluger Geir Getsson
+         </Text>
+       </View>
+       <View style={styles.viewOptionContainer}>
+         <SettingOption optionTxt={'Option 1'} baseline={true} />
+         <SettingOption optionTxt={'Option 2'} baseline={true} />
+         <SettingOption optionTxt={'Option 3'} baseline={true} />
+         <SettingOption optionTxt={'Option 4'} baseline={false} />
+       </View>
+       <TouchableOpacity style={styles.btnLogout}>
+         {/* <Linear colors={[Colors.LinearBlue1, Colors.LinearBlue2]} style={styles.linearStyle}> */}
+           <Text style={{ color: '#fff', fontSize: 16 }}>Log Out</Text>
+         {/* </Linear> */}
       </TouchableOpacity>
-      <ImageBackground
+       <ImageBackground
         style={{ width: 100, height: 130, position: "absolute", alignSelf: "center", bottom: 10, zIndex: -1000000 }}
         source={require('../../assets/images/inback.png')}
         resizeMode="cover"
       />
-    </View>
-  );
-};
-
-export default Settings;
+  </View>
+}
+export default Setting;
 
 const styles = StyleSheet.create({
   container: {
@@ -66,7 +62,8 @@ const styles = StyleSheet.create({
     borderRadius: 30,
     alignSelf: 'center',
     overflow: 'hidden',
-    // backgroundColor: 'rgba(66, 177, 248, 1)',
+    backgroundColor: Colors.LinearBlue1,
+    justifyContent:"center", alignItems:"center"
   },
   viewTop: {
     width: '99.5%',
