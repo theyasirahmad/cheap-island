@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Colors } from '../constants/theme'
-import Hotels from '../screens/hotels';
+import PointOfInterest from '../screens/pointOfInterest';
 import Restaurants from '../screens/Restaurants';
 import Settings from '../screens/setting';
 import Offers from '../screens/offer';
@@ -22,7 +22,7 @@ const BottomTabNavigator = (props) => {
       tabBar={(tabProps) => <MyTabBar {...tabProps} {...props} />}>
       <Tab.Screen name={'Gas Station'} component={GasStations} />
       <Tab.Screen name={'Restaurant'} component={Restaurants} />
-      <Tab.Screen name={'Hotel'} component={Hotels} />
+      <Tab.Screen name={'Interest points'} component={PointOfInterest} />
       <Tab.Screen name={'Offer'} component={Offers} />
       <Tab.Screen name={'Settings'} component={Settings} />
     </Tab.Navigator>
