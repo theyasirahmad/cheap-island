@@ -25,6 +25,10 @@ const SignupScreen = ({
 
   const [loading, setLoading] = useState(false)
 
+  const onSubmit = () => {
+    navigation.navigate('BottomTabNav')
+  }
+
 
   return (
     <View style={styles.container}>
@@ -83,7 +87,7 @@ const SignupScreen = ({
         )}
 
         <TouchableOpacity 
-        // onPress={onSubmit}
+        onPress={onSubmit}
          style={styles.btnLogin}>
           {loading ? (
             <ActivityIndicator size="large" color="#fff" />
@@ -93,6 +97,16 @@ const SignupScreen = ({
             </Text>
           )}
         </TouchableOpacity>
+
+        <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('Login');
+            }}
+          >
+            <Text style={styles.text4}>
+              Already have an account - Login
+            </Text>
+          </TouchableOpacity>
       </ScrollView>
     </View>
   );
@@ -174,7 +188,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingVertical: 15,
     backgroundColor: 'rgba(36, 142, 255, 1)',
-    marginVertical: 30,
+    marginTop: 30,
+    marginBottom:20,
     borderRadius: 10,
   },
   loginTxt: {
@@ -200,5 +215,12 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: 50,
     fontWeight: 'bold',
+  },
+  text4: {
+    fontSize: 15,
+    color: 'rgba(36, 142, 255, 1)',
+    alignSelf: 'center',
+    marginHorizontal: 5,
+    marginBottom:30
   },
 });

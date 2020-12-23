@@ -28,23 +28,24 @@ const LoginScreen = ({
   const [loading, setLoading] = useState(false)
 
   const loginHandler = () => {
-      setLoading(true);
-    if (email == '' || email == ' ') {
-      setemailErr(true);
-    } else {
-      setemailErr(false);
-    }
-    if (password == '' || password == ' ') {
-      setpasswordErr(true);
-    } else {
-      setpasswordErr(false);
-    }
-    if (emailErr == false && passwordErr == false) {
-      console.log('Logged In');
-      alert('Logged inn')
-    //   login(email, password);
-    }
-    setLoading(false);
+    //   setLoading(true);
+    // if (email == '' || email == ' ') {
+    //   setemailErr(true);
+    // } else {
+    //   setemailErr(false);
+    // }
+    // if (password == '' || password == ' ') {
+    //   setpasswordErr(true);
+    // } else {
+    //   setpasswordErr(false);
+    // }
+    // if (emailErr == false && passwordErr == false) {
+    //   console.log('Logged In');
+    //   alert('Logged inn')
+    // //   login(email, password);
+    // }
+    // setLoading(false);
+    navigation.navigate('BottomTabNav')
   };
 
 
@@ -110,9 +111,9 @@ const LoginScreen = ({
             Dont have an account?
           </Text>
           <TouchableOpacity
-            // onPress={() => {
-            //   navigation.navigate('Signup');
-            // }}
+            onPress={() => {
+              navigation.navigate('Signup');
+            }}
             >
             <Text style={styles.text4}>
               Join us now
