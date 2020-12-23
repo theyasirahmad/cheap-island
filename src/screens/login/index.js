@@ -27,49 +27,60 @@ const LoginScreen = ({
   const [emailErr, setemailErr] = useState(false);
   const [passwordErr, setpasswordErr] = useState(false);
 
-  useEffect(() => {
+  // useEffect(() => {
+  //   checkAuthLocal()
+  // }, [])
 
-  }, [])
-
-  const checkAuthReq = async () => {
-    Axios({
-      url: `${connectionString}/auth/login`,
-      method: 'POST',
-    })
-      .then((res) => {
-        console.log(res.data)
-        if (res.data.isAuth) {
-          const jsonValue = JSON.stringify(true)
-          AsyncStorage.setItem('isAuth', jsonValue)
-          navigation.navigate('BottomTabNav')
-        }
-      })
-      .catch((res) => {
-        // console.log(res,'error')
-        alert('Error CheckAuthReq')
-      })
-  }
+  // const checkAuthLocal = async () => {
+  //   AsyncStorage.getItem('isAuth', jsonValue)
+  //   jsonValue ?
+  //   navigation.navigate('BottomTabNav') : 
+  //   null
+  // }
 
 
   const loginHandler = () => {
     //   setLoading(true);
-    // if (email == '' || email == ' ') {
-    //   setemailErr(true);
-    // } else {
-    //   setemailErr(false);
-    // }
-    // if (password == '' || password == ' ') {
-    //   setpasswordErr(true);
-    // } else {
-    //   setpasswordErr(false);
-    // }
-    // if (emailErr == false && passwordErr == false) {
-    //   console.log('Logged In');
-    //   alert('Logged inn')
-    // //   login(email, password);
-    // }
-    // setLoading(false);
-    navigation.navigate('BottomTabNav')
+    if (email == '' || email == ' ') {
+      setemailErr(true);
+    } else {
+      setemailErr(false);
+    }
+    if (password == '' || password == ' ') {
+      setpasswordErr(true);
+    } else {
+      setpasswordErr(false);
+    }
+    if (emailErr == false && passwordErr == false) {
+
+      // alert('Logged Function triggering')
+      setLoading(true)
+
+      Axios({
+        url: `${connectionString}/auth/login`,
+        method: 'POST',
+        data: {
+          email, password
+        }
+      })
+        .then((res) => {
+          console.log('resssss', res)
+          const jsonValue = JSON.stringify(true)
+          AsyncStorage.setItem('isAuth', jsonValue)
+
+          setLoading(false)
+          navigation.navigate('BottomTabNav')
+          console.log('Done loginnnnnnnn')
+          setEmail('')
+          setpassword('')
+        })
+        .catch((err) => {
+          setLoading(false)
+          alert("Some error occured while Logging in")
+        })
+    }
+    setLoading(false);
+    // navigation.navigate('BottomTabNav')
   };
 
 
@@ -91,7 +102,7 @@ const LoginScreen = ({
 
         <TextInput
           value={email}
-          //   onChangeText={(text) => setEmail(text)}
+          onChangeText={(text) => setEmail(text)}
           placeholder='Email address'
           style={styles.input}
         />
@@ -99,8 +110,8 @@ const LoginScreen = ({
 
         <TextInput
           value={password}
+          onChangeText={(text) => setpassword(text)}
           secureTextEntry={true}
-          //   onChangeText={(text) => setpassword(text)}
           placeholder='Password'
           style={styles.input}
         />

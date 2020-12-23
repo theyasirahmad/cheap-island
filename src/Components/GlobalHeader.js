@@ -25,7 +25,7 @@ const GlobalHeader = (props) => {
     props.navigation.goBack();
   };
 
-  console.log('Propssss', props);
+  // console.log('Propssss', props);
 
   return (
     <View
