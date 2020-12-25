@@ -15,8 +15,8 @@ function RootNavigator() {
   return (
     <Stack.Navigator initialRouteName="SplashScreen" headerMode="none">
       <Stack.Screen name="BottomTabNav" component={BottomTabNav} />
-      <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="SplashScreen" component={SplashScreen} />
+      <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Signup" component={Signup} />
       <Stack.Screen name="DetailDisplay" component={DetailDisplay} />
       <Stack.Screen name="Profile" component={Profile} />

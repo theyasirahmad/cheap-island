@@ -132,7 +132,10 @@ const LoginScreen = ({
           </Text>
         </TouchableOpacity>
         <Animatable.View animation={'fadeInDown'}>
-          <TouchableOpacity style={styles.btnLogin} onPress={loginHandler}>
+          <TouchableOpacity style={styles.btnLogin}
+            // onPress={loginHandler}
+            onPress={() => navigation.navigate('Profile')}
+          >
             {loading ? (
               <ActivityIndicator color="#fff" />
             ) : (
@@ -226,7 +229,7 @@ const styles = StyleSheet.create({
   img: {
     alignSelf: 'center',
     marginVertical: 40,
-    marginTop:55,
+    marginTop: 55,
     width: 150,
     height: 60,
   },

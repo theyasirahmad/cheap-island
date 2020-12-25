@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
-import {View,StyleSheet, ScrollView, FlatList, Dimensions, StatusBar, ImageBackground} from 'react-native';
+import {View,StyleSheet, ScrollView, TextInput, TouchableOpacity, Dimensions, StatusBar, ImageBackground} from 'react-native';
 import GlobalHeader from '../../Components/GlobalHeader';
 import GasStationCard from '../../Components/GasStataionCard'
 import {PointList as STATIONLIST} from '../../dummyData/dummyData'
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
 import { Colors } from '../../constants/theme'
 
@@ -19,54 +20,49 @@ const PointOfInterest = () => {
 
   return (
     <View style={styles.container}>
-      {/* <StatusBar backgroundColor={Colors.LinearBlue1} /> */}
     <GlobalHeader 
         backgroundColor="blue"
-        headingText="POINTS OF INTEREST" 
+        headingText="INTERESTING POINTS" 
         headingMargin={1}
         fontSize={18}
         color="#fff"
     />
-    <View style={styles.viewMapConatiner}>
-      <View style={{width:"100%", height:Dimensions.get('window').height*0.3, backgroundColor:"#bbb"}}>
-        <MapView
-        // provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-        initialRegion={{
-          latitude:  40.758896,
-          longitude:  -73.985130,
-          latitudeDelta: 0.0422,
-          longitudeDelta: 0.0421,
-      }}
-      style={{
-          position: 'relative',
-          minHeight: '100%',
-          width: '100%',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          marginBottom: 1,
-          borderWidth: 2,
-      }}
-      onMapReady={_onMapReady}
-      />
+    {/* <StatusBar backgroundColor={Colors.LinearBlue1} /> */}
+    <ScrollView showsVerticalScrollIndicator={false} >
+      <View style={styles.viewSearch}>
+        <TextInput  
+        placeholder="Search location"
+        style={styles.inputSearch}/>
+        <TouchableOpacity style={styles.btnSearch}>
+          <FontAwesome color="#fff" size={23} name="search" />
+        </TouchableOpacity>
       </View>
-      {/* <ScrollView style={styles.containerList} showsVerticalScrollIndicator={false}> */}
-      <View style={styles.containerList}>
-      <FlatList
-          showsVerticalScrollIndicator={false}
-          numColumns={1}
-          data={STATIONLIST}
-          keyExtractor={(item) => item.id}
-          renderItem={(itemData) => (
-            <GasStationCard 
-              StationName={itemData.item.name}
-            />
-          )}
-        />
+      <View style={styles.viewMapConatiner}>
+        <View style={{width:"100%", height:Dimensions.get('window').height*0.57}}>
+          <MapView
+            // provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+            initialRegion={{
+              latitude:  40.758896,
+              longitude:  -73.985130,
+              latitudeDelta: 0.0422,
+              longitudeDelta: 0.0421,
+            }}
+            style={{
+              position: 'relative',
+              minHeight: Dimensions.get('window').height*0.57,
+              width: '100%',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              marginBottom: 1,
+              borderWidth: 2,
+            }}
+            onMapReady={_onMapReady}
+          />
         </View>
-      {/* </ScrollView> */}
-    </View>
+      </View>
+    </ScrollView>
     <ImageBackground 
         style={{width:100, height:130, position:"absolute", alignSelf:"center", bottom:10, zIndex: -1000000}} 
         source={require('../../assets/images/inback.png')} 
@@ -82,7 +78,22 @@ const styles = StyleSheet.create({
   container: {
     flex:1,
     backgroundColor: Colors.backgroundBlueColor,
-    paddingBottom:30
+    // paddingBottom:30
+  },
+  btnSearch:{
+    paddingHorizontal:12, backgroundColor:"#bbb",
+    height:Dimensions.get('window').height*0.09,
+    alignItems:"center", justifyContent:"center"
+  },
+  inputSearch:{
+    backgroundColor:"#fff", height:Dimensions.get('window').height*0.09,
+    flex:1, paddingHorizontal:15, paddingVertical:0
+  },
+  viewSearch:{
+    width:Dimensions.get('window').width*0.9, height:Dimensions.get('window').height*0.09, 
+    backgroundColor:"#fff", alignSelf:"center", marginBottom:10, borderRadius:8,
+    borderWidth:1, borderColor:'rgba(0,0,0,0.1)', overflow:"hidden", flexDirection:"row",
+    alignItems:"center"
   },
   containerList:{
     // padding:10,
@@ -125,80 +136,3 @@ const styles = StyleSheet.create({
     // elevation: 24,
   }
 });
-
-
-// import React, {useState, useEffect} from 'react';
-// import {View, Text, StyleSheet, TouchableOpacity, FlatList, ScrollView, ImageBackground, Dimensions} from 'react-native';
-// import GlobalHeader from '../../Components/GlobalHeader';
-// import HotelCard from '../../Components/HotelCard';
-// import {Colors} from '../../constants/theme';
-// import {HotelList as HOTELLIST} from '../../dummyData/dummyData';
-
-// const Hotels = ({navigation}) => {
-//   // const [cardSelect, setcardSelect] = useState(false);
-//   // const onPressCard = () => {
-//   //   setcardSelect(!cardSelect)
-//   // }
-//   return (
-//     <View style={styles.container}>
-//       <GlobalHeader
-//         backgroundColor="#42B1F8"
-//         headingText="HOTELS"
-//         headingMargin={1}
-//         fontSize={18}
-//         color="#fff"
-//       />
-//       <View style={styles.viewFlatlist}>
-//         <FlatList
-//           showsVerticalScrollIndicator={false}
-//           numColumns={1}
-//           data={HOTELLIST}
-//           keyExtractor={(item) => item.id}
-//           renderItem={(itemData) => (
-//             <HotelCard 
-//               img={itemData.item.img} 
-//               name={itemData.item.name} 
-//               descrption={itemData.item.descrption}
-//               navigation={navigation}
-//             />
-//           )}
-//         />
-//       </View>
-//       <ImageBackground 
-//         style={{width:100, height:130, position:"absolute", alignSelf:"center", bottom:10, zIndex: -1000000}} 
-//         source={require('../../assets/images/inback.png')} 
-//         resizeMode="cover"
-//       />
-//     </View>
-//   );
-// };
-
-// export default Hotels;
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: Colors.backgroundBlueColor,
-//   },
-//   viewFlatlist: {
-//     width: '90%',
-//     maxHeight: Dimensions.get('window').height*0.68,
-//     alignSelf: 'center',
-//     backgroundColor: '#fff',
-//     borderRadius: 20,
-//     overflow: 'hidden',
-//     padding: 10,
-//     borderWidth:1, 
-//     borderColor:Colors.borderCardColor,
-//     zIndex:10000000
-//     // shadowColor: "#000",
-//     // shadowOffset: {
-//     //   width: 0,
-//     //   height: 12,
-//     // },
-//     // shadowOpacity: 0.58,
-//     // shadowRadius: 16.00,
-
-//     // elevation: 24,
-//   },
-// });

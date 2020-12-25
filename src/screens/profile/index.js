@@ -11,7 +11,6 @@ import {
   ActivityIndicator,
   StatusBar
 } from 'react-native';
-import AntDesign from 'react-native-vector-icons/AntDesign';
 import { Colors } from '../../constants/theme'
 import * as Animatable from 'react-native-animatable';
 
