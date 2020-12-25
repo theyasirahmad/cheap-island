@@ -90,8 +90,8 @@ const LoginScreen = ({
         <View style={styles.upper}>
           <Image
             style={styles.img}
-            source={require('../../assets/images/cheaplogo3.png')}
-            resizeMode={'cover'}
+            source={require('../../assets/images/cheaplogo4.png')}
+            resizeMode={'contain'}
           />
           <View style={styles.mid}>
             <Animatable.Text animation={'fadeInDown'} style={styles.loginText1}>
@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
     fontSize: 28,
     color: 'rgba(36, 142, 255, 1)',
     fontWeight: 'bold',
-    marginVertical: 10,
+    marginVertical: 20,
     alignSelf: 'center',
   },
   upper: {
@@ -223,10 +223,10 @@ const styles = StyleSheet.create({
   },
   img: {
     alignSelf: 'center',
-    marginVertical: 10,
+    marginVertical: 40,
+    marginTop:55,
     width: 150,
-    height: 150,
-    // tintColor: '#fff',
+    height: 60,
   },
   mid: {
     borderTopRightRadius: 20,
