@@ -8,10 +8,10 @@ import {
   Image,
   ScrollView,
   ActivityIndicator,
+  StatusBar
 } from 'react-native';
-import AntDesign from 'react-native-vector-icons/AntDesign';
 import * as Animatable from 'react-native-animatable';
-// import Color from '../../constants/Color';
+import { Colors } from '../../constants/theme'
 
 const SignupScreen = ({
   navigation
@@ -32,6 +32,7 @@ const SignupScreen = ({
 
   return (
     <View style={styles.container}>
+      <StatusBar backgroundColor={Colors.LinearBlue1} />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.upper}>
           <Image

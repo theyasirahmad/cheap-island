@@ -9,9 +9,10 @@ import {
   ScrollView,
   Dimensions,
   ActivityIndicator,
+  StatusBar
 } from 'react-native';
-import AntDesign from 'react-native-vector-icons/AntDesign';
 import * as Animatable from 'react-native-animatable';
+import { Colors } from '../../constants/theme'
 
 import Axios from 'axios'
 import AsyncStorage from '@react-native-community/async-storage'
@@ -86,6 +87,7 @@ const LoginScreen = ({
 
   return (
     <View style={styles.container}>
+      <StatusBar backgroundColor={Colors.LinearBlue1} />
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.upper}>
           <Image
