@@ -61,6 +61,7 @@ const GasStation = () => {
           renderItem={(itemData) => (
             <GasStationCard 
               StationName={itemData.item.name}
+              favourite={itemData.item.favourite}
             />
           )}
         />

@@ -20,10 +20,10 @@ const Setting = () => {
          </Text>
        </View>
        <View style={styles.viewOptionContainer}>
-         <SettingOption optionTxt={'Option 1'} baseline={true} />
-         <SettingOption optionTxt={'Option 2'} baseline={true} />
-         <SettingOption optionTxt={'Option 3'} baseline={true} />
-         <SettingOption optionTxt={'Option 4'} baseline={false} />
+         <SettingOption optionTxt={'Gas Stations'} baseline={true} />
+         <SettingOption optionTxt={'Restaurants'} baseline={true} />
+         <SettingOption optionTxt={'Interesting points'} baseline={true} />
+         <SettingOption optionTxt={'Others'} baseline={false} />
        </View>
        <TouchableOpacity style={styles.btnLogout}>
          {/* <Linear colors={[Colors.LinearBlue1, Colors.LinearBlue2]} style={styles.linearStyle}> */}

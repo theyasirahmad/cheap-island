@@ -24,6 +24,7 @@ const Offer = ({navigation}) => {
           img={itemData.item.img} 
         name={itemData.item.name}
         descrption={itemData.item.descrption}
+        favourite={itemData.item.favourite}
         navigation={navigation}
       />}
       />

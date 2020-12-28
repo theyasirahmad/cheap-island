@@ -31,6 +31,7 @@ const Restaurants = ({ navigation }) => {
               name={itemData.item.name}
               descrption={itemData.item.descrption}
               navigation={navigation}
+              favourite={itemData.item.favourite}
             />
           )}
         />

@@ -4,7 +4,6 @@ import GlobalHeader from '../../Components/GlobalHeader';
 import { Colors } from '../../constants/theme'
 
 const TermsConditions = () => {
-    
     return (
         <View style={styles.container}>
             {/* <StatusBar backgroundColor={Colors.LinearBlue1} /> */}
