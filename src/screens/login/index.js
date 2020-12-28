@@ -70,10 +70,11 @@ const LoginScreen = ({
           AsyncStorage.setItem('isAuth', jsonValue)
 
           setLoading(false)
-          navigation.navigate('BottomTabNav')
+          // navigation.navigate('BottomTabNav')
           console.log('Done loginnnnnnnn')
           setEmail('')
           setpassword('')
+          navigation.navigate('BottomTabNav')
         })
         .catch((err) => {
           setLoading(false)
@@ -133,8 +134,8 @@ const LoginScreen = ({
         </TouchableOpacity>
         <Animatable.View animation={'fadeInDown'}>
           <TouchableOpacity style={styles.btnLogin}
-            // onPress={loginHandler}
-            onPress={() => navigation.navigate('Profile')}
+            onPress={loginHandler}
+            // onPress={() => navigation.navigate('Profile')}
           >
             {loading ? (
               <ActivityIndicator color="#fff" />
@@ -160,15 +161,6 @@ const LoginScreen = ({
             </Text>
           </TouchableOpacity>
         </Animatable.View>
-        {/* <TouchableOpacity
-          style={styles.btnStyle2}
-          // onPress={() => signInWithGmail()}
-        >
-          <AntDesign name="google" size={18} color="#42B1F8" />
-          <Text style={styles.txtLoginWithGoogle}>
-            Login with Google
-          </Text>
-        </TouchableOpacity> */}
       </ScrollView>
     </View>
   );

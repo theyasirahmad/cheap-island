@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -13,12 +13,22 @@ import {
 import * as Animatable from 'react-native-animatable';
 import { Colors } from '../../constants/theme'
 
+import Axios from 'axios'
+import AsyncStorage from '@react-native-community/async-storage'
+import connectionString from '../../api/api'
+
+
 const SignupScreen = ({
   navigation
 }) => {
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setpassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
   const [radio, setradio] = useState(false);
   console.log(radio);
-  const [firstNameErr, setFirstNameErr] = useState(false);
+  const [usernameErr, setUsernameErr] = useState(false);
   const [emailErr, setemailErr] = useState(false);
   const [passwordErr, setpasswordErr] = useState(false);
   const [passDontMatchErr, setpassDontMatchErr] = useState(false);
@@ -26,7 +36,56 @@ const SignupScreen = ({
   const [loading, setLoading] = useState(false)
 
   const onSubmit = () => {
-    navigation.navigate('BottomTabNav')
+    // navigation.navigate('BottomTabNav')
+    if (username == '' || username == ' ') {
+      setUsernameErr(true)
+    } else {
+      setUsernameErr(false)
+    }
+    if (email == '' || email == ' ') {
+      setemailErr(true);
+    } else {
+      setemailErr(false);
+    }
+    if (password == '' || password == ' ' || confirmPassword == '' || confirmPassword == ' ') {
+      setpasswordErr(true);
+    } else {
+      setpasswordErr(false);
+    }
+    if (password !== confirmPassword) {
+      passDontMatchErr(true)
+    } else {
+      passDontMatchErr(false)
+    }
+
+    if (usernameErr == false && emailErr == false && passwordErr == false && passDontMatchErr == false) {
+      setLoading(true)
+
+      Axios({
+        url: `${connectionString}/auth/signup`,
+        method: 'POST',
+        data: {
+          username, email, password
+        }
+      })
+        .then((res) => {
+          console.log('resssssponseee', res)
+          const jsonValue = JSON.stringify(true)
+          AsyncStorage.setItem('isAuth', jsonValue)
+
+          setLoading(false)
+          // navigation.navigate('BottomTabNav')
+          console.log('Done regitering')
+          setEmail('')
+          setpassword('')
+          navigation.navigate('BottomTabNav')
+        })
+        .catch((err) => {
+          setLoading(false)
+          alert("Some error occured while Registering user")
+        })
+      setLoading(false);
+    }
   }
 
 
@@ -50,9 +109,9 @@ const SignupScreen = ({
           placeholder='User name'
           name="username"
           style={styles.input}
-          // value={firstName}
+          value={username}
         />
-        {firstNameErr && (
+        {usernameErr && (
           <Text style={styles.errTxt}>First name is invalid</Text>
         )}
 
@@ -60,7 +119,7 @@ const SignupScreen = ({
           placeholder='Email address'
           name="email"
           style={styles.input}
-          // value={email}
+          value={email}
         />
         {emailErr && <Text style={styles.errTxt}>Email is invalid</Text>}
 
@@ -68,15 +127,15 @@ const SignupScreen = ({
           placeholder='Password'
           secureTextEntry={true}
           style={styles.input}
-          // value={password}
-        //   onChangeText={(text) => handleOnTextChange('password', text)}
+          value={password}
+          onChangeText={(text) => handleOnTextChange('password', text)}
         />
         <TextInput
           placeholder='Confirm Password'
           secureTextEntry={true}
           style={styles.input}
-          // value={confirmPassword}
-        //   onChangeText={(text) => handleOnTextChange('confirmPassword', text)}
+          value={confirmPassword}
+          onChangeText={(text) => handleOnTextChange('confirmPassword', text)}
         />
         {passwordErr && (
           <Text style={styles.errTxt}>
@@ -87,27 +146,27 @@ const SignupScreen = ({
           <Text style={styles.errTxt}>Password does not match</Text>
         )}
 
-        <TouchableOpacity 
-        onPress={onSubmit}
-         style={styles.btnLogin}>
+        <TouchableOpacity
+          onPress={onSubmit}
+          style={styles.btnLogin}>
           {loading ? (
             <ActivityIndicator size="large" color="#fff" />
           ) : (
-            <Text style={styles.loginTxt}>
-              Sign up
-            </Text>
-          )}
+              <Text style={styles.loginTxt}>
+                Sign up
+              </Text>
+            )}
         </TouchableOpacity>
 
         <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('Login');
-            }}
-          >
-            <Text style={styles.text4}>
-              Already have an account - Login
-            </Text>
-          </TouchableOpacity>
+          onPress={() => {
+            navigation.navigate('Login');
+          }}
+        >
+          <Text style={styles.text4}>
+            Already have an account - Login
+          </Text>
+        </TouchableOpacity>
       </ScrollView>
     </View>
   );
@@ -139,7 +198,7 @@ const styles = StyleSheet.create({
   img: {
     alignSelf: 'center',
     marginVertical: 35,
-    marginTop:50,
+    marginTop: 50,
     width: 150,
     height: 60,
   },
@@ -168,20 +227,20 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginTop: 20,
   },
-  radio2: {
-    backgroundColor: 'rgba(36, 142, 255, 1)',
-    flex: 1,
-    borderRadius: 10,
-  },
-  radio1: {
-    width: 20,
-    height: 20,
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: '#bbb',
-    padding: 2,
-    marginTop: 10,
-  },
+  // radio2: {
+  //   backgroundColor: 'rgba(36, 142, 255, 1)',
+  //   flex: 1,
+  //   borderRadius: 10,
+  // },
+  // radio1: {
+  //   width: 20,
+  //   height: 20,
+  //   borderRadius: 20,
+  //   borderWidth: 1,
+  //   borderColor: '#bbb',
+  //   padding: 2,
+  //   marginTop: 10,
+  // },
   btnLogin: {
     width: '80%',
     alignSelf: 'center',
@@ -190,7 +249,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     backgroundColor: 'rgba(36, 142, 255, 1)',
     marginTop: 30,
-    marginBottom:20,
+    marginBottom: 20,
     borderRadius: 10,
   },
   loginTxt: {
@@ -222,6 +281,6 @@ const styles = StyleSheet.create({
     color: 'rgba(36, 142, 255, 1)',
     alignSelf: 'center',
     marginHorizontal: 5,
-    marginBottom:30
+    marginBottom: 30
   },
 });
