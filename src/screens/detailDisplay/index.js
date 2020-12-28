@@ -4,8 +4,8 @@ import GlobalHeader from '../../Components/GlobalHeader';
 import { Colors } from '../../constants/theme';
 
 const DetailDisplay = ({ route, navigation }) => {
-  const { img, name, descrption } = route.params;
-  console.log( 'navigationnnnnnnnnn',name, descrption)
+  const { img, name, descrption, offerAvail } = route.params;
+  console.log('navigationnnnnnnnnn', name, descrption)
   return (
     <View style={styles.container}>
       <GlobalHeader
@@ -20,14 +20,16 @@ const DetailDisplay = ({ route, navigation }) => {
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.viewDetail}>
           <Image
-          source={{uri: img}} 
-            style={{width:"100%", height:200, backgroundColor:"lightblue"}}
+            source={{ uri: img }}
+            style={{ width: "100%", height: 200, backgroundColor: "lightblue" }}
           />
           <View style={{ padding: 8 }}>
-            {/* <Text style={{ fontSize: 21, color: "rgba(36, 142, 255, 1)", marginVertical: 10, marginTop: 20, fontWeight: 'bold' }}>
-              {name}
-              </Text > */}
-            <Text style={{ fontSize: 15, color: "rgba(0,0,0,0.4)", marginTop:10}}>
+            {offerAvail !== null && offerAvail !== undefined && offerAvail === true ?
+              <TouchableOpacity style={styles.btnAvail}>
+                <Text style={{ color: "#fff" }}>Avail offer</Text>
+              </TouchableOpacity> : null
+            }
+            <Text style={{ fontSize: 15, color: "rgba(0,0,0,0.4)", marginTop: 10 }}>
               {descrption}
             </Text>
           </View>
@@ -55,5 +57,9 @@ const styles = StyleSheet.create({
   },
   bgImg: {
     width: 100, height: 130, position: "absolute", alignSelf: "center", bottom: 10, zIndex: -1000000
+  },
+  btnAvail: {
+    paddingHorizontal: 20, paddingVertical: 10, backgroundColor: Colors.LinearBlue1,
+    alignSelf: "center", borderRadius: 10, marginTop: 5
   }
 });

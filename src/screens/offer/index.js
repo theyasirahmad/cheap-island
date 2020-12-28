@@ -27,6 +27,7 @@ const Offer = ({navigation}) => {
         name={itemData.item.name}
         descrption={itemData.item.descrption}
         favourite={itemData.item.favourite}
+        offerAvail={itemData.item.offer}
         navigation={navigation}
       />}
       />

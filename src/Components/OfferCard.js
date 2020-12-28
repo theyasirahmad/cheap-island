@@ -3,10 +3,10 @@ import { Colors } from '../constants/theme';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign'
 
-const OfferCard = ({ img, name, descrption, favourite, navigation }) => {
+const OfferCard = ({ img, name, descrption, favourite, offerAvail, navigation }) => {
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate('DetailDisplay', { name: name, descrption: descrption, img: img })}
+      onPress={() => navigation.navigate('DetailDisplay', { name: name, descrption: descrption, img: img, offerAvail: offerAvail })}
       style={styles.container}
     >
       <View style={{ flexDirection: "row", alignItems: "center" }}>
