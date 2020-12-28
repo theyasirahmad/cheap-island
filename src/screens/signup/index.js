@@ -26,8 +26,6 @@ const SignupScreen = ({
   const [password, setpassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-  const [radio, setradio] = useState(false);
-  console.log(radio);
   const [usernameErr, setUsernameErr] = useState(false);
   const [emailErr, setemailErr] = useState(false);
   const [passwordErr, setpasswordErr] = useState(false);
@@ -149,7 +147,8 @@ const SignupScreen = ({
         )}
 
         <TouchableOpacity
-          onPress={onSubmit}
+          // onPress={onSubmit}
+          onPress={()=> navigation.navigate('BottomTabNav')}
           style={styles.btnLogin}>
           {loading ? (
             <ActivityIndicator size="large" color="#fff" />
@@ -175,7 +174,6 @@ const SignupScreen = ({
 };
 
 export default SignupScreen;
-// export default connect(mapStateToProps, {register})(SignupScreen);
 
 const styles = StyleSheet.create({
   container: {

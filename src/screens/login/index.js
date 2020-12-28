@@ -134,8 +134,8 @@ const LoginScreen = ({
         </TouchableOpacity>
         <Animatable.View animation={'fadeInDown'}>
           <TouchableOpacity style={styles.btnLogin}
-            onPress={loginHandler}
-            // onPress={() => navigation.navigate('Profile')}
+            // onPress={loginHandler}
+            onPress={() => navigation.navigate('Profile')}
           >
             {loading ? (
               <ActivityIndicator color="#fff" />
