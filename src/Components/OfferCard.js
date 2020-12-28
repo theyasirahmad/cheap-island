@@ -16,7 +16,7 @@ const OfferCard = ({ img, name, descrption, favourite, navigation }) => {
           resizeMode="cover"
         />
         <View style={{ marginHorizontal: 12 }}>
-          <Text style={{ color: "rgba(0,0,0,0.5)" }}>Subway</Text>
+          <Text style={{ color: "rgba(0,0,0,0.5)" }}>{name}</Text>
           <Text style={{ color: "rgba(0,0,0,0.5)" }}>15% of everything</Text>
         </View>
       </View>
