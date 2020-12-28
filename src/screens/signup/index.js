@@ -69,13 +69,13 @@ const SignupScreen = ({
         }
       })
         .then((res) => {
-          console.log('resssssponseee', res)
-          const jsonValue = JSON.stringify(true)
-          AsyncStorage.setItem('isAuth', jsonValue)
+          console.log('resssssponseee', res.data)
+          console.log(res.data)
+          AsyncStorage.setItem('token', res.data.token)
 
           setLoading(false)
           // navigation.navigate('BottomTabNav')
-          console.log('Done regitering')
+          console.log('Done registering')
           setEmail('')
           setpassword('')
           navigation.navigate('BottomTabNav')
@@ -110,6 +110,7 @@ const SignupScreen = ({
           name="username"
           style={styles.input}
           value={username}
+          onChangeText={(text) => setUsername('username', text)}
         />
         {usernameErr && (
           <Text style={styles.errTxt}>First name is invalid</Text>
@@ -120,6 +121,7 @@ const SignupScreen = ({
           name="email"
           style={styles.input}
           value={email}
+          onChangeText={(text) => setEmail('email', text)}
         />
         {emailErr && <Text style={styles.errTxt}>Email is invalid</Text>}
 
@@ -128,14 +130,14 @@ const SignupScreen = ({
           secureTextEntry={true}
           style={styles.input}
           value={password}
-          onChangeText={(text) => handleOnTextChange('password', text)}
+          onChangeText={(text) => setpassword('password', text)}
         />
         <TextInput
           placeholder='Confirm Password'
           secureTextEntry={true}
           style={styles.input}
           value={confirmPassword}
-          onChangeText={(text) => handleOnTextChange('confirmPassword', text)}
+          onChangeText={(text) => setConfirmPassword('confirmPassword', text)}
         />
         {passwordErr && (
           <Text style={styles.errTxt}>
@@ -176,6 +178,11 @@ export default SignupScreen;
 // export default connect(mapStateToProps, {register})(SignupScreen);
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    // paddingHorizontal: 20,
+  },
   upper: {
     backgroundColor: 'rgba(36, 142, 255, 1)',
     width: '100%',
@@ -214,11 +221,6 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     alignSelf: 'center',
   },
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    // paddingHorizontal: 20,
-  },
   roleView: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -227,20 +229,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginTop: 20,
   },
-  // radio2: {
-  //   backgroundColor: 'rgba(36, 142, 255, 1)',
-  //   flex: 1,
-  //   borderRadius: 10,
-  // },
-  // radio1: {
-  //   width: 20,
-  //   height: 20,
-  //   borderRadius: 20,
-  //   borderWidth: 1,
-  //   borderColor: '#bbb',
-  //   padding: 2,
-  //   marginTop: 10,
-  // },
   btnLogin: {
     width: '80%',
     alignSelf: 'center',
