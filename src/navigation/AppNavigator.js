@@ -7,6 +7,7 @@ import Login from '../screens/login'
 import Signup from '../screens/signup'
 import DetailDisplay from '../screens/detailDisplay'
 import Profile from '../screens/profile'
+import TermsConditions from '../screens/termsConditions'
 // import Settings from '../screens/setting'
 
 const Stack = createStackNavigator();
@@ -20,6 +21,7 @@ function RootNavigator() {
       <Stack.Screen name="Signup" component={Signup} />
       <Stack.Screen name="DetailDisplay" component={DetailDisplay} />
       <Stack.Screen name="Profile" component={Profile} />
+      <Stack.Screen name="TermsConditions" component={TermsConditions} />
 
       {/* <Stack.Screen name="Settings" component={Settings} /> */}
     </Stack.Navigator>

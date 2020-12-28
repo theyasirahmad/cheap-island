@@ -11,6 +11,7 @@ import GasStations from '../screens/gasStation';
 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Ionicons from 'react-native-vector-icons/Fontisto'
+import Feather from 'react-native-vector-icons/Feather'
 // import { Fonts } from '../constants/theme';
 
 const Tab = createBottomTabNavigator();
@@ -96,11 +97,11 @@ const MyTabBar = ({ state, descriptors, navigation, carts }) => {
                 />
               )}
               {index == 4 && (
-                <Ionicons
-                  name={"player-settings"}
-                  size={23}
+                <Feather
+                  name={"more-horizontal"}
+                  size={25}
                   color={isFocused ? Colors.LinearBlue1 : 'rgba(188, 188, 188, 1)'}
-                  style={{marginTop: index === 2 ? 0: -10}}
+                  style={{marginTop: index === 2 ? 0: -12}}
                 />
               )}
 

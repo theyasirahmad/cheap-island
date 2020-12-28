@@ -159,15 +159,35 @@ const SignupScreen = ({
             )}
         </TouchableOpacity>
 
+
         <TouchableOpacity
           onPress={() => {
             navigation.navigate('Login');
           }}
+          style={{ flexDirection:"row", alignSelf:"center"}}
         >
+          <Text style={styles.text3}>
+          Already have an account -
+          </Text>
           <Text style={styles.text4}>
-            Already have an account - Login
+            Login
           </Text>
         </TouchableOpacity>
+
+        <View  style={styles.bot}>
+          <Text style={styles.text3}>
+            Agree to our
+          </Text>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('TermsConditions');
+            }}
+          >
+            <Text style={styles.text4}>
+              Terms and Conditions
+            </Text>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     </View>
   );
@@ -180,6 +200,18 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     // paddingHorizontal: 20,
+  },
+  bot: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 10,
+    marginBottom:20
+  },
+  text3: {
+    fontSize: 15,
+    color: '#ABB8C3',
+    alignSelf: 'center',
   },
   upper: {
     backgroundColor: 'rgba(36, 142, 255, 1)',
@@ -267,6 +299,6 @@ const styles = StyleSheet.create({
     color: 'rgba(36, 142, 255, 1)',
     alignSelf: 'center',
     marginHorizontal: 5,
-    marginBottom: 30
+    // marginBottom: 30
   },
 });
