@@ -14,6 +14,8 @@ const Offer = ({navigation}) => {
         headingMargin={1}
         fontSize={18}
         color="#fff"
+        isFavouriteLoading={false}
+        RightIcon={true}
       />
       <FlatList
         showsVerticalScrollIndicator={false}

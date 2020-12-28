@@ -26,6 +26,8 @@ const GasStation = () => {
         headingMargin={1}
         fontSize={18}
         color="#fff"
+        isFavouriteLoading={false}
+        RightIcon={true}
     />
     <View style={styles.viewMapConatiner}>
       <View style={{width:"100%", height:Dimensions.get('window').height*0.3, backgroundColor:"#bbb"}}>

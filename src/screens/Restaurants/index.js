@@ -18,6 +18,8 @@ const Restaurants = ({ navigation }) => {
         headingMargin={1}
         fontSize={18}
         color="#fff"
+        isFavouriteLoading={false}
+        RightIcon={true}
       />
       <View style={styles.viewFlatlist}>
         <FlatList

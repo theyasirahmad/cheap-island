@@ -155,9 +155,9 @@ const GlobalHeader = (props) => {
               <ActivityIndicator size={25} color="#FFF" />
             </View>
           ) : props.RightIcon == true ? (
-            <View style={styles.arrowView}>
-              <AntDesign name="closecircle" size={33} color="#fff" />
-            </View>
+            <TouchableOpacity style={styles.arrowView}>
+              <AntDesign name="staro" size={33} color="#fff" style={{marginTop:-10}} />
+            </TouchableOpacity>
           ) : null}
         </Right>
       </Header>
