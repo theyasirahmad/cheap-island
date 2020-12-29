@@ -45,6 +45,7 @@ const Offer = ({ navigation }) => {
           descrption={itemData.item.descrption}
           favourite={itemData.item.favourite}
           offerAvail={itemData.item.offer}
+          useTimes={itemData.item.timesUse}
           navigation={navigation}
         />}
       />

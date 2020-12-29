@@ -3,7 +3,7 @@ import { Colors } from '../constants/theme';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign'
 
-const OfferCard = ({ img, name, descrption, favourite, offerAvail, navigation }) => {
+const OfferCard = ({ img, name, descrption, favourite, offerAvail, useTimes, navigation }) => {
   return (
     <TouchableOpacity
       onPress={() => navigation.navigate('DetailDisplay', { name: name, descrption: descrption, img: img, offerAvail: offerAvail })}
@@ -20,13 +20,18 @@ const OfferCard = ({ img, name, descrption, favourite, offerAvail, navigation })
           <Text style={{ color: "rgba(0,0,0,0.5)" }}>15% of everything</Text>
         </View>
       </View>
-      <TouchableOpacity onPress={() => { }}>
-        {favourite ?
-          <AntDesign name="star" color="gold" size={22} />
-          :
-          <AntDesign name="staro" color="gold" size={22} />
-        }
-      </TouchableOpacity>
+      <View style={{alignItems:"flex-end"}}>
+        <TouchableOpacity onPress={() => { }}>
+          {favourite ?
+            <AntDesign name="star" color="gold" size={22} />
+            :
+            <AntDesign name="staro" color="gold" size={22} />
+          }
+        </TouchableOpacity>
+        <Text style={{fontSize:17, color:"rgba(0,0,0,0.45)", fontWeight:"bold"}}>
+          x{useTimes}
+        </Text>
+      </View>
     </TouchableOpacity>
   );
 };
