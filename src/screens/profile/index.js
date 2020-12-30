@@ -104,12 +104,14 @@ const Profile = ({ navigation }) => {
                 //   value={email}
                 //   onChangeText={(text) => setEmail(text)}
                 placeholder='New password'
+                secureTextEntry={true}
                 style={styles.input}
               />
               <TextInput
                 //   value={email}
                 //   onChangeText={(text) => setEmail(text)}
                 placeholder='Confirm password'
+                secureTextEntry={true}
                 style={styles.input}
               />
               <TouchableOpacity onPress={() => setEditPass(!editPass)} style={styles.btnDone}>
@@ -209,7 +211,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingVertical: 15,
     backgroundColor: 'rgba(36, 142, 255, 1)',
-    marginTop: 30,
+    marginVertical: 25,
     borderRadius: 10,
   },
   loginTxt: {
