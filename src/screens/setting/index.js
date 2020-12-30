@@ -28,6 +28,10 @@ const Setting = ({navigation}) => {
         <Text style={{color:'rgba(0,0,0,0.5)', fontSize:15}}>About Us</Text>
         <AntDesign name="doubleright" color="rgba(0,0,0,0.3)" size={20} />
       </TouchableOpacity>
+      <TouchableOpacity onPress={()=> navigation.navigate('Profile')} style={[styles.btnAboutus,{marginTop:10}]}>
+        <Text style={{color:'rgba(0,0,0,0.5)', fontSize:15}}>Profile</Text>
+        <AntDesign name="doubleright" color="rgba(0,0,0,0.3)" size={20} />
+      </TouchableOpacity>
       <View style={styles.viewOptionContainer}>
         <SettingOption optionTxt={'Gas Stations'} baseline={true} />
         <SettingOption optionTxt={'Restaurants'} baseline={true} />

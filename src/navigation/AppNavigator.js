@@ -7,7 +7,7 @@ import Login from '../screens/login'
 import Signup from '../screens/signup'
 import DetailDisplay from '../screens/detailDisplay'
 import Profile from '../screens/profile'
-import TermsConditions from '../screens/termsConditions'
+import TermsConditions from '../screens/aboutUs'
 // import Settings from '../screens/setting'
 
 const Stack = createStackNavigator();

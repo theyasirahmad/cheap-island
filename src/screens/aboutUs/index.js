@@ -9,14 +9,20 @@ const TermsConditions = () => {
             {/* <StatusBar backgroundColor={Colors.LinearBlue1} /> */}
             <GlobalHeader
                 backgroundColor="blue"
-                headingText="Terms & Conditions"
+                headingText="ABOUT US"
                 headingMargin={1}
                 fontSize={18}
                 color="#fff"
             />
-            <ScrollView style={{paddingHorizontal:20}} showsVerticalScrollIndicator={false}>
+            <ScrollView style={{ paddingHorizontal: 20 }} showsVerticalScrollIndicator={false}>
+                <Text style={styles.txtHeading1}>About Us</Text>
+                <Text style={{ color: "rgba(0,0,0,0.5)", marginTop: 10 }}>
+                    Welcome to www.lorem-ipsum.info. This site is provided as a service to our
+                    visitors and may be used for informational purposes only. Because the
+                    Terms and Conditions contain legal obligations, please read them carefully.
+                </Text>
                 <Text style={styles.txtHeading1}>Terms & Conditions</Text>
-                <Text style={{color:"rgba(0,0,0,0.5)", marginTop:10}}>
+                <Text style={{ color: "rgba(0,0,0,0.5)", marginTop: 10 }}>
                     Welcome to www.lorem-ipsum.info. This site is provided as a service to our visitors and may be used for informational purposes only. Because the Terms and Conditions contain legal obligations, please read them carefully.
 
                     1. YOUR AGREEMENT
@@ -49,7 +55,7 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.backgroundBlueColor,
         paddingBottom: 30
     },
-    txtHeading1:{
-        color: Colors.LinearBlue1, fontSize: 24, fontWeight:'bold'
+    txtHeading1: {
+        color: Colors.LinearBlue1, fontSize: 24, fontWeight: 'bold'
     },
 });
