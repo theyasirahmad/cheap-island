@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity, StatusBar, ScrollView, ImageBackground } from 'react-native';
 import GlobalHeader from '../../Components/GlobalHeader';
-import SettingOption from '../../Components/SettingOption';
+// import SettingOption from '../../Components/SettingOption';
 import AntDesign from 'react-native-vector-icons/AntDesign'
 // import Linear from 'expo-linear-gradient';
 import { Colors } from '../../constants/theme';
@@ -74,16 +74,16 @@ const styles = StyleSheet.create({
     flex: 1, width: "100%", justifyContent: 'center',
     alignItems: 'center',
   },
-  btnLogout: {
-    width: 150,
-    height: 50,
-    borderRadius: 30,
-    alignSelf: 'center',
-    overflow: 'hidden',
-    backgroundColor: Colors.LinearBlue1,
-    justifyContent: "center", alignItems: "center",
-    marginTop:25
-  },
+  // btnLogout: {
+  //   width: 150,
+  //   height: 50,
+  //   borderRadius: 30,
+  //   alignSelf: 'center',
+  //   overflow: 'hidden',
+  //   backgroundColor: Colors.LinearBlue1,
+  //   justifyContent: "center", alignItems: "center",
+  //   marginTop:25
+  // },
   viewTop: {
     width: '99.5%',
     alignSelf: "center",
@@ -99,24 +99,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  viewOptionContainer: {
-    marginVertical: 20,
-    width: '90%',
-    alignSelf: 'center',
-    backgroundColor: '#fff',
-    overflow: 'hidden',
-    borderRadius: 20,
+  // viewOptionContainer: {
+  //   marginVertical: 20,
+  //   width: '90%',
+  //   alignSelf: 'center',
+  //   backgroundColor: '#fff',
+  //   overflow: 'hidden',
+  //   borderRadius: 20,
 
-    borderWidth: 1,
-    borderColor: Colors.borderCardColor,
-    // shadowColor: "#000",
-    // shadowOffset: {
-    //   width: 0,
-    //   height: 7,
-    // },
-    // shadowOpacity: 0.41,
-    // shadowRadius: 9.11,
-
-    // elevation: 14,
-  },
+  //   borderWidth: 1,
+  //   borderColor: Colors.borderCardColor,
+  // },
 });

@@ -18,11 +18,6 @@ const Setting = ({ navigation }) => {
       fontSize={18}
       color="#fff"
     />
-    {/* <View style={styles.viewTop}>
-      <Text style={{ color: '#fff', fontSize: 18 }}>
-        Gunnluger Geir Getsson
-      </Text>
-    </View> */}
     <ScrollView showsVerticalScrollIndicator={false}>
       <TouchableOpacity onPress={() => navigation.navigate('TermsConditions')} style={styles.btnAboutus}>
         <Text style={{ color: 'rgba(0,0,0,0.5)', fontSize: 15 }}>About Us</Text>
