@@ -8,7 +8,6 @@ import More from '../screens/more';
 import Offers from '../screens/offer';
 import GasStations from '../screens/gasStation';
 
-
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Feather from 'react-native-vector-icons/Feather'
 // import { Fonts } from '../constants/theme';

@@ -26,7 +26,7 @@ const DetailDisplay = ({ route, navigation }) => {
           <View style={{ padding: 8 }}>
             {offerAvail !== null && offerAvail !== undefined && offerAvail === true ?
               <TouchableOpacity style={styles.btnAvail}>
-                <Text style={{ color: "#fff" }}>Avail offer</Text>
+                <Text style={{ color: "#fff" }}>Use offer</Text>
               </TouchableOpacity> : null
             }
             <Text style={{ fontSize: 15, color: "rgba(0,0,0,0.4)", marginTop: 10 }}>
