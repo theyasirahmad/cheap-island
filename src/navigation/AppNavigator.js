@@ -19,7 +19,7 @@ const Stack = createStackNavigator();
 
 function RootNavigator() {
   return (
-    <Stack.Navigator initialRouteName="BottomTabNav" headerMode="none">
+    <Stack.Navigator initialRouteName="SplashScreen" headerMode="none">
       <Stack.Screen name="BottomTabNav" component={BottomTabNav} />
       <Stack.Screen name="SplashScreen" component={SplashScreen} />
       <Stack.Screen name="Login" component={Login} />
