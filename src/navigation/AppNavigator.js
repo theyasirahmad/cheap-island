@@ -8,13 +8,18 @@ import Signup from '../screens/signup'
 import DetailDisplay from '../screens/detailDisplay'
 import Profile from '../screens/profile'
 import TermsConditions from '../screens/aboutUs'
+import Offer from '../screens/offer';
+import Restaurant from '../screens/Restaurants';
+import Mores from '../screens/more'
+import Settings from '../screens/setting';
+
 // import Settings from '../screens/setting'
 
 const Stack = createStackNavigator();
 
 function RootNavigator() {
   return (
-    <Stack.Navigator initialRouteName="SplashScreen" headerMode="none">
+    <Stack.Navigator initialRouteName="BottomTabNav" headerMode="none">
       <Stack.Screen name="BottomTabNav" component={BottomTabNav} />
       <Stack.Screen name="SplashScreen" component={SplashScreen} />
       <Stack.Screen name="Login" component={Login} />
@@ -22,6 +27,10 @@ function RootNavigator() {
       <Stack.Screen name="DetailDisplay" component={DetailDisplay} />
       <Stack.Screen name="Profile" component={Profile} />
       <Stack.Screen name="TermsConditions" component={TermsConditions} />
+      <Stack.Screen name="Restaurant" component={Restaurant} />
+      <Stack.Screen name="Offer" component={Offer} />
+      <Stack.Screen name="Settings" component={Settings} />
+      <Stack.Screen name="Mores" component={Mores} />
 
       {/* <Stack.Screen name="Settings" component={Settings} /> */}
     </Stack.Navigator>

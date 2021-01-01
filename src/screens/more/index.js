@@ -9,38 +9,41 @@ import { Colors } from '../../constants/theme';
 const WidthDevice = Dimensions.get('window').width;
 const HeightDevice = Dimensions.get('window').height;
 
-const Setting = ({ navigation }) => {
+const Setting = ({navigation}) => {
   return <View style={styles.container}>
     <GlobalHeader
       backgroundColor="#42B1F8"
-      headingText="SETTINGS"
+      headingText="MORE"
       headingMargin={1}
       fontSize={18}
       color="#fff"
     />
-    {/* <View style={styles.viewTop}>
+    <View style={styles.viewTop}>
       <Text style={{ color: '#fff', fontSize: 18 }}>
         Gunnluger Geir Getsson
       </Text>
-    </View> */}
+    </View>
     <ScrollView showsVerticalScrollIndicator={false}>
-      <TouchableOpacity onPress={() => navigation.navigate('TermsConditions')} style={styles.btnAboutus}>
-        <Text style={{ color: 'rgba(0,0,0,0.5)', fontSize: 15 }}>About Us</Text>
-        <AntDesign name="doubleright" color="rgba(0,0,0,0.3)" size={20} />
-      </TouchableOpacity>
-      {/* <TouchableOpacity onPress={()=> navigation.navigate('Profile')} style={[styles.btnAboutus,{marginTop:10}]}>
+      <TouchableOpacity onPress={()=> navigation.navigate('Profile')} style={styles.btnAboutus}>
         <Text style={{color:'rgba(0,0,0,0.5)', fontSize:15}}>Profile</Text>
         <AntDesign name="doubleright" color="rgba(0,0,0,0.3)" size={20} />
-      </TouchableOpacity> */}
-      <View style={styles.viewOptionContainer}>
-        <SettingOption optionTxt={'Notifications'} baseline={true} />
-        <SettingOption optionTxt={'Location'} baseline={false} />
-      </View>
-      <TouchableOpacity style={styles.btnLogout}>
-        {/* <Linear colors={[Colors.LinearBlue1, Colors.LinearBlue2]} style={styles.linearStyle}> */}
-        <Text style={{ color: '#fff', fontSize: 16 }}>Log Out</Text>
-        {/* </Linear> */}
       </TouchableOpacity>
+      <TouchableOpacity onPress={()=> navigation.navigate('Offers')} style={[styles.btnAboutus,{marginTop:10}]}>
+        <Text style={{color:'rgba(0,0,0,0.5)', fontSize:15}}>Used Offers</Text>
+        <AntDesign name="doubleright" color="rgba(0,0,0,0.3)" size={20} />
+      </TouchableOpacity>
+      <TouchableOpacity onPress={()=> navigation.navigate('Restaurants')} style={[styles.btnAboutus,{marginTop:10}]}>
+        <Text style={{color:'rgba(0,0,0,0.5)', fontSize:15}}>Favourite Restaurants</Text>
+        <AntDesign name="doubleright" color="rgba(0,0,0,0.3)" size={20} />
+      </TouchableOpacity>
+      <TouchableOpacity onPress={()=> navigation.navigate('Settings')} style={[styles.btnAboutus,{marginTop:10}]}>
+        <Text style={{color:'rgba(0,0,0,0.5)', fontSize:15}}>Settings</Text>
+        <AntDesign name="doubleright" color="rgba(0,0,0,0.3)" size={20} />
+      </TouchableOpacity>
+      
+      {/* <TouchableOpacity style={styles.btnLogout}>
+        <Text style={{ color: '#fff', fontSize: 16 }}>Log Out</Text>
+      </TouchableOpacity> */}
     </ScrollView>
     <ImageBackground
       style={{ width: 100, height: 130, position: "absolute", alignSelf: "center", bottom: 10, zIndex: -1000000 }}
@@ -55,14 +58,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.backgroundBlueColor,
-    // f7faff background
-    //#fafbfe card background
-    // #ebeff6 card border
-    // #8595ad card text
-    // Gradient #6399ff #8371ff
-    // #6194ff selective text
-    // #bfd9ff setting name card
-    // #24eff #f64fff button gradient
   },
   btnAboutus: {
     width: WidthDevice * 0.9,
@@ -70,7 +65,7 @@ const styles = StyleSheet.create({
     height: 55,
     backgroundColor: "#fff",
     borderRadius: 5,
-    marginTop: 20, flexDirection: "row", justifyContent: "space-between",
+    marginTop: 20, flexDirection: "row", justifyContent:"space-between",
     alignItems: "center", paddingHorizontal: 20,
     borderWidth: 1,
     borderColor: Colors.borderCardColor,
@@ -86,7 +81,23 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     overflow: 'hidden',
     backgroundColor: Colors.LinearBlue1,
-    justifyContent: "center", alignItems: "center"
+    justifyContent: "center", alignItems: "center",
+    marginTop:25
+  },
+  viewTop: {
+    width: '99.5%',
+    alignSelf: "center",
+    alignContent: "center",
+    height: 55,
+    backgroundColor: "#bfd9ff",
+    // borderRadius: 20,
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
+    borderBottomRightRadius: 20,
+    borderBottomLeftRadius: 20,
+    marginTop: -20,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   viewOptionContainer: {
     marginVertical: 20,
@@ -98,12 +109,14 @@ const styles = StyleSheet.create({
 
     borderWidth: 1,
     borderColor: Colors.borderCardColor,
+    // shadowColor: "#000",
+    // shadowOffset: {
+    //   width: 0,
+    //   height: 7,
+    // },
+    // shadowOpacity: 0.41,
+    // shadowRadius: 9.11,
+
+    // elevation: 14,
   },
 });
-
-{/* <View style={styles.viewOptionContainer}>
-  <SettingOption optionTxt={'Gas Stations'} baseline={true} />
-  <SettingOption optionTxt={'Restaurants'} baseline={true} />
-  <SettingOption optionTxt={'Interesting points'} baseline={true} />
-  <SettingOption optionTxt={'Others'} baseline={false} />
-</View> */}

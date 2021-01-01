@@ -4,13 +4,12 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Colors } from '../constants/theme'
 import PointOfInterest from '../screens/pointOfInterest';
 import Restaurants from '../screens/Restaurants';
-import Settings from '../screens/setting';
+import More from '../screens/more';
 import Offers from '../screens/offer';
 import GasStations from '../screens/gasStation';
 
 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import Ionicons from 'react-native-vector-icons/Fontisto'
 import Feather from 'react-native-vector-icons/Feather'
 // import { Fonts } from '../constants/theme';
 
@@ -25,7 +24,7 @@ const BottomTabNavigator = (props) => {
       <Tab.Screen name={'Restaurants'} component={Restaurants} />
       <Tab.Screen name={'Interesting points'} component={PointOfInterest} />
       <Tab.Screen name={'Offers'} component={Offers} />
-      <Tab.Screen name={'More'} component={Settings} />
+      <Tab.Screen name={'More'} component={More} />
     </Tab.Navigator>
   );
 };
