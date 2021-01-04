@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Dimensions, FlatList, ScrollView, ImageBackground } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, FlatList, ScrollView, ImageBackground, TextInput, TouchableOpacity } from 'react-native';
 import GlobalHeader from '../../Components/GlobalHeader';
 import RestaurantCard from '../../Components/RestaurantCard';
 import { Colors } from '../../constants/theme';
 import { RestaurantList as RESTAURANTLIST } from '../../dummyData/dummyData';
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
+
+const WIDTH = Dimensions.get('window').width;
+const HEIGHT = Dimensions.get('window').height;
 
 const Restaurants = ({ navigation }) => {
   // const [cardSelect, setcardSelect] = useState(false);
@@ -21,6 +25,13 @@ const Restaurants = ({ navigation }) => {
         isFavouriteLoading={false}
         RightIcon={true}
       />
+      <View style={styles.searchbarStyle}>
+        <TextInput placeholder="Search location" style={styles.inputStyle} />
+        <TouchableOpacity style={styles.btnSearch}>
+          <FontAwesome name="search" size={23} color="#fff" />
+        </TouchableOpacity>
+
+      </View>
       <View style={styles.viewFlatlist}>
         <FlatList
           showsVerticalScrollIndicator={false}
@@ -74,4 +85,30 @@ const styles = StyleSheet.create({
 
     // elevation: 24,
   },
+  searchbarStyle: {
+    backgroundColor: '#fff',
+    height: HEIGHT * 0.09,
+    width: WIDTH * 0.9,
+    alignSelf: "center",
+    borderRadius: 8,
+    flexDirection: "row",
+    overflow: "hidden",
+    marginBottom: 10,
+    borderWidth: 1,
+    borderColor: 'rgba(0,0,0,0.1)',
+    padding: 0
+  },
+  inputStyle: {
+    flex: 1,
+    backgroundColor: "#fff",
+    height: HEIGHT * 0.09,
+    // marginLeft: 20,
+    // fontSize: 16,
+    paddingHorizontal: 15,
+    paddingVertical: 0
+  },
+  btnSearch: {
+    backgroundColor: "#bbb", justifyContent: "center", alignItems: "center",
+    paddingHorizontal: 12, height: HEIGHT * 0.09
+  }
 });
