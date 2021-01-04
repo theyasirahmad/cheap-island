@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, FlatList, ImageBackground } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, FlatList, TextInput, Dimensions, ImageBackground } from 'react-native';
 import GlobalHeader from '../../Components/GlobalHeader';
 import OfferCard from '../../Components/OfferCard';
 import { OfferList as OFFERLIST } from '../../dummyData/dummyData';
 import { Colors } from '../../constants/theme';
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
+
+const WIDTH = Dimensions.get('window').width;
+const HEIGHT = Dimensions.get('window').height;
 
 const Offer = ({ navigation }) => {
   const [toggleBtn, setToggleBtn] = useState(true)
@@ -33,6 +37,12 @@ const Offer = ({ navigation }) => {
             <Text style={{ color: "#fff" }}>Used offers</Text>
           </TouchableOpacity>
         {/* } */}
+      </View>
+      <View style={styles.searchbarStyle}>
+        <TextInput placeholder="Search location" style={styles.inputStyle} />
+        <TouchableOpacity style={styles.btnSearch}>
+          <FontAwesome name="search" size={23} color="#fff" />
+        </TouchableOpacity>
       </View>
       <FlatList
         showsVerticalScrollIndicator={false}
@@ -73,5 +83,29 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     backgroundColor: Colors.LinearBlue1, width: 120,
     justifyContent: "center", alignItems: "center", borderRadius: 20
+  },
+  searchbarStyle: {
+    backgroundColor: '#fff',
+    height: HEIGHT * 0.08,
+    width: WIDTH * 0.9,
+    alignSelf: "center",
+    borderRadius: 8,
+    flexDirection: "row",
+    overflow: "hidden",
+    marginVertical: 10,
+    borderWidth: 1,
+    borderColor: 'rgba(0,0,0,0.1)',
+    padding: 0
+  },
+  inputStyle: {
+    flex: 1,
+    backgroundColor: "#fff",
+    height: HEIGHT * 0.08,
+    paddingHorizontal: 15,
+    paddingVertical: 0
+  },
+  btnSearch: {
+    backgroundColor: "#bbb", justifyContent: "center", alignItems: "center",
+    paddingHorizontal: 12, height: HEIGHT * 0.08
   }
 });

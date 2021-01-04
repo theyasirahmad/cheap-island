@@ -17,8 +17,8 @@ const Verification = ({
     const [loading, setLoading] = useState(false)
   const [error, setError] = useState([]);
   const verificationHandle = (e, code) => {
-    console.log(e);
-    console.log(code);
+    // console.log(e);
+    // console.log(code);
   };
 
   return (

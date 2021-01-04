@@ -30,7 +30,6 @@ const Restaurants = ({ navigation }) => {
         <TouchableOpacity style={styles.btnSearch}>
           <FontAwesome name="search" size={23} color="#fff" />
         </TouchableOpacity>
-
       </View>
       <View style={styles.viewFlatlist}>
         <FlatList
@@ -102,8 +101,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     height: HEIGHT * 0.09,
-    // marginLeft: 20,
-    // fontSize: 16,
     paddingHorizontal: 15,
     paddingVertical: 0
   },

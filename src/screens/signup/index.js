@@ -21,7 +21,7 @@ import connectionString from '../../api/api'
 const SignupScreen = ({
   navigation
 }) => {
-  const [username, setUsername] = useState('');
+  const [fullName, setFullname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setpassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -35,7 +35,7 @@ const SignupScreen = ({
 
   const onSubmit = () => {
     // navigation.navigate('BottomTabNav')
-    if (username == '' || username == ' ') {
+    if (fullName == '' || fullName == ' ') {
       setUsernameErr(true)
     } else {
       setUsernameErr(false)
@@ -51,9 +51,9 @@ const SignupScreen = ({
       setpasswordErr(false);
     }
     if (password !== confirmPassword) {
-      passDontMatchErr(true)
+      setpassDontMatchErr(true)
     } else {
-      passDontMatchErr(false)
+      setpassDontMatchErr(false)
     }
 
     if (usernameErr == false && emailErr == false && passwordErr == false && passDontMatchErr == false) {
@@ -63,26 +63,28 @@ const SignupScreen = ({
         url: `${connectionString}/auth/signup`,
         method: 'POST',
         data: {
-          username, email, password
+          fullName, email, password, confirmPassword
         }
       })
         .then((res) => {
-          console.log('resssssponseee', res.data)
-          console.log(res.data)
+          // console.log('resssssponseee', res.data)
+          // console.log(res.data)
+          // setLoading(true)
           AsyncStorage.setItem('token', res.data.token)
 
-          setLoading(false)
           // navigation.navigate('BottomTabNav')
           console.log('Done registering')
+          setLoading(false)
           setEmail('')
           setpassword('')
           navigation.navigate('BottomTabNav')
         })
         .catch((err) => {
           setLoading(false)
-          alert("Some error occured while Registering user")
+          // alert("Some error occured while Registering user")
+          alert(err)
         })
-      setLoading(false);
+      // setLoading(false);
     }
   }
 
@@ -105,10 +107,10 @@ const SignupScreen = ({
         </View>
         <TextInput
           placeholder='User name'
-          name="username"
+          name="fullName"
           style={styles.input}
-          value={username}
-          onChangeText={(text) => setUsername('username', text)}
+          value={fullName}
+          onChangeText={(text) => setFullname(text)}
         />
         {usernameErr && (
           <Text style={styles.errTxt}>First name is invalid</Text>
@@ -119,7 +121,7 @@ const SignupScreen = ({
           name="email"
           style={styles.input}
           value={email}
-          onChangeText={(text) => setEmail('email', text)}
+          onChangeText={(text) => setEmail(text)}
         />
         {emailErr && <Text style={styles.errTxt}>Email is invalid</Text>}
 
@@ -128,14 +130,14 @@ const SignupScreen = ({
           secureTextEntry={true}
           style={styles.input}
           value={password}
-          onChangeText={(text) => setpassword('password', text)}
+          onChangeText={(text) => setpassword(text)}
         />
         <TextInput
           placeholder='Confirm Password'
           secureTextEntry={true}
           style={styles.input}
           value={confirmPassword}
-          onChangeText={(text) => setConfirmPassword('confirmPassword', text)}
+          onChangeText={(text) => setConfirmPassword(text)}
         />
         {passwordErr && (
           <Text style={styles.errTxt}>

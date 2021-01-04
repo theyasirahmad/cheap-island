@@ -56,6 +56,7 @@ const LoginScreen = ({
 
       // alert('Logged Function triggering')
       setLoading(true)
+      // console.log('Connecting STringgggggggggggggggggg',connectionString)
 
       Axios({
         url: `${connectionString}/auth/login`,
@@ -65,23 +66,24 @@ const LoginScreen = ({
         }
       })
         .then((res) => {
-          console.log('resssss', res)
-          const jsonValue = JSON.stringify(true)
-          AsyncStorage.setItem('isAuth', jsonValue)
+          // console.log('resssss', res.data.token)
+          // const jsonValue = JSON.stringify(true)
+          AsyncStorage.setItem('token', res.data.token)
 
-          setLoading(false)
+          setLoading(true)
           // navigation.navigate('BottomTabNav')
-          console.log('Done loginnnnnnnn')
+          // console.log('Done loginnnnnnnn')
           setEmail('')
           setpassword('')
+          setLoading(false);
           navigation.navigate('BottomTabNav')
         })
         .catch((err) => {
           setLoading(false)
-          alert("Some error occured while Logging in")
+          alert('User does not exist')
         })
     }
-    setLoading(false);
+    // setLoading(false);
     // navigation.navigate('BottomTabNav')
   };
 

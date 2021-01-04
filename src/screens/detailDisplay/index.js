@@ -5,7 +5,7 @@ import { Colors } from '../../constants/theme';
 
 const DetailDisplay = ({ route, navigation }) => {
   const { img, name, descrption, offerAvail } = route.params;
-  console.log('navigationnnnnnnnnn', name, descrption)
+  // console.log('navigationnnnnnnnnn', name, descrption)
   return (
     <View style={styles.container}>
       <GlobalHeader
