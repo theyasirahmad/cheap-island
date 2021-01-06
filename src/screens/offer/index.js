@@ -39,7 +39,7 @@ const Offer = ({ navigation }) => {
         {/* } */}
       </View>
       <View style={styles.searchbarStyle}>
-        <TextInput placeholder="Search location" style={styles.inputStyle} />
+        <TextInput placeholder="Search offer" style={styles.inputStyle} />
         <TouchableOpacity style={styles.btnSearch}>
           <FontAwesome name="search" size={23} color="#fff" />
         </TouchableOpacity>

@@ -59,7 +59,7 @@ const LoginScreen = ({
       // console.log('Connecting STringgggggggggggggggggg',connectionString)
 
       Axios({
-        url: `${connectionString}/auth/login`,
+        url: `${connectionString}/auth/vendor-login`,
         method: 'POST',
         data: {
           email, password
@@ -80,7 +80,7 @@ const LoginScreen = ({
         })
         .catch((err) => {
           setLoading(false)
-          alert('User does not exist')
+          alert(err)
         })
     }
     // setLoading(false);

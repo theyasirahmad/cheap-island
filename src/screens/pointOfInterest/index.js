@@ -31,7 +31,7 @@ const PointOfInterest = () => {
     <ScrollView showsVerticalScrollIndicator={false} >
       <View style={styles.viewSearch}>
         <TextInput  
-        placeholder="Search location"
+        placeholder="Search"
         style={styles.inputSearch}/>
         <TouchableOpacity style={styles.btnSearch}>
           <FontAwesome color="#fff" size={23} name="search" />
