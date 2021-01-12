@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -11,6 +11,8 @@ import {
   StatusBar
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
+import * as Location from 'expo-location';
+
 import { Colors } from '../../constants/theme'
 
 import Axios from 'axios'
@@ -32,6 +34,42 @@ const SignupScreen = ({
   const [passDontMatchErr, setpassDontMatchErr] = useState(false);
 
   const [loading, setLoading] = useState(false)
+
+
+  const [location, setLocation] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+  const [CurrentLatitude, setCurrentLatitude] = useState(null)
+  const [CurrentLongitude, setCurrentLongitude] = useState(null)
+
+  const [locationResults, setLocationResults] = useState(null)
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+      setCurrentLatitude(location.coords.latitude)
+      setCurrentLongitude(location.coords.longitude)
+
+      // console.log('Locationnnnn '+CurrentLatitude, CurrentLongitude)
+      let results = await Location.reverseGeocodeAsync({ latitude: CurrentLatitude, longitude: CurrentLongitude });
+      // alert(JSON.stringify(results.city))
+      setLocationResults(results[0].city)
+
+    })();
+  }, []);
+
+  let text = 'Waiting..';
+  if (errorMsg) {
+    text = errorMsg;
+  } else if (location) {
+    text = JSON.stringify(location);
+  }
 
   const onSubmit = () => {
     // navigation.navigate('BottomTabNav')
@@ -63,7 +101,7 @@ const SignupScreen = ({
         url: `${connectionString}/auth/signup`,
         method: 'POST',
         data: {
-          fullName, email, password, confirmPassword
+          fullName, email, password, confirmPassword, CurrentLatitude, CurrentLongitude, locationResults
         }
       })
         .then((res) => {
@@ -147,10 +185,33 @@ const SignupScreen = ({
         {passDontMatchErr && (
           <Text style={styles.errTxt}>Password does not match</Text>
         )}
+        <TextInput
+          placeholder='Latitude'
+          style={styles.input}
+          value={'Latitude - ' + CurrentLatitude}
+          editable={false}
+        />
+        <TextInput
+          placeholder='Longitude'
+          style={styles.input}
+          value={'Longitude - ' + CurrentLongitude}
+          editable={false}
+        />
+        <TextInput
+          placeholder='City'
+          style={styles.input}
+          value={locationResults}
+          editable={false}
+        />
+        {/* <Text>{JSON.stringify(location)}</Text>
+        <Text>{JSON.stringify(locationResults[0].city)}</Text> */}
+        {/* <Text>{JSON.stringify(location.opt)}</Text> */}
+        {/* <Text>Thisss issss latitude{JSON.stringify(CurrentLatitude)}</Text> */}
+        {/* <Text>Thisss issss Longitude{JSON.stringify(CurrentLongitude)}</Text> */}
 
         <TouchableOpacity
           // onPress={onSubmit}
-          onPress={()=> navigation.navigate('BottomTabNav')}
+          onPress={() => navigation.navigate('BottomTabNav')}
           style={styles.btnLogin}>
           {loading ? (
             <ActivityIndicator size="large" color="#fff" />
@@ -166,17 +227,17 @@ const SignupScreen = ({
           onPress={() => {
             navigation.navigate('Login');
           }}
-          style={{ flexDirection:"row", alignSelf:"center"}}
+          style={{ flexDirection: "row", alignSelf: "center" }}
         >
           <Text style={styles.text3}>
-          Already have an account -
+            Already have an account -
           </Text>
           <Text style={styles.text4}>
             Login
           </Text>
         </TouchableOpacity>
 
-        <View  style={styles.bot}>
+        <View style={styles.bot}>
           <Text style={styles.text3}>
             Agree to our
           </Text>
@@ -208,7 +269,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 10,
-    marginBottom:20
+    marginBottom: 20
   },
   text3: {
     fontSize: 15,
