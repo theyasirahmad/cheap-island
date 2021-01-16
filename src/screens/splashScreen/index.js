@@ -11,6 +11,7 @@ import {
 import { CommonActions } from '@react-navigation/native';
 import { useFonts } from 'expo-font'
 import { Colors } from '../../constants/theme'
+import AsyncStorage from '@react-native-community/async-storage';
 
 const imgSplash = require('../../assets/images/cheaplogo4.png')
 
@@ -19,15 +20,33 @@ export default function SplashScreen(props) {
 
   const [springValue] = React.useState(new Animated.Value(0.5))
 
-  React.useEffect(() => {
+  const delayedNavigation = (name) => {
     setTimeout(() => {
       props.navigation.dispatch(
         CommonActions.reset({
           index: 0,
-          routes: [{ name: 'Login' }],
+          routes: [{ name }],
         }),
       );
-    }, 3200) 
+    }, 3200)
+  }
+
+
+  React.useEffect(() => {
+
+
+    const getStatus = async () => {
+
+      let token = await AsyncStorage.getItem('token');
+
+      if (token) {
+        delayedNavigation('BottomTabNav')
+      }
+      else {
+        delayedNavigation('Login')
+      }
+    } 
+    getStatus()
 
     // const spring = () => {
     Animated.spring(springValue, {
@@ -38,16 +57,16 @@ export default function SplashScreen(props) {
   }, [])
 
   return (
-      <View style={styles.container}>
-          <StatusBar hidden={true} />
-          <ImageBackground 
-          style={{
-            width:Dimensions.get('window').width*0.7,
-            height:Dimensions.get('screen').width*0.3
-          }}
-          resizeMode="contain"
-          source={imgSplash}></ImageBackground>
-      </View>
+    <View style={styles.container}>
+      <StatusBar hidden={true} />
+      <ImageBackground
+        style={{
+          width: Dimensions.get('window').width * 0.7,
+          height: Dimensions.get('screen').width * 0.3
+        }}
+        resizeMode="contain"
+        source={imgSplash}></ImageBackground>
+    </View>
   );
 }
 
