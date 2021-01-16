@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, FlatList, ImageBackground, Image } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, FlatList, ImageBackground, Image, Dimensions } from 'react-native';
+import connectionString from '../../api/api';
 import GlobalHeader from '../../Components/GlobalHeader';
 import { Colors } from '../../constants/theme';
 
 const DetailDisplay = ({ route, navigation }) => {
-  const { img, name, descrption, offerAvail } = route.params;
+  const { img, name, description, offerAvail, address, menuCard } = route.params;
   // console.log('navigationnnnnnnnnn', name, descrption)
   return (
     <View style={styles.container}>
@@ -20,8 +21,11 @@ const DetailDisplay = ({ route, navigation }) => {
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.viewDetail}>
           <Image
-            source={{ uri: img }}
-            style={{ width: "100%", height: 200, backgroundColor: "lightblue" }}
+            source={{
+              uri:
+                connectionString + "/" + img
+            }}
+            style={{ width: "100%", height: 200, backgroundColor: "transparent" }}
           />
           <View style={{ padding: 8 }}>
             {offerAvail !== null && offerAvail !== undefined && offerAvail === true ?
@@ -30,8 +34,39 @@ const DetailDisplay = ({ route, navigation }) => {
               </TouchableOpacity> : null
             }
             <Text style={{ fontSize: 15, color: "rgba(0,0,0,0.4)", marginTop: 10 }}>
-              {descrption}
+              {name}
             </Text>
+            <Text style={{ fontSize: 15, color: "rgba(0,0,0,0.4)", marginTop: 10 }}>
+              {description}
+            </Text>
+            <Text style={{ fontSize: 15, color: "rgba(0,0,0,0.4)", marginTop: 10 }}>
+              {address}
+            </Text>
+            <Text style={{ fontSize: 15, color: "rgba(0,0,0,0.4)", marginTop: 10 }}>
+              Menu
+            </Text>
+            <FlatList
+              showsVerticalScrollIndicator={false}
+              numColumns={1}
+              data={menuCard}
+              keyExtractor={(item) => img.toString()}
+              horizontal={true}
+              pagingEnabled={true}
+              renderItem={(itemData) => (
+                <Image
+                  source={{
+                    uri:
+                      connectionString + "/" + itemData.item
+                  }}
+                  resizeMode={"contain"}
+                  style={{
+                    width: Dimensions.get('window').width * .9 - 16,
+                    height: Dimensions.get('window').width * .9 - 16,
+                    backgroundColor: "transparent"
+                  }}
+                />
+              )}
+            />
           </View>
         </View>
       </ScrollView>

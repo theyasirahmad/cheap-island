@@ -5,6 +5,9 @@ import RestaurantCard from '../../Components/RestaurantCard';
 import { Colors } from '../../constants/theme';
 import { RestaurantList as RESTAURANTLIST } from '../../dummyData/dummyData';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import AsyncStorage from '@react-native-community/async-storage';
+import axios from 'axios';
+import connectionString from '../../api/api';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
@@ -14,6 +17,35 @@ const Restaurants = ({ navigation }) => {
   // const onPressCard = () => {
   //   setcardSelect(!cardSelect)
   // }
+
+  const [resturants, setResturants] = useState([])
+
+  const getResturants = async () => {
+
+    let type = "resturant"
+    let token = AsyncStorage.getItem('token');
+
+    axios({
+      url: `${connectionString}/user/get-vendors`,
+      method: "POST",
+      data: {
+        type
+      }
+    })
+      .then((res) => {
+        // console.log(res.data.vendors)
+        setResturants([...res.data.vendors])
+      })
+      .catch((err) => {
+        console.log(err);
+        alert("internal server error")
+      })
+  }
+
+  React.useEffect(() => {
+    getResturants()
+  })
+
   return (
     <View style={styles.container}>
       <GlobalHeader
@@ -35,15 +67,17 @@ const Restaurants = ({ navigation }) => {
         <FlatList
           showsVerticalScrollIndicator={false}
           numColumns={1}
-          data={RESTAURANTLIST}
-          keyExtractor={(item) => item.id}
+          data={resturants}
+          keyExtractor={(item) => item._id}
           renderItem={(itemData) => (
             <RestaurantCard
-              img={itemData.item.img}
+              img={itemData.item.logo}
               name={itemData.item.name}
-              descrption={itemData.item.descrption}
+              description={itemData.item.description}
+              address={itemData.item.address}
               navigation={navigation}
-              favourite={itemData.item.favourite}
+              favourite={false}
+              menuCard={itemData.item.menuCard}
             />
           )}
         />

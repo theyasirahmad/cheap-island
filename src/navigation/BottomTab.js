@@ -19,9 +19,9 @@ const BottomTabNavigator = (props) => {
     <Tab.Navigator
       tabBarVisible={true}
       tabBar={(tabProps) => <MyTabBar {...tabProps} {...props} />}>
-      <Tab.Screen name={'Gas Stations'} component={GasStations} />
       <Tab.Screen name={'Restaurants'} component={Restaurants} />
       <Tab.Screen name={'Interesting points'} component={PointOfInterest} />
+      <Tab.Screen name={'Gas Stations'} component={GasStations} />
       <Tab.Screen name={'Offers'} component={Offers} />
       <Tab.Screen name={'More'} component={More} />
     </Tab.Navigator>

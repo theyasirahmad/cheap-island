@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { Colors } from '../constants/theme'
 import AntDesign from 'react-native-vector-icons/AntDesign'
+import connectionString from '../api/api';
 
-const RestaurantCard = ({ img, name, descrption, favourite, navigation }) => {
+const RestaurantCard = ({ img, name, description, favourite, navigation, address, menuCard }) => {
 
   const [cardSelected, setCardSelected] = useState(false)
   // alert(cardSelect)
@@ -12,7 +13,7 @@ const RestaurantCard = ({ img, name, descrption, favourite, navigation }) => {
     <TouchableOpacity
       onPress={() => {
         setCardSelected(!cardSelected),
-          navigation.navigate('DetailDisplay', { name: name, descrption: descrption, img: img })
+          navigation.navigate('DetailDisplay', { name, description, img, address, menuCard })
       }}
       style={styles.container}
     >
@@ -28,7 +29,9 @@ const RestaurantCard = ({ img, name, descrption, favourite, navigation }) => {
             />
           ) : (
               <Image
-                source={{ uri: img }}
+                source={{
+                  uri: connectionString + "/" + img
+                }}
                 style={styles.imgstyle}
                 resizeMode="cover"
               />
