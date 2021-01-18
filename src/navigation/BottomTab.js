@@ -67,13 +67,14 @@ const MyTabBar = ({ state, descriptors, navigation, carts }) => {
                   name="gas-pump"
                   size={24}
                   color={isFocused ? Colors.LinearBlue1 : 'rgba(188, 188, 188, 1)'}
-                  style={{marginTop: index === 2 ? 0: -10}}
+                  style={{ marginTop: index === 2 ? 0 : -10 }}
                 />
               )}
               {index === 1 && (
                 <Image
-                  style={{ width: 53, height: 23, marginTop: index === 2 ? 0: -10,
-                    tintColor: isFocused ? Colors.LinearBlue1 : 'rgba(188, 188, 188, 1)' 
+                  style={{
+                    width: 53, height: 23, marginTop: index === 2 ? 0 : -10,
+                    tintColor: isFocused ? Colors.LinearBlue1 : 'rgba(188, 188, 188, 1)'
                   }}
                   source={require('../assets/images/pot.png')}
                   resizeMode='cover'
@@ -84,12 +85,14 @@ const MyTabBar = ({ state, descriptors, navigation, carts }) => {
                   name="hotel"
                   size={22}
                   color={isFocused ? Colors.LinearBlue1 : 'rgba(188, 188, 188, 1)'}
-                  style={{marginTop: index === 2 ? 0: -10}}
+                  style={{ marginTop: index === 2 ? 0 : -10 }}
                 />
               )}
               {index == 3 && (
-                <Image style={{ width: 30, height: 23, marginTop: index === 2 ? 0: -10,
-                  tintColor: isFocused ? Colors.LinearBlue1 : 'rgba(188, 188, 188, 1)' }}
+                <Image style={{
+                  width: 30, height: 23, marginTop: index === 2 ? 0 : -10,
+                  tintColor: isFocused ? Colors.LinearBlue1 : 'rgba(188, 188, 188, 1)'
+                }}
                   source={require('../assets/images/offerIcon.png')}
                   resizeMode='contain'
                 />
@@ -99,7 +102,7 @@ const MyTabBar = ({ state, descriptors, navigation, carts }) => {
                   name={"more-horizontal"}
                   size={25}
                   color={isFocused ? Colors.LinearBlue1 : 'rgba(188, 188, 188, 1)'}
-                  style={{marginTop: index === 2 ? 0: -12}}
+                  style={{ marginTop: index === 2 ? 0 : -12 }}
                 />
               )}
 
@@ -109,8 +112,8 @@ const MyTabBar = ({ state, descriptors, navigation, carts }) => {
                   fontSize: 10,
                   // fontFamily: Fonts.bold,
                   top: carts?.length && label === 'CART' ? -7 : 0,
-                  textAlign:"center",
-                  marginTop: index === 2 ? 0: 3,
+                  textAlign: "center",
+                  marginTop: index === 2 ? 0 : 3,
                   // marginTop:10
                 }}>
                 {label}

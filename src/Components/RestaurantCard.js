@@ -3,12 +3,52 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { Colors } from '../constants/theme'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import connectionString from '../api/api';
+import axios from 'axios';
+import AsyncStorage from '@react-native-community/async-storage';
 
-const RestaurantCard = ({ img, name, description, favourite, navigation, address, menuCard }) => {
+const RestaurantCard = ({
+  img,
+  name,
+  description,
+  favourite,
+  navigation,
+  address,
+  menuCard,
+  id,
+  favs,
+  setFavs
+}) => {
 
   const [cardSelected, setCardSelected] = useState(false)
   // alert(cardSelect)
   // alert(onPressCard)
+
+  const updateFavourites = async (tempFavs) => {
+
+    
+    setFavs([...tempFavs])
+
+    let token = await AsyncStorage.getItem('token');
+
+    axios({
+      url: `${connectionString}/user/update-favourites`,
+      method: "POST",
+      headers: {
+        Authorization: token,
+      },
+      data: {
+        favourites: tempFavs
+      }
+    })
+      .then(() => {
+
+      })
+      .catch((err) => {
+        console.log(err);
+        alert('Internal server error')
+      })
+  }
+
   return (
     <TouchableOpacity
       onPress={() => {
@@ -41,7 +81,22 @@ const RestaurantCard = ({ img, name, description, favourite, navigation, address
           {name}
         </Text>
       </View>
-      <TouchableOpacity onPress={() => { }}>
+      <TouchableOpacity onPress={() => {
+
+        let tempFavs = [];
+
+        if (favourite) {
+          let favIndex = favs.indexOf(id);
+          tempFavs = [...favs];
+          tempFavs.splice(favIndex, 1);
+        }
+        else {
+          // setFavs([...favs, id])
+          tempFavs = [...favs]
+          tempFavs = [...tempFavs, id]
+        }
+        updateFavourites(tempFavs)
+      }}>
         {favourite ?
           <AntDesign name="star" color="gold" size={22} />
           :

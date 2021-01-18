@@ -18,7 +18,9 @@ const Restaurants = ({ navigation }) => {
   //   setcardSelect(!cardSelect)
   // }
 
-  const [resturants, setResturants] = useState([])
+  const [resturants, setResturants] = useState([]);
+
+  const [favs, setFavs] = useState([]);
 
   const getResturants = async () => {
 
@@ -41,10 +43,35 @@ const Restaurants = ({ navigation }) => {
         alert("internal server error")
       })
   }
+  const getFavs = async () => {
+    let token = await AsyncStorage.getItem('token')
+    axios({
+      url: `${connectionString}/user/get-user`,
+      method: "POST",
+      headers: {
+        Authorization: token,
+      },
+      data: {
+        get: "favourites"
+      }
+    })
+      .then((res) => {
+        console.log(res.data.user)
+        let favourites = res.data.user.favourites
+        setFavs(favourites)
+      })
+      .catch((err) => {
+        console.log(err);
+        alert('Error Getting User Details')
+      })
+  }
 
   React.useEffect(() => {
+
     getResturants()
-  })
+    getFavs()
+
+  }, [])
 
   return (
     <View style={styles.container}>
@@ -76,8 +103,11 @@ const Restaurants = ({ navigation }) => {
               description={itemData.item.description}
               address={itemData.item.address}
               navigation={navigation}
-              favourite={false}
+              favourite={(favs.indexOf(itemData.item._id.toString()) !== -1)}
               menuCard={itemData.item.menuCard}
+              id={itemData.item._id}
+              setFavs={setFavs}
+              favs={favs}
             />
           )}
         />
