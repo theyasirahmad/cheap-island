@@ -147,7 +147,7 @@ const GasStation = () => {
       // RightIcon={true}
       />
       <View style={styles.viewMapConatiner}>
-        <View style={{ width: "100%", height: Dimensions.get('window').height * 0.55, backgroundColor: "#bbb" }}>
+        <View style={{ width: "100%", height: Dimensions.get('window').height * 0.5, backgroundColor: "#bbb" }}>
           {
             latitude && longitude &&
             <MapView
@@ -245,10 +245,10 @@ const GasStation = () => {
       >
         <View style={{ flex: 1, padding: 15 }}>
           <Text style={{ fontSize: 18, fontWeight: "bold", color: 'rgba(0,0,0,0.4)' }}>
-            Name: {viewStation.StationName}
+            Company: {viewStation.company}
           </Text>
           <Text style={{ fontSize: 18, fontWeight: "bold", color: 'rgba(0,0,0,0.4)' }}>
-            Company: {viewStation.company}
+            Name: {viewStation.StationName}
           </Text>
 
           <View style={{ width: '90%', height: 1, backgroundColor: "rgba(0,0,0,0.1)", marginVertical: 15 }} />
@@ -299,7 +299,7 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 15,
     // paddingBottom:180,
     backgroundColor: "#fff",
-    maxHeight: Dimensions.get('window').height * 0.20,
+    maxHeight: Dimensions.get('window').height * 0.24,
 
     // marginBottom:5,
     //     overflow:"hidden",
@@ -316,7 +316,8 @@ const styles = StyleSheet.create({
   viewMapConatiner: {
     overflow: "hidden",
     // maxHeight: Dimensions.get('window').height*0.68,
-    width: "90%",
+    width: "100%",
+    marginTop:-20,
     borderRadius: 20,
     alignSelf: "center",
     borderWidth: 1,
