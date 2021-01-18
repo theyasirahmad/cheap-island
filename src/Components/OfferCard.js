@@ -3,10 +3,20 @@ import { Colors } from '../constants/theme';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign'
 
-const OfferCard = ({ img, name, descrption, favourite, offerAvail, useTimes, navigation }) => {
+const OfferCard = ({ favourite, navigation, offer, img }) => {
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate('DetailDisplay', { name: name, descrption: descrption, img: img, offerAvail: offerAvail, menuCard:[] })}
+      onPress={() => navigation.navigate('DetailDisplay', {
+        name: offer.name,
+        description: offer.description,
+        img: img,
+        offerAvail: true,
+        menuCard: [],
+        id: offer._id,
+        limit: offer.limit,
+        off: offer.off,
+        usedBy: offer.used
+      })}
       style={styles.container}
     >
       <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -16,11 +26,11 @@ const OfferCard = ({ img, name, descrption, favourite, offerAvail, useTimes, nav
           resizeMode="cover"
         />
         <View style={{ marginHorizontal: 12 }}>
-          <Text style={{ color: "rgba(0,0,0,0.5)" }}>{name}</Text>
-          <Text style={{ color: "rgba(0,0,0,0.5)" }}>15% of everything</Text>
+          <Text style={{ color: "rgba(0,0,0,0.5)" }}>{offer.name}</Text>
+          <Text style={{ color: "rgba(0,0,0,0.5)" }}>{offer.off}%</Text>
         </View>
       </View>
-      <View style={{alignItems:"flex-end"}}>
+      <View style={{ alignItems: "flex-end" }}>
         <TouchableOpacity onPress={() => { }}>
           {favourite ?
             <AntDesign name="star" color="gold" size={22} />
@@ -28,8 +38,8 @@ const OfferCard = ({ img, name, descrption, favourite, offerAvail, useTimes, nav
             <AntDesign name="staro" color="gold" size={22} />
           }
         </TouchableOpacity>
-        <Text style={{fontSize:17, color:"rgba(0,0,0,0.45)", fontWeight:"bold"}}>
-          x{useTimes}
+        <Text style={{ fontSize: 12, color: "rgba(0,0,0,0.45)", fontWeight: "bold" }}>
+          x{offer.limit}
         </Text>
       </View>
     </TouchableOpacity>

@@ -5,12 +5,74 @@ import OfferCard from '../../Components/OfferCard';
 import { OfferList as OFFERLIST } from '../../dummyData/dummyData';
 import { Colors } from '../../constants/theme';
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import AsyncStorage from '@react-native-community/async-storage';
+import axios from 'axios';
+import connectionString from '../../api/api';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
 
 const Offer = ({ navigation }) => {
-  const [toggleBtn, setToggleBtn] = useState(true)
+  const [toggleBtn, setToggleBtn] = useState(true);
+
+
+  const [offers, setOffers] = useState([]);
+
+
+  const getUserDetails = async () => {
+
+    let token = await AsyncStorage.getItem('token');
+
+    axios({
+      url: `${connectionString}/user/get-user`,
+      method: "POST",
+      headers: {
+        Authorization: token,
+      },
+      data: {
+        get: "favourites"
+      }
+    })
+      .then((res) => {
+        // console.log(res.data.user)
+        AsyncStorage.setItem('userId', res.data.user._id)
+        // let favourites = res.data.user.favourites
+        // setFavs(favourites)
+      })
+      .catch((err) => {
+        console.log(err);
+        alert('Error Getting User Details')
+      })
+  }
+  React.useEffect(() => {
+    getUserDetails()
+  }, [])
+
+
+  React.useEffect(() => {
+
+    const getOffers = async () => {
+
+      let token = await AsyncStorage.getItem('token');
+
+      axios({
+        url: `${connectionString}/offer/get-offers`,
+        method: "POST",
+        headers: {
+          Authorization: token,
+        },
+      })
+        .then((res) => {
+          setOffers(res.data.offers)
+        })
+        .catch((err) => {
+          console.log(err);
+          alert('Internal Server Error')
+        })
+    }
+    getOffers()
+  })
+
   return (
     <View style={styles.container}>
       <GlobalHeader
@@ -24,18 +86,18 @@ const Offer = ({ navigation }) => {
       />
       <View style={styles.topBtnsView}>
         {/* {toggleBtn ? */}
-          <TouchableOpacity 
-            onPress={()=> setToggleBtn(true)} 
-            style={[styles.btnTop,{backgroundColor: toggleBtn ? Colors.LinearBlue1 : 'transparent' }]}
-          >
-            <Text style={{ color: "#fff" }}>Offers</Text>
-          </TouchableOpacity> 
-          <TouchableOpacity 
-            onPress={()=> setToggleBtn(false)} 
-            style={[styles.btnTop,{backgroundColor: toggleBtn ? 'transparent' : Colors.LinearBlue1}]}
-          >
-            <Text style={{ color: "#fff" }}>Used offers</Text>
-          </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => setToggleBtn(true)}
+          style={[styles.btnTop, { backgroundColor: toggleBtn ? Colors.LinearBlue1 : 'transparent' }]}
+        >
+          <Text style={{ color: "#fff" }}>Offers</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => setToggleBtn(false)}
+          style={[styles.btnTop, { backgroundColor: toggleBtn ? 'transparent' : Colors.LinearBlue1 }]}
+        >
+          <Text style={{ color: "#fff" }}>Used offers</Text>
+        </TouchableOpacity>
         {/* } */}
       </View>
       <View style={styles.searchbarStyle}>
@@ -47,16 +109,13 @@ const Offer = ({ navigation }) => {
       <FlatList
         showsVerticalScrollIndicator={false}
         numColumns={1}
-        data={OFFERLIST}
+        data={offers}
         keyExtractor={(item) => item.id}
         renderItem={(itemData) => <OfferCard
-          img={itemData.item.img}
-          name={itemData.item.name}
-          descrption={itemData.item.descrption}
-          favourite={itemData.item.favourite}
-          offerAvail={itemData.item.offer}
-          useTimes={itemData.item.timesUse}
+          img={OFFERLIST[0].img}
+          favourite={false}
           navigation={navigation}
+          offer={itemData.item}
         />}
       />
       <ImageBackground
@@ -77,7 +136,7 @@ const styles = StyleSheet.create({
   },
   topBtnsView: {
     flexDirection: 'row', height: 40, alignSelf: "center", backgroundColor: "rgba(0,0,0,0.1)",
-    borderRadius: 20, width:240
+    borderRadius: 20, width: 240
   },
   btnTop: {
     paddingHorizontal: 15,
