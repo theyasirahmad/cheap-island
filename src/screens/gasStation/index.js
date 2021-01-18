@@ -1,78 +1,199 @@
-import React, {useState} from 'react';
-import {View,StyleSheet, ScrollView, FlatList, Dimensions, StatusBar, ImageBackground} from 'react-native';
+import React, { useState } from 'react';
+import { View, StyleSheet, ScrollView, FlatList, Dimensions, StatusBar, ImageBackground } from 'react-native';
 import GlobalHeader from '../../Components/GlobalHeader';
 import GasStationCard from '../../Components/GasStataionCard'
-import {StationList as STATIONLIST} from '../../dummyData/dummyData'
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
+import { StationList as STATIONLIST } from '../../dummyData/dummyData'
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
 import { Colors } from '../../constants/theme'
+import axios from 'axios';
+import * as Location from 'expo-location';
+
 
 const GasStation = () => {
-  const [latitude,setLatitude] = useState('1')
-  const [longitude,setLongitude] = useState('1')
-  const [paddingTop,setPaddingTop] = useState(0)
+  const [latitude, setLatitude] = useState(null)
+  const [longitude, setLongitude] = useState(null)
 
-  const  _onMapReady = () => {
+  const [paddingTop, setPaddingTop] = useState(0)
+
+  const [gasStations, setGasStations] = useState([]);
+
+
+  const _onMapReady = () => {
 
     setPaddingTop(0)
-  
+
   }
+
+  const getMyLocation = () => {
+
+    (async () => {
+      let { status } = await Location.requestPermissionsAsync();
+      if (status !== 'granted') {
+        setErrorMsg('Permission to access location was denied');
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      setLatitude(location.coords.latitude)
+      setLongitude(location.coords.longitude)
+
+      // let results = await Location.reverseGeocodeAsync({
+      //   latitude: location.coords.latitude,
+      //   longitude: location.coords.longitude
+      // });
+
+    })();
+  }
+
+  const sortFunction = (a, b) => {
+    const bandA = parseFloat(a.distance)
+    const bandB = parseFloat(b.distance)
+
+    let comparison = 0;
+    if (bandA > bandB) {
+      comparison = 1;
+    } else if (bandA < bandB) {
+      comparison = -1;
+    }
+    return comparison;
+
+  }
+
+  const getGasStations = () => {
+
+    axios({
+      url: 'https://raw.githubusercontent.com/gasvaktin/gasvaktin/master/vaktin/gas.min.json',
+      method: "GET"
+    })
+      .then((res) => {
+        // console.log(res.data.stations)
+        // setGasStations([...res.data.stations])
+        let tempArr = res.data.stations;
+
+        let tempArr2 = [];
+
+        tempArr.map((item) => {
+
+          const R = 6371e3; // metres
+          const φ1 = latitude * Math.PI / 180; // φ, λ in radians
+          const φ2 = item.geo.lat * Math.PI / 180;
+          const Δφ = (item.geo.lat - latitude) * Math.PI / 180;
+          const Δλ = (item.geo.lon - longitude) * Math.PI / 180;
+
+          const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+            Math.cos(φ1) * Math.cos(φ2) *
+            Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+          const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+          const d = R * c; // in metres
+
+          tempArr2.push({ station: item, distance: d })
+
+        })
+        let tempArr3 = tempArr2.distance.sort(this.sortFunction)
+
+        console.log(tempArr3)
+
+      })
+      .catch((err) => {
+        console.log(err)
+        alert('Error Getting Gas Stations');
+      })
+  }
+
+  React.useEffect(() => {
+    getGasStations()
+    getMyLocation()
+  }, [])
 
   return (
     <View style={styles.container}>
       {/* <StatusBar backgroundColor={Colors.LinearBlue1} /> */}
-    <GlobalHeader 
+      <GlobalHeader
         backgroundColor="blue"
-        headingText="GAS STATIONS" 
+        headingText="GAS STATIONS"
         headingMargin={1}
         fontSize={18}
         color="#fff"
-        isFavouriteLoading={false}
-        RightIcon={true}
-    />
-    <View style={styles.viewMapConatiner}>
-      <View style={{width:"100%", height:Dimensions.get('window').height*0.3, backgroundColor:"#bbb"}}>
-        <MapView
-        // provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-        initialRegion={{
-          latitude:  40.758896,
-          longitude:  -73.985130,
-          latitudeDelta: 0.0422,
-          longitudeDelta: 0.0421,
-      }}
-      style={{
-          position: 'relative',
-          minHeight: '100%',
-          width: '100%',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          marginBottom: 1,
-          borderWidth: 2,
-      }}
-      onMapReady={_onMapReady}
+      // isFavouriteLoading={false}
+      // RightIcon={true}
       />
-      </View>
-      {/* <ScrollView style={styles.containerList} showsVerticalScrollIndicator={false}> */}
-      <View style={styles.containerList}>
-      <FlatList
-          showsVerticalScrollIndicator={false}
-          numColumns={1}
-          data={STATIONLIST}
-          keyExtractor={(item) => item.id}
-          renderItem={(itemData) => (
-            <GasStationCard 
-              StationName={itemData.item.name}
-              favourite={itemData.item.favourite}
-            />
-          )}
-        />
+      <View style={styles.viewMapConatiner}>
+        <View style={{ width: "100%", height: Dimensions.get('window').height * 0.3, backgroundColor: "#bbb" }}>
+          {
+            latitude && longitude &&
+            <MapView
+              // provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+              showsUserLocation={true}
+              initialRegion={{
+                latitude: latitude,
+                longitude: longitude,
+                latitudeDelta: 0.0422,
+                longitudeDelta: 0.0421,
+              }}
+              style={{
+                position: 'relative',
+                minHeight: '100%',
+                width: '100%',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                marginBottom: 1,
+                borderWidth: 2,
+              }}
+              onMapReady={_onMapReady}
+            >
+              {
+                gasStations.map((item) => {
+                  return (
+                    <Marker
+                      onPress={() => {
+                        // setCardSelected(!cardSelected),
+                        navigation.navigate('DetailDisplay', {
+                          name: item.name,
+                          description: item.description,
+                          img: item.logo,
+                          address: item.address,
+                          menuCard: []
+                        })
+                      }}
+                      key={item.geo.lat.toString() + Math.random() * 100 + item.geo.lon.toString()}
+                      coordinate={{
+                        latitude: parseFloat(item.geo.lat),
+                        longitude: parseFloat(item.geo.lon)
+                      }}
+                    />
+                  )
+                })
+              }
+
+            </MapView>
+          }
         </View>
-      {/* </ScrollView> */}
-    </View>
-    <ImageBackground 
-        style={{width:100, height:130, position:"absolute", alignSelf:"center", bottom:10, zIndex: -1000000}} 
-        source={require('../../assets/images/inback.png')} 
+        {/* <ScrollView style={styles.containerList} showsVerticalScrollIndicator={false}> */}
+        <View style={styles.containerList}>
+          <FlatList
+            showsVerticalScrollIndicator={false}
+            numColumns={1}
+            data={gasStations}
+            keyExtractor={(item) => item.id}
+            renderItem={(itemData) => (
+              <GasStationCard
+                StationName={itemData.item.name}
+                favourite={itemData.item.favourite}
+                latitude={latitude}
+                longitude={longitude}
+                geo={itemData.item.geo}
+              />
+            )}
+          />
+        </View>
+        {/* </ScrollView> */}
+      </View>
+      <ImageBackground
+        style={{ width: 100, height: 130, position: "absolute", alignSelf: "center", bottom: 10, zIndex: -1000000 }}
+        source={require('../../assets/images/inback.png')}
         resizeMode="cover"
       />
     </View>
@@ -83,38 +204,38 @@ export default GasStation;
 
 const styles = StyleSheet.create({
   container: {
-    flex:1,
+    flex: 1,
     backgroundColor: Colors.backgroundBlueColor,
-    paddingBottom:30
+    paddingBottom: 30
   },
-  containerList:{
+  containerList: {
     // padding:10,
-    borderBottomLeftRadius:15,
-    borderBottomRightRadius:15,
+    borderBottomLeftRadius: 15,
+    borderBottomRightRadius: 15,
     // paddingBottom:180,
     // backgroundColor:"#fff",
-    maxHeight: Dimensions.get('window').height*0.38,
+    maxHeight: Dimensions.get('window').height * 0.38,
 
     // marginBottom:5,
-//     overflow:"hidden",
-//     shadowColor: "#000",
-// shadowOffset: {
-// 	width: 0,
-// 	height: 1,
-// },
-// shadowOpacity: 0.20,
-// shadowRadius: 1.41,
+    //     overflow:"hidden",
+    //     shadowColor: "#000",
+    // shadowOffset: {
+    // 	width: 0,
+    // 	height: 1,
+    // },
+    // shadowOpacity: 0.20,
+    // shadowRadius: 1.41,
 
-// elevation: 2,
+    // elevation: 2,
   },
-  viewMapConatiner:{
-    overflow:"hidden", 
+  viewMapConatiner: {
+    overflow: "hidden",
     // maxHeight: Dimensions.get('window').height*0.68,
-    width:"90%", 
-    borderRadius:20, 
-    alignSelf:"center",
-    borderWidth:1, 
-    borderColor:Colors.borderCardColor,
+    width: "90%",
+    borderRadius: 20,
+    alignSelf: "center",
+    borderWidth: 1,
+    borderColor: Colors.borderCardColor,
     // justifyContent:"center",
     // padding:1,
     // paddingBottom:10,

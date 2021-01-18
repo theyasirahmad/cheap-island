@@ -104,11 +104,12 @@ const PointOfInterest = ({ navigation }) => {
           </TouchableOpacity>
         </View>
         <View style={styles.viewMapConatiner}>
-          <View style={{ width: "100%", height: Dimensions.get('window').height * 0.57 }}>
+          <View style={{ width: "100%", height: Dimensions.get('window').height * 0.30 }}>
             {
               latitude && longitude &&
               <MapView
                 // provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+                showsMyLocationButton={true}
                 showsUserLocation={true}
                 initialRegion={{
                   latitude: latitude,
@@ -118,7 +119,7 @@ const PointOfInterest = ({ navigation }) => {
                 }}
                 style={{
                   position: 'relative',
-                  minHeight: Dimensions.get('window').height * 0.57,
+                  minHeight: Dimensions.get('window').height * 0.30,
                   width: '100%',
                   top: 0,
                   left: 0,
