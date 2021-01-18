@@ -22,6 +22,8 @@ const Restaurants = ({ navigation }) => {
 
   const [favs, setFavs] = useState([]);
 
+  const [favsOnly, setFavsOnly] = useState(false);
+
   const getResturants = async () => {
 
     let type = "resturant"
@@ -66,6 +68,40 @@ const Restaurants = ({ navigation }) => {
       })
   }
 
+  const getFavsOnly = async () => {
+    // setFavsOnly(true)
+    if (!favsOnly) {
+
+
+      let type = "resturant"
+      let token = await AsyncStorage.getItem('token');
+
+      axios({
+        url: `${connectionString}/user/get-fav-vendors`,
+        method: "POST",
+        headers: {
+          Authorization: token,
+        },
+        data: {
+          type,
+        }
+      })
+        .then((res) => {
+          // console.log(res.data.vendors)
+          setResturants([...res.data.vendors])
+          setFavsOnly(true)
+        })
+        .catch((err) => {
+          console.log(err);
+          alert("internal server error")
+        })
+    }
+    else {
+      getResturants()
+      setFavsOnly(false)
+    }
+  }
+
   React.useEffect(() => {
 
     getResturants()
@@ -83,6 +119,8 @@ const Restaurants = ({ navigation }) => {
         color="#fff"
         isFavouriteLoading={false}
         RightIcon={true}
+        favsOnly={favsOnly}
+        getFavsOnly={getFavsOnly}
       />
       <View style={styles.searchbarStyle}>
         <TextInput placeholder="Search restaurant" style={styles.inputStyle} />
