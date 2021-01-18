@@ -20,7 +20,7 @@ const BottomTabNavigator = (props) => {
       tabBarVisible={true}
       tabBar={(tabProps) => <MyTabBar {...tabProps} {...props} />}>
       <Tab.Screen name={'Restaurants'} component={Restaurants} />
-      <Tab.Screen name={'Interesting points'} component={PointOfInterest} />
+      <Tab.Screen name={'Intresting'} component={PointOfInterest} />
       <Tab.Screen name={'Gas Stations'} component={GasStations} />
       <Tab.Screen name={'Offers'} component={Offers} />
       <Tab.Screen name={'More'} component={More} />
@@ -64,7 +64,7 @@ const MyTabBar = ({ state, descriptors, navigation, carts }) => {
               key={index}>
               {index === 0 && (
                 <FontAwesome5
-                  name="gas-pump"
+                  name="hotel"
                   size={24}
                   color={isFocused ? Colors.LinearBlue1 : 'rgba(188, 188, 188, 1)'}
                   style={{ marginTop: index === 2 ? 0 : -10 }}
@@ -82,10 +82,10 @@ const MyTabBar = ({ state, descriptors, navigation, carts }) => {
               )}
               {index === 2 && (
                 <FontAwesome5
-                  name="hotel"
+                  name="gas-pump"
                   size={22}
                   color={isFocused ? Colors.LinearBlue1 : 'rgba(188, 188, 188, 1)'}
-                  style={{ marginTop: index === 2 ? 0 : -10 }}
+                  style={{ marginTop: -10 }}
                 />
               )}
               {index == 3 && (
