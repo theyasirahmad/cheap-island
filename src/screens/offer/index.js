@@ -18,6 +18,9 @@ const Offer = ({ navigation }) => {
 
   const [offers, setOffers] = useState([]);
 
+  const [favs, setFavs] = useState([]);
+  const [favsOnly, setFavsOnly] = useState(false);
+
 
   const getUserDetails = async () => {
 
@@ -36,42 +39,70 @@ const Offer = ({ navigation }) => {
       .then((res) => {
         // console.log(res.data.user)
         AsyncStorage.setItem('userId', res.data.user._id)
-        // let favourites = res.data.user.favourites
-        // setFavs(favourites)
+        let favourites = res.data.user.favourites
+        setFavs(favourites)
       })
       .catch((err) => {
         console.log(err);
         alert('Error Getting User Details')
       })
   }
-  React.useEffect(() => {
-    getUserDetails()
-  }, [])
+
+  const getOffers = async () => {
+
+    let token = await AsyncStorage.getItem('token');
+
+    axios({
+      url: `${connectionString}/offer/get-offers`,
+      method: "POST",
+      headers: {
+        Authorization: token,
+      },
+    })
+      .then((res) => {
+        setOffers(res.data.offers)
+      })
+      .catch((err) => {
+        console.log(err);
+        alert('Internal Server Error')
+      })
+  }
+
+  const getFavsOnly = async () => {
+    if (!favsOnly) {
 
 
-  React.useEffect(() => {
-
-    const getOffers = async () => {
-
+      let type = "resturant"
       let token = await AsyncStorage.getItem('token');
 
       axios({
-        url: `${connectionString}/offer/get-offers`,
+        url: `${connectionString}/offer/get-fav-offers`,
         method: "POST",
         headers: {
           Authorization: token,
         },
       })
         .then((res) => {
-          setOffers(res.data.offers)
+          console.log(res.data)
+          setOffers([...res.data.offers])
+          setFavsOnly(true)
         })
         .catch((err) => {
           console.log(err);
-          alert('Internal Server Error')
+          alert("internal server error")
         })
     }
+    else {
+      getOffers()
+      setFavsOnly(false)
+    }
+  }
+
+
+  React.useEffect(() => {
+    getUserDetails()
     getOffers()
-  })
+  }, [])
 
   return (
     <View style={styles.container}>
@@ -83,6 +114,8 @@ const Offer = ({ navigation }) => {
         color="#fff"
         isFavouriteLoading={false}
         RightIcon={true}
+        favsOnly={favsOnly}
+        getFavsOnly={getFavsOnly}
       />
       <View style={styles.topBtnsView}>
         {/* {toggleBtn ? */}
@@ -113,9 +146,12 @@ const Offer = ({ navigation }) => {
         keyExtractor={(item) => item.id}
         renderItem={(itemData) => <OfferCard
           img={OFFERLIST[0].img}
-          favourite={false}
+          favourite={(favs.indexOf(itemData.item._id.toString()) !== -1)}
           navigation={navigation}
           offer={itemData.item}
+          id={itemData.item._id}
+          favs={favs}
+          setFavs={setFavs}
         />}
       />
       <ImageBackground

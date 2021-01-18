@@ -1,9 +1,50 @@
 import React, { useState } from 'react';
 import { Colors } from '../constants/theme';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import AntDesign from 'react-native-vector-icons/AntDesign'
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
-const OfferCard = ({ favourite, navigation, offer, img }) => {
+import connectionString from '../api/api';
+import axios from 'axios';
+import AsyncStorage from '@react-native-community/async-storage';
+
+const OfferCard = ({
+  favourite,
+  navigation,
+  offer,
+  img,
+  id,
+  favs,
+  setFavs
+}) => {
+
+
+  const updateFavourites = async (tempFavs) => {
+
+
+    setFavs([...tempFavs])
+
+    let token = await AsyncStorage.getItem('token');
+
+    axios({
+      url: `${connectionString}/user/update-favourites`,
+      method: "POST",
+      headers: {
+        Authorization: token,
+      },
+      data: {
+        favourites: tempFavs
+      }
+    })
+      .then(() => {
+
+      })
+      .catch((err) => {
+        console.log(err);
+        alert('Internal server error')
+      })
+  }
+
+
   return (
     <TouchableOpacity
       onPress={() => navigation.navigate('DetailDisplay', {
@@ -31,7 +72,21 @@ const OfferCard = ({ favourite, navigation, offer, img }) => {
         </View>
       </View>
       <View style={{ alignItems: "flex-end" }}>
-        <TouchableOpacity onPress={() => { }}>
+        <TouchableOpacity onPress={() => {
+
+          let tempFavs = [];
+          if (favourite) {
+            let favIndex = favs.indexOf(id);
+            tempFavs = [...favs];
+            tempFavs.splice(favIndex, 1);
+          }
+          else {
+            // setFavs([...favs, id])
+            tempFavs = [...favs]
+            tempFavs = [...tempFavs, id]
+          }
+          updateFavourites(tempFavs)
+        }}>
           {favourite ?
             <AntDesign name="star" color="gold" size={22} />
             :
