@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView, FlatList, Dimensions, StatusBar, ImageBackground } from 'react-native';
+import React, { useState, useRef } from 'react';
+import { View, StyleSheet, Text, TouchableOpacity, FlatList, Dimensions, StatusBar, ImageBackground } from 'react-native';
 import GlobalHeader from '../../Components/GlobalHeader';
 import GasStationCard from '../../Components/GasStataionCard'
 import { StationList as STATIONLIST } from '../../dummyData/dummyData'
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
 import { Colors } from '../../constants/theme'
+import RBSheet from "react-native-raw-bottom-sheet";
 import axios from 'axios';
 import * as Location from 'expo-location';
 
@@ -16,7 +17,18 @@ const GasStation = () => {
   const [paddingTop, setPaddingTop] = useState(0)
 
   const [gasStations, setGasStations] = useState([]);
+  const [viewStation, setViewStation] = useState(
+    {
+      StationName: '',
+      company: '',
+      fuel1: '',
+      discount1: '',
+      fuel2: '',
+      discount2: ''
+    }
+  )
 
+  const rbSheetRef = useRef();
 
   const _onMapReady = () => {
 
@@ -56,7 +68,16 @@ const GasStation = () => {
       comparison = -1;
     }
     return comparison;
+  }
 
+  const openSheet = (StationName, company, fuel1, discount1, fuel2, discount2) => {
+    // console.log(StationName)
+    setViewStation(
+      { StationName, company, fuel1, discount1, fuel2, discount2 }
+    )
+    console.log('View Stationnnnnnnnnnnnn', viewStation)
+    rbSheetRef.current.open()
+    // gasStations.filter((key)=>)
   }
 
   const getGasStations = () => {
@@ -66,7 +87,7 @@ const GasStation = () => {
       method: "GET"
     })
       .then((res) => {
-        // console.log(res.data.stations)
+        console.log('Api responsee dataaaaaaaaaaaaa', res.data)
         // setGasStations([...res.data.stations])
         let tempArr = res.data.stations;
 
@@ -98,7 +119,7 @@ const GasStation = () => {
 
           tempArr4.push(item.station)
         })
-        
+
         setGasStations([...tempArr4])
 
       })
@@ -186,18 +207,71 @@ const GasStation = () => {
             data={gasStations}
             keyExtractor={(item) => item.id}
             renderItem={(itemData) => (
-              <GasStationCard
-                StationName={itemData.item.name}
-                favourite={itemData.item.favourite}
-                latitude={latitude}
-                longitude={longitude}
-                geo={itemData.item.geo}
-              />
+              <TouchableOpacity onPress={() => openSheet(
+                itemData.item.name,
+                itemData.item.company,
+                itemData.item.bensin95,
+                itemData.item.bensin95_discount,
+                itemData.item.diesel,
+                itemData.item.diesel_discount
+              )}>
+                <GasStationCard
+                  StationName={itemData.item.name}
+                  favourite={itemData.item.favourite}
+                  latitude={latitude}
+                  longitude={longitude}
+                  geo={itemData.item.geo}
+                />
+              </TouchableOpacity>
             )}
           />
         </View>
         {/* </ScrollView> */}
       </View>
+      <RBSheet
+        ref={rbSheetRef}
+        height={260}
+        openDuration={250}
+        // closeOnDragDown={true}
+        // dragFromTopOnly={true}
+        customStyles={{
+          container: {
+            justifyContent: "center",
+            borderTopLeftRadius: 20,
+            borderTopRightRadius: 20
+            // alignItems: "center"
+          }
+        }}
+      >
+        <View style={{ flex: 1, padding: 15 }}>
+          <Text style={{ fontSize: 18, fontWeight: "bold", color: 'rgba(0,0,0,0.4)' }}>
+            Name: {viewStation.StationName}
+          </Text>
+          <Text style={{ fontSize: 18, fontWeight: "bold", color: 'rgba(0,0,0,0.4)' }}>
+            Company: {viewStation.company}
+          </Text>
+
+          <View style={{ width: '90%', height: 1, backgroundColor: "rgba(0,0,0,0.1)", marginVertical: 15 }} />
+
+          <Text style={{ fontSize: 18, fontWeight: "bold", color: 'rgba(0,0,0,0.4)' }}>
+            Bension95
+          </Text>
+          <View style={{ flexDirection: "row" }}>
+            <Text style={styles.txtDetail}>Price: {viewStation.fuel1}</Text>
+            <Text style={styles.txtDetail}>Discounted price: {viewStation.discount1}</Text>
+          </View>
+
+          <View style={{ width: '90%', height: 1, backgroundColor: "rgba(0,0,0,0.1)", marginVertical: 15 }} />
+
+          <Text style={{ fontSize: 18, fontWeight: "bold", color: 'rgba(0,0,0,0.4)' }}>
+            Diesel
+          </Text>
+          <View style={{ flexDirection: "row" }}>
+            <Text style={styles.txtDetail}>Price: {viewStation.fuel2}</Text>
+            <Text style={styles.txtDetail}>Discounted price: {viewStation.discount2}</Text>
+          </View>
+        </View>
+      </RBSheet>
       <ImageBackground
         style={{ width: 100, height: 130, position: "absolute", alignSelf: "center", bottom: 10, zIndex: -1000000 }}
         source={require('../../assets/images/inback.png')}
@@ -215,12 +289,16 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.backgroundBlueColor,
     paddingBottom: 30
   },
+  txtDetail: {
+    width: "50%",
+    marginTop: 5, fontSize: 15, color: "rgba(0,0,0,0.4)"
+  },
   containerList: {
     // padding:10,
     borderBottomLeftRadius: 15,
     borderBottomRightRadius: 15,
     // paddingBottom:180,
-    backgroundColor:"#fff",
+    backgroundColor: "#fff",
     maxHeight: Dimensions.get('window').height * 0.20,
 
     // marginBottom:5,
