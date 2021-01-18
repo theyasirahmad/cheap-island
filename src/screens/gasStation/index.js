@@ -90,9 +90,16 @@ const GasStation = () => {
           tempArr2.push({ station: item, distance: d })
 
         })
-        let tempArr3 = tempArr2.distance.sort(this.sortFunction)
+        let tempArr3 = tempArr2.sort(sortFunction)
 
-        console.log(tempArr3)
+        let tempArr4 = [];
+
+        tempArr3.map((item) => {
+
+          tempArr4.push(item.station)
+        })
+        
+        setGasStations([...tempArr4])
 
       })
       .catch((err) => {
@@ -119,7 +126,7 @@ const GasStation = () => {
       // RightIcon={true}
       />
       <View style={styles.viewMapConatiner}>
-        <View style={{ width: "100%", height: Dimensions.get('window').height * 0.3, backgroundColor: "#bbb" }}>
+        <View style={{ width: "100%", height: Dimensions.get('window').height * 0.55, backgroundColor: "#bbb" }}>
           {
             latitude && longitude &&
             <MapView
@@ -213,8 +220,8 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 15,
     borderBottomRightRadius: 15,
     // paddingBottom:180,
-    // backgroundColor:"#fff",
-    maxHeight: Dimensions.get('window').height * 0.38,
+    backgroundColor:"#fff",
+    maxHeight: Dimensions.get('window').height * 0.20,
 
     // marginBottom:5,
     //     overflow:"hidden",

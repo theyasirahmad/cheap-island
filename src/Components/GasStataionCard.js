@@ -26,7 +26,7 @@ const GasStationCard = ({ StationName, favourite, latitude, longitude, geo }) =>
       </Text>
 
       <Text style={{ marginHorizontal: 10, color: "rgba(0,0,0,0.4)" }}>
-        {d} meters
+        {d.toFixed(3)} m
       </Text>
 
       {/* <TouchableOpacity onPress={()=>{}}>
