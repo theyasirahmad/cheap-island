@@ -6,7 +6,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 const OfferCard = ({ img, name, descrption, favourite, offerAvail, useTimes, navigation }) => {
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate('DetailDisplay', { name: name, descrption: descrption, img: img, offerAvail: offerAvail })}
+      onPress={() => navigation.navigate('DetailDisplay', { name: name, descrption: descrption, img: img, offerAvail: offerAvail, menuCard:[] })}
       style={styles.container}
     >
       <View style={{ flexDirection: "row", alignItems: "center" }}>
