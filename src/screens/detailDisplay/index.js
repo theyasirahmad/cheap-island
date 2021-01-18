@@ -42,9 +42,13 @@ const DetailDisplay = ({ route, navigation }) => {
             <Text style={{ fontSize: 15, color: "rgba(0,0,0,0.4)", marginTop: 10 }}>
               {address}
             </Text>
-            <Text style={{ fontSize: 15, color: "rgba(0,0,0,0.4)", marginTop: 10 }}>
-              Menu
-            </Text>
+            {
+              menuCard.length > 0 &&
+              <Text style={{ fontSize: 15, color: "rgba(0,0,0,0.4)", marginTop: 10 }}>
+                Menu
+              </Text>
+            }
+            
             <FlatList
               showsVerticalScrollIndicator={false}
               numColumns={1}
@@ -75,7 +79,7 @@ const DetailDisplay = ({ route, navigation }) => {
         source={require('../../assets/images/inback.png')}
         resizeMode='cover'
       />
-    </View>
+    </View >
   );
 };
 
