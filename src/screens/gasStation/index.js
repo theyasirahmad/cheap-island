@@ -300,18 +300,6 @@ const styles = StyleSheet.create({
     // paddingBottom:180,
     backgroundColor: "#fff",
     maxHeight: Dimensions.get('window').height * 0.24,
-
-    // marginBottom:5,
-    //     overflow:"hidden",
-    //     shadowColor: "#000",
-    // shadowOffset: {
-    // 	width: 0,
-    // 	height: 1,
-    // },
-    // shadowOpacity: 0.20,
-    // shadowRadius: 1.41,
-
-    // elevation: 2,
   },
   viewMapConatiner: {
     overflow: "hidden",
