@@ -68,32 +68,87 @@ const Offer = ({ navigation }) => {
       })
   }
 
-  const getFavsOnly = async () => {
-    if (!favsOnly) {
+  const getUsedOffers = async () => {
 
+    let token = await AsyncStorage.getItem('token');
 
-      let type = "resturant"
-      let token = await AsyncStorage.getItem('token');
-
-      axios({
-        url: `${connectionString}/offer/get-fav-offers`,
-        method: "POST",
-        headers: {
-          Authorization: token,
-        },
+    axios({
+      url: `${connectionString}/offer/get-used-offers`,
+      method: "POST",
+      headers: {
+        Authorization: token,
+      },
+    })
+      .then((res) => {
+        setOffers(res.data.offers)
       })
-        .then((res) => {
-          console.log(res.data)
-          setOffers([...res.data.offers])
-          setFavsOnly(true)
-        })
-        .catch((err) => {
-          console.log(err);
-          alert("internal server error")
-        })
+      .catch((err) => {
+        console.log(err);
+        alert('Internal Server Error')
+      })
+  }
+
+  const getFavOffers = async () => {
+
+    let token = await AsyncStorage.getItem('token');
+
+    axios({
+      url: `${connectionString}/offer/get-fav-offers`,
+      method: "POST",
+      headers: {
+        Authorization: token,
+      },
+    })
+      .then((res) => {
+        console.log(res.data)
+        setOffers([...res.data.offers])
+        setFavsOnly(true)
+      })
+      .catch((err) => {
+        console.log(err);
+        alert("internal server error")
+      })
+  }
+
+  const getFavUsedOffers = async () => {
+
+    let token = await AsyncStorage.getItem('token');
+
+    axios({
+      url: `${connectionString}/offer/get-fav-used-offers`,
+      method: "POST",
+      headers: {
+        Authorization: token,
+      },
+    })
+      .then((res) => {
+        console.log(res.data)
+        setOffers([...res.data.offers])
+        setFavsOnly(true)
+      })
+      .catch((err) => {
+        console.log(err);
+        alert("internal server error")
+      })
+  }
+
+  const getFavsOnly = async () => {
+
+    if (!favsOnly) {
+      if (toggleBtn) {
+        getFavOffers()
+      }
+      else {
+        getFavUsedOffers()
+      }
     }
     else {
-      getOffers()
+      if (toggleBtn) {
+        getOffers()
+      }
+      else {
+        getUsedOffers()
+      }
       setFavsOnly(false)
     }
   }
@@ -120,13 +175,21 @@ const Offer = ({ navigation }) => {
       <View style={styles.topBtnsView}>
         {/* {toggleBtn ? */}
         <TouchableOpacity
-          onPress={() => setToggleBtn(true)}
+          onPress={() => {
+            setToggleBtn(true)
+            setFavsOnly(false)
+            getOffers()
+          }}
           style={[styles.btnTop, { backgroundColor: toggleBtn ? Colors.LinearBlue1 : 'transparent' }]}
         >
           <Text style={{ color: "#fff" }}>Offers</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => setToggleBtn(false)}
+          onPress={() => {
+            setToggleBtn(false)
+            setFavsOnly(false)
+            getUsedOffers()
+          }}
           style={[styles.btnTop, { backgroundColor: toggleBtn ? 'transparent' : Colors.LinearBlue1 }]}
         >
           <Text style={{ color: "#fff" }}>Used offers</Text>
