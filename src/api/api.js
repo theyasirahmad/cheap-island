@@ -8,6 +8,6 @@
 // })
 
 
-const connectionString = "https://cheap-island.herokuapp.com";
+const connectionString = "https://cheapiceland.herokuapp.com";
 
 module.exports = connectionString;
