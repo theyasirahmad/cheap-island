@@ -35,12 +35,10 @@ const SignupScreen = ({
 
   const [loading, setLoading] = useState(false)
 
-
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [CurrentLatitude, setCurrentLatitude] = useState(null)
   const [CurrentLongitude, setCurrentLongitude] = useState(null)
-
   const [locationResults, setLocationResults] = useState(null)
 
   useEffect(() => {
