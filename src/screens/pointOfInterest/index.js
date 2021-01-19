@@ -94,7 +94,15 @@ const PointOfInterest = ({ navigation }) => {
         color="#fff"
       />
       {/* <StatusBar backgroundColor={Colors.LinearBlue1} /> */}
-      <ScrollView showsVerticalScrollIndicator={false} >
+      {/* <ScrollView showsVerticalScrollIndicator={false} > */}
+        {/* <View style={styles.viewSearch}>
+          <TextInput
+            placeholder="Search"
+            style={styles.inputSearch} />
+          <TouchableOpacity style={styles.btnSearch}>
+            <FontAwesome color="#fff" size={23} name="search" />
+          </TouchableOpacity>
+        </View> */}
         <View style={styles.viewSearch}>
           <TextInput
             placeholder="Search"
@@ -104,7 +112,7 @@ const PointOfInterest = ({ navigation }) => {
           </TouchableOpacity>
         </View>
         <View style={styles.viewMapConatiner}>
-          <View style={{ width: "100%", height: Dimensions.get('window').height * 0.30 }}>
+          {/* <View style={{ width: "100%", height: Dimensions.get('window').height * 0.70}}> */}
             {
               latitude && longitude &&
               <MapView
@@ -119,7 +127,8 @@ const PointOfInterest = ({ navigation }) => {
                 }}
                 style={{
                   position: 'relative',
-                  minHeight: Dimensions.get('window').height * 0.30,
+                  minHeight: Dimensions.get('window').height * 0.80,
+                  // zIndex:-100,
                   width: '100%',
                   top: 0,
                   left: 0,
@@ -153,13 +162,12 @@ const PointOfInterest = ({ navigation }) => {
                     )
                   })
                 }
-
               </MapView>
             }
-          </View>
+          {/* </View> */}
         </View>
 
-      </ScrollView>
+      {/* </ScrollView> */}
       <ImageBackground
         style={{ width: 100, height: 130, position: "absolute", alignSelf: "center", bottom: 10, zIndex: -1000000 }}
         source={require('../../assets/images/inback.png')}
@@ -187,10 +195,11 @@ const styles = StyleSheet.create({
     flex: 1, paddingHorizontal: 15, paddingVertical: 0
   },
   viewSearch: {
-    width: Dimensions.get('window').width * 0.9, height: Dimensions.get('window').height * 0.09,
+    width: Dimensions.get('window').width * 0.9, height: Dimensions.get('window').height * 0.08,
     backgroundColor: "#fff", alignSelf: "center", marginBottom: 10, borderRadius: 8,
     borderWidth: 1, borderColor: 'rgba(0,0,0,0.1)', overflow: "hidden", flexDirection: "row",
-    alignItems: "center"
+    alignItems: "center",
+    position: "absolute", top: 80, zIndex:100
   },
   containerList: {
     // padding:10,
@@ -214,12 +223,14 @@ const styles = StyleSheet.create({
   },
   viewMapConatiner: {
     overflow: "hidden",
-    // maxHeight: Dimensions.get('window').height*0.68,
-    width: "90%",
-    borderRadius: 20,
+    maxHeight: Dimensions.get('window').height*0.75,
+    width: "100%",
+    borderRadius: 25,
     alignSelf: "center",
     borderWidth: 1,
     borderColor: Colors.borderCardColor,
+    backgroundColor:'red',
+    marginTop:-20
     // justifyContent:"center",
     // padding:1,
     // paddingBottom:10,

@@ -61,6 +61,8 @@ const Offer = ({ navigation }) => {
     })
       .then((res) => {
         setOffers(res.data.offers)
+        console.log('offersssssssssssssssss', res.data.offers)
+        // console.log(connectionString +'/'+res.data.offer.logo)
       })
       .catch((err) => {
         console.log(err);
@@ -207,15 +209,16 @@ const Offer = ({ navigation }) => {
         numColumns={1}
         data={offers}
         keyExtractor={(item) => item.id}
-        renderItem={(itemData) => <OfferCard
-          img={OFFERLIST[0].img}
-          favourite={(favs.indexOf(itemData.item._id.toString()) !== -1)}
-          navigation={navigation}
-          offer={itemData.item}
-          id={itemData.item._id}
-          favs={favs}
-          setFavs={setFavs}
-        />}
+        renderItem={(itemData) =>
+          <OfferCard
+            img={connectionString + "/" + itemData.item.logo}
+            favourite={(favs.indexOf(itemData.item._id.toString()) !== -1)}
+            navigation={navigation}
+            offer={itemData.item}
+            id={itemData.item._id}
+            favs={favs}
+            setFavs={setFavs}
+          />}
       />
       <ImageBackground
         style={{ width: 100, height: 130, position: "absolute", alignSelf: "center", bottom: 10, zIndex: -1000000 }}

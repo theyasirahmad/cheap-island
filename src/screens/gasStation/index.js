@@ -75,7 +75,7 @@ const GasStation = () => {
     setViewStation(
       { StationName, company, fuel1, discount1, fuel2, discount2 }
     )
-    console.log('View Stationnnnnnnnnnnnn', viewStation)
+    // console.log('View Stationnnnnnnnnnnnn', viewStation)
     rbSheetRef.current.open()
     // gasStations.filter((key)=>)
   }
@@ -87,7 +87,7 @@ const GasStation = () => {
       method: "GET"
     })
       .then((res) => {
-        console.log('Api responsee dataaaaaaaaaaaaa', res.data)
+        // console.log('Api responsee dataaaaaaaaaaaaa', res.data)
         // setGasStations([...res.data.stations])
         let tempArr = res.data.stations;
 
@@ -177,14 +177,22 @@ const GasStation = () => {
                   return (
                     <Marker
                       onPress={() => {
+                        openSheet(
+                          item.name,
+                          item.company,
+                          item.bensin95,
+                          item.bensin95_discount,
+                          item.diesel,
+                          item.diesel_discount
+                        )
                         // setCardSelected(!cardSelected),
-                        navigation.navigate('DetailDisplay', {
-                          name: item.name,
-                          description: item.description,
-                          img: item.logo,
-                          address: item.address,
-                          menuCard: []
-                        })
+                        // navigation.navigate('DetailDisplay', {
+                        //   name: item.name,
+                        //   description: item.description,
+                        //   img: item.logo,
+                        //   address: item.address,
+                        //   menuCard: []
+                        // })
                       }}
                       key={item.geo.lat.toString() + Math.random() * 100 + item.geo.lon.toString()}
                       coordinate={{
