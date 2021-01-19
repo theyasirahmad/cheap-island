@@ -169,6 +169,9 @@ const Offer = ({ navigation }) => {
         headingMargin={1}
         fontSize={18}
         color="#fff"
+        arrow={true}
+        BackIconColor='#fff'
+        navigation={navigation}
         isFavouriteLoading={false}
         RightIcon={true}
         favsOnly={favsOnly}

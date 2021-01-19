@@ -13,6 +13,9 @@ const TermsConditions = () => {
                 headingMargin={1}
                 fontSize={18}
                 color="#fff"
+                arrow={true}
+                BackIconColor='#fff'
+                navigation={navigation}
             />
             <ScrollView style={{ paddingHorizontal: 20 }} showsVerticalScrollIndicator={false}>
                 <Text style={styles.txtHeading1}>About Us</Text>

@@ -70,6 +70,7 @@ const DetailDisplay = ({ route, navigation }) => {
         fontSize={18}
         color="#fff"
         arrow={true}
+        BackIconColor='#fff'
         navigation={navigation}
       />
       <ScrollView showsVerticalScrollIndicator={false}>

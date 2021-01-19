@@ -17,6 +17,9 @@ const Setting = ({ navigation }) => {
       headingMargin={1}
       fontSize={18}
       color="#fff"
+      arrow={true}
+      BackIconColor='#fff'
+      navigation={navigation}
     />
     <ScrollView showsVerticalScrollIndicator={false}>
       <TouchableOpacity onPress={() => navigation.navigate('TermsConditions')} style={styles.btnAboutus}>
