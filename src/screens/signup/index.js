@@ -55,7 +55,7 @@ const SignupScreen = ({
       setCurrentLongitude(location.coords.longitude)
 
       // console.log('Locationnnnn '+CurrentLatitude, CurrentLongitude)
-      let results = await Location.reverseGeocodeAsync({ latitude: CurrentLatitude, longitude: CurrentLongitude });
+      let results = await Location.reverseGeocodeAsync({ latitude: location.coords.latitude, longitude: location.coords.longitude });
       // alert(JSON.stringify(results.city))
       setLocationResults(results[0].city)
 
@@ -209,8 +209,8 @@ const SignupScreen = ({
         {/* <Text>Thisss issss Longitude{JSON.stringify(CurrentLongitude)}</Text> */}
 
         <TouchableOpacity
-          // onPress={onSubmit}
-          onPress={() => navigation.navigate('BottomTabNav')}
+          onPress={onSubmit}
+          // onPress={() => navigation.navigate('BottomTabNav')}
           style={styles.btnLogin}>
           {loading ? (
             <ActivityIndicator size="large" color="#fff" />
