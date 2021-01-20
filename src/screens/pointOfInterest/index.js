@@ -21,7 +21,10 @@ const PointOfInterest = ({ navigation }) => {
 
   const [vendors, setVendors] = useState([]);
 
-  const [selectedVendor, setSelectedVendor] = useState(null)
+  const [selectedVendor, setSelectedVendor] = useState(null);
+
+  const [query, setQuery] = useState('');
+
 
 
   const _onMapReady = () => {
@@ -35,6 +38,7 @@ const PointOfInterest = ({ navigation }) => {
     let myCity = city2 ? city2 : city;
 
 
+
     axios({
       url: `${connectionString}/user/get-vendor-by-city`,
       method: "POST",
@@ -42,7 +46,8 @@ const PointOfInterest = ({ navigation }) => {
         Authorization: token,
       },
       data: {
-        city: myCity
+        city: myCity,
+        query
       }
     })
       .then((res) => {
@@ -105,9 +110,10 @@ const PointOfInterest = ({ navigation }) => {
         </View> */}
       <View style={styles.viewSearch}>
         <TextInput
+          onChangeText={(e) => { setQuery(e) }}
           placeholder="Search"
           style={styles.inputSearch} />
-        <TouchableOpacity style={styles.btnSearch}>
+        <TouchableOpacity onPress={() => { getPOI(myCity) }} style={styles.btnSearch}>
           <FontAwesome color="#fff" size={23} name="search" />
         </TouchableOpacity>
       </View>

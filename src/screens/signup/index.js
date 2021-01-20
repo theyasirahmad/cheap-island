@@ -101,6 +101,7 @@ const SignupScreen = ({
         data: {
           fullName, email, password, confirmPassword, CurrentLatitude, CurrentLongitude, locationResults
         }
+     
       })
         .then((res) => {
           // console.log('resssssponseee', res.data)
