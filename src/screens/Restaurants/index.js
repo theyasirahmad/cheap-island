@@ -24,6 +24,9 @@ const Restaurants = ({ navigation }) => {
 
   const [favsOnly, setFavsOnly] = useState(false);
 
+  const [query, setQuery] = useState('');
+
+
   const getResturants = async () => {
 
     let type = "resturant"
@@ -33,7 +36,8 @@ const Restaurants = ({ navigation }) => {
       url: `${connectionString}/user/get-vendors`,
       method: "POST",
       data: {
-        type
+        type,
+        query,
       }
     })
       .then((res) => {
@@ -123,8 +127,10 @@ const Restaurants = ({ navigation }) => {
         getFavsOnly={getFavsOnly}
       />
       <View style={styles.searchbarStyle}>
-        <TextInput placeholder="Search restaurant" style={styles.inputStyle} />
-        <TouchableOpacity style={styles.btnSearch}>
+        <TextInput onChangeText={(e) => { setQuery(e) }} placeholder="Search restaurant" style={styles.inputStyle} />
+        <TouchableOpacity
+        onPress={getResturants}
+        style={styles.btnSearch}>
           <FontAwesome name="search" size={23} color="#fff" />
         </TouchableOpacity>
       </View>
