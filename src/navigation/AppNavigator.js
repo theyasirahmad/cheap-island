@@ -12,6 +12,7 @@ import Offer from '../screens/offer';
 import Restaurant from '../screens/Restaurants';
 import Mores from '../screens/more'
 import Settings from '../screens/setting';
+import forgetPassword from '../screens/forgetPassword';
 
 // import Settings from '../screens/setting'
 
@@ -31,6 +32,7 @@ function RootNavigator() {
       <Stack.Screen name="Offer" component={Offer} />
       <Stack.Screen name="Settings" component={Settings} />
       <Stack.Screen name="Mores" component={Mores} />
+      <Stack.Screen name="forgetPassword" component={forgetPassword} />
 
       {/* <Stack.Screen name="Settings" component={Settings} /> */}
     </Stack.Navigator>
