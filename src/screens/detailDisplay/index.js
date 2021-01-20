@@ -18,7 +18,8 @@ const DetailDisplay = ({ route, navigation }) => {
     limit,
     off,
     usedBy,
-    city
+    city,
+    products
   } = route.params;
   // console.log('navigationnnnnnnnnn', name, descrption)
 
@@ -119,6 +120,28 @@ const DetailDisplay = ({ route, navigation }) => {
               <Text style={{ fontSize: 15, color: "rgba(0,0,0,0.4)", marginTop: 10 }}>
                 {city}
               </Text>
+            }
+            {
+              products && products.length > 0 &&
+              <>
+                <Text style={{ fontSize: 15, color: "rgba(0,0,0,0.4)", marginTop: 10 }}>
+                  Products
+                </Text>
+                {
+                  products.map((item) => {
+                    return (
+                      < View key={Math.random() * 100} style={{ flex: 1, flexDirection: 'row' }}>
+                        <Text style={{ width: '70%' }}>
+                          {item.productName}
+                        </Text>
+                        <Text style={{ width: '30%' }}>
+                          {item.price}
+                        </Text>
+                      </View>
+                    )
+                  })
+                }
+              </>
             }
             {
               offerAvail &&

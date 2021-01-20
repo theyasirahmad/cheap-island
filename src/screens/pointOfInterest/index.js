@@ -46,7 +46,7 @@ const PointOfInterest = ({ navigation }) => {
       }
     })
       .then((res) => {
-
+        console.log(res.data.vendors)
         setVendors([...res.data.vendors])
       })
       .catch((err) => {
@@ -95,7 +95,7 @@ const PointOfInterest = ({ navigation }) => {
       />
       {/* <StatusBar backgroundColor={Colors.LinearBlue1} /> */}
       {/* <ScrollView showsVerticalScrollIndicator={false} > */}
-        {/* <View style={styles.viewSearch}>
+      {/* <View style={styles.viewSearch}>
           <TextInput
             placeholder="Search"
             style={styles.inputSearch} />
@@ -103,69 +103,71 @@ const PointOfInterest = ({ navigation }) => {
             <FontAwesome color="#fff" size={23} name="search" />
           </TouchableOpacity>
         </View> */}
-        <View style={styles.viewSearch}>
-          <TextInput
-            placeholder="Search"
-            style={styles.inputSearch} />
-          <TouchableOpacity style={styles.btnSearch}>
-            <FontAwesome color="#fff" size={23} name="search" />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.viewMapConatiner}>
-          {/* <View style={{ width: "100%", height: Dimensions.get('window').height * 0.70}}> */}
+      <View style={styles.viewSearch}>
+        <TextInput
+          placeholder="Search"
+          style={styles.inputSearch} />
+        <TouchableOpacity style={styles.btnSearch}>
+          <FontAwesome color="#fff" size={23} name="search" />
+        </TouchableOpacity>
+      </View>
+      <View style={styles.viewMapConatiner}>
+        {/* <View style={{ width: "100%", height: Dimensions.get('window').height * 0.70}}> */}
+        {
+          latitude && longitude &&
+          <MapView
+            // provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+            showsMyLocationButton={true}
+            showsUserLocation={true}
+            initialRegion={{
+              latitude: latitude,
+              longitude: longitude,
+              latitudeDelta: 0.0422,
+              longitudeDelta: 0.0421,
+            }}
+            style={{
+              position: 'relative',
+              minHeight: Dimensions.get('window').height * 0.80,
+              // zIndex:-100,
+              width: '100%',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              marginBottom: 1,
+              borderWidth: 2,
+            }}
+            onMapReady={_onMapReady}
+          >
             {
-              latitude && longitude &&
-              <MapView
-                // provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-                showsMyLocationButton={true}
-                showsUserLocation={true}
-                initialRegion={{
-                  latitude: latitude,
-                  longitude: longitude,
-                  latitudeDelta: 0.0422,
-                  longitudeDelta: 0.0421,
-                }}
-                style={{
-                  position: 'relative',
-                  minHeight: Dimensions.get('window').height * 0.80,
-                  // zIndex:-100,
-                  width: '100%',
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  marginBottom: 1,
-                  borderWidth: 2,
-                }}
-                onMapReady={_onMapReady}
-              >
-                {
-                  vendors.map((item) => {
-                    return (
-                      <Marker
-                        onPress={() => {
-                          // setCardSelected(!cardSelected),
-                          navigation.navigate('DetailDisplay', {
-                            name: item.name,
-                            description: item.description,
-                            img: item.logo,
-                            address: item.address,
-                            menuCard: []
-                          })
-                        }}
-                        key={item.latitude.toString() + item.longitude.toString()}
-                        coordinate={{
-                          latitude: parseFloat(item.latitude),
-                          longitude: parseFloat(item.longitude)
-                        }}
-                      />
-                    )
-                  })
-                }
-              </MapView>
+              vendors.map((item) => {
+                return (
+                  <Marker
+                    onPress={() => {
+                      // setCardSelected(!cardSelected),
+                      navigation.navigate('DetailDisplay', {
+                        name: item.name,
+                        description: item.description,
+                        img: item.logo,
+                        city: item.city,
+                        address: item.address,
+                        menuCard: [],
+                        products: item.products
+                      })
+                    }}
+                    key={item.latitude.toString() + item.longitude.toString()}
+                    coordinate={{
+                      latitude: parseFloat(item.latitude),
+                      longitude: parseFloat(item.longitude)
+                    }}
+                  />
+                )
+              })
             }
-          {/* </View> */}
-        </View>
+          </MapView>
+        }
+        {/* </View> */}
+      </View>
 
       {/* </ScrollView> */}
       <ImageBackground
@@ -199,7 +201,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff", alignSelf: "center", marginBottom: 10, borderRadius: 8,
     borderWidth: 1, borderColor: 'rgba(0,0,0,0.1)', overflow: "hidden", flexDirection: "row",
     alignItems: "center",
-    position: "absolute", top: 80, zIndex:100
+    position: "absolute", top: 80, zIndex: 100
   },
   containerList: {
     // padding:10,
@@ -223,14 +225,14 @@ const styles = StyleSheet.create({
   },
   viewMapConatiner: {
     overflow: "hidden",
-    maxHeight: Dimensions.get('window').height*0.75,
+    maxHeight: Dimensions.get('window').height * 0.75,
     width: "100%",
     borderRadius: 25,
     alignSelf: "center",
     borderWidth: 1,
     borderColor: Colors.borderCardColor,
-    backgroundColor:'red',
-    marginTop:-20
+    backgroundColor: 'red',
+    marginTop: -20
     // justifyContent:"center",
     // padding:1,
     // paddingBottom:10,
