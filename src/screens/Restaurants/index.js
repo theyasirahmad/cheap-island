@@ -129,8 +129,8 @@ const Restaurants = ({ navigation }) => {
       <View style={styles.searchbarStyle}>
         <TextInput onChangeText={(e) => { setQuery(e) }} placeholder="Search restaurant" style={styles.inputStyle} />
         <TouchableOpacity
-        onPress={getResturants}
-        style={styles.btnSearch}>
+          onPress={getResturants}
+          style={styles.btnSearch}>
           <FontAwesome name="search" size={23} color="#fff" />
         </TouchableOpacity>
       </View>
@@ -146,6 +146,7 @@ const Restaurants = ({ navigation }) => {
               name={itemData.item.name}
               description={itemData.item.description}
               address={itemData.item.address}
+              city={itemData.item.city}
               navigation={navigation}
               favourite={(favs.indexOf(itemData.item._id.toString()) !== -1)}
               menuCard={itemData.item.menuCard}

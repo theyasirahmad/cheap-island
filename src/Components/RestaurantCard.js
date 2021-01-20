@@ -16,6 +16,7 @@ const RestaurantCard = ({
   menuCard,
   id,
   favs,
+  city,
   setFavs
 }) => {
 
@@ -25,7 +26,7 @@ const RestaurantCard = ({
 
   const updateFavourites = async (tempFavs) => {
 
-    
+
     setFavs([...tempFavs])
 
     let token = await AsyncStorage.getItem('token');
@@ -53,7 +54,7 @@ const RestaurantCard = ({
     <TouchableOpacity
       onPress={() => {
         setCardSelected(!cardSelected),
-          navigation.navigate('DetailDisplay', { name, description, img, address, menuCard })
+          navigation.navigate('DetailDisplay', { name, description, img, address, menuCard, city })
       }}
       style={styles.container}
     >

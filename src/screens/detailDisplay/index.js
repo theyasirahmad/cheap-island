@@ -7,7 +7,19 @@ import GlobalHeader from '../../Components/GlobalHeader';
 import { Colors } from '../../constants/theme';
 
 const DetailDisplay = ({ route, navigation }) => {
-  const { img, name, description, offerAvail, address, menuCard, id, limit, off, usedBy } = route.params;
+  const {
+    img,
+    name,
+    description,
+    offerAvail,
+    address,
+    menuCard,
+    id,
+    limit,
+    off,
+    usedBy,
+    city
+  } = route.params;
   // console.log('navigationnnnnnnnnn', name, descrption)
 
   const [timesUsed, setTimesUsed] = useState(0)
@@ -20,12 +32,14 @@ const DetailDisplay = ({ route, navigation }) => {
       let userId = await AsyncStorage.getItem('userId')
       setUserId(userId)
 
-      usedBy.map((item) => {
+      if (usedBy) {
 
-        if (item.user.toString() === userId.toString()) {
-          setTimesUsed(item.times)
-        }
-      })
+        usedBy.map((item) => {
+          if (item.user.toString() === userId.toString()) {
+            setTimesUsed(item.times)
+          }
+        })
+      }
 
 
     }
@@ -78,8 +92,8 @@ const DetailDisplay = ({ route, navigation }) => {
           <Image
             source={{
               uri:
-                img
-              // connectionString + "/" + img
+                // img
+                connectionString + "/" + img
             }}
             style={{ width: "100%", height: 200, backgroundColor: "transparent" }}
           />
@@ -100,6 +114,12 @@ const DetailDisplay = ({ route, navigation }) => {
             <Text style={{ fontSize: 15, color: "rgba(0,0,0,0.4)", marginTop: 10 }}>
               {address}
             </Text>
+            {
+              city &&
+              <Text style={{ fontSize: 15, color: "rgba(0,0,0,0.4)", marginTop: 10 }}>
+                {city}
+              </Text>
+            }
             {
               offerAvail &&
               <>
