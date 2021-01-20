@@ -101,20 +101,26 @@ const SignupScreen = ({
         data: {
           fullName, email, password, confirmPassword, CurrentLatitude, CurrentLongitude, locationResults
         }
-     
+
       })
         .then((res) => {
           // console.log('resssssponseee', res.data)
           // console.log(res.data)
           // setLoading(true)
           AsyncStorage.setItem('token', res.data.token)
+          AsyncStorage.setItem('emailVerified', "false");
+          AsyncStorage.setItem('email', email);
+
 
           // navigation.navigate('BottomTabNav')
           console.log('Done registering')
           setLoading(false)
           setEmail('')
           setpassword('')
-          navigation.navigate('BottomTabNav')
+          navigation.navigate('verification')
+
+
+
         })
         .catch((err) => {
           setLoading(false)

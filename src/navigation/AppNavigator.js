@@ -13,6 +13,7 @@ import Restaurant from '../screens/Restaurants';
 import Mores from '../screens/more'
 import Settings from '../screens/setting';
 import forgetPassword from '../screens/forgetPassword';
+import verification from '../screens/verification';
 
 // import Settings from '../screens/setting'
 
@@ -22,6 +23,7 @@ function RootNavigator() {
   return (
     <Stack.Navigator initialRouteName="SplashScreen" headerMode="none">
       <Stack.Screen name="BottomTabNav" component={BottomTabNav} />
+      <Stack.Screen name="verification" component={verification} />
       <Stack.Screen name="SplashScreen" component={SplashScreen} />
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Signup" component={Signup} />
@@ -33,6 +35,7 @@ function RootNavigator() {
       <Stack.Screen name="Settings" component={Settings} />
       <Stack.Screen name="Mores" component={Mores} />
       <Stack.Screen name="forgetPassword" component={forgetPassword} />
+
 
       {/* <Stack.Screen name="Settings" component={Settings} /> */}
     </Stack.Navigator>

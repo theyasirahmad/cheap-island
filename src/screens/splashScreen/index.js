@@ -38,14 +38,18 @@ export default function SplashScreen(props) {
     const getStatus = async () => {
 
       let token = await AsyncStorage.getItem('token');
+      let emailVerified = await AsyncStorage.getItem('emailVerified');
 
       if (token) {
-        delayedNavigation('BottomTabNav')
+        if (emailVerified === "true") {
+          delayedNavigation('BottomTabNav')
+        }
+        delayedNavigation('verification')
       }
       else {
         delayedNavigation('Login')
       }
-    } 
+    }
     getStatus()
 
     // const spring = () => {

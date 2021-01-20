@@ -69,14 +69,20 @@ const LoginScreen = ({
           // console.log('resssss', res.data.token)
           // const jsonValue = JSON.stringify(true)
           AsyncStorage.setItem('token', res.data.token)
-
+          if (res.data.user.emailVerified) {
+            AsyncStorage.setItem('emailVerified', "true")
+            navigation.navigate('BottomTabNav')
+          } else {
+            AsyncStorage.setItem('emailVerified', "false")
+            navigation.navigate('verification')
+          }
           setLoading(true)
           // navigation.navigate('BottomTabNav')
           // console.log('Done loginnnnnnnn')
           setEmail('')
           setpassword('')
           setLoading(false);
-          navigation.navigate('BottomTabNav')
+          // navigation.navigate('BottomTabNav')
         })
         .catch((err) => {
           setLoading(false)
@@ -137,7 +143,7 @@ const LoginScreen = ({
         <Animatable.View animation={'fadeInDown'}>
           <TouchableOpacity style={styles.btnLogin}
             onPress={loginHandler}
-            // onPress={() => navigation.navigate('Profile')}
+          // onPress={() => navigation.navigate('Profile')}
           >
             {loading ? (
               <ActivityIndicator color="#fff" />
