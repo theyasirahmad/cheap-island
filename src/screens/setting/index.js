@@ -5,6 +5,7 @@ import SettingOption from '../../Components/SettingOption';
 import AntDesign from 'react-native-vector-icons/AntDesign'
 // import Linear from 'expo-linear-gradient';
 import { Colors } from '../../constants/theme';
+import AsyncStorage from '@react-native-community/async-storage'
 
 const WidthDevice = Dimensions.get('window').width;
 const HeightDevice = Dimensions.get('window').height;
@@ -34,7 +35,12 @@ const Setting = ({ navigation }) => {
         <SettingOption optionTxt={'Notifications'} baseline={true} />
         <SettingOption optionTxt={'Location'} baseline={false} />
       </View>
-      <TouchableOpacity style={styles.btnLogout}>
+      <TouchableOpacity
+        onPress={() => {
+          AsyncStorage.clear();
+          navigation.navigate("Login")
+        }}
+        style={styles.btnLogout}>
         {/* <Linear colors={[Colors.LinearBlue1, Colors.LinearBlue2]} style={styles.linearStyle}> */}
         <Text style={{ color: '#fff', fontSize: 16 }}>Log Out</Text>
         {/* </Linear> */}
