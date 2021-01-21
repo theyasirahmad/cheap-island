@@ -110,6 +110,8 @@ const SignupScreen = ({
           AsyncStorage.setItem('token', res.data.token)
           AsyncStorage.setItem('emailVerified', "false");
           AsyncStorage.setItem('email', email);
+          AsyncStorage.setItem('locationEnabled', "true");
+          AsyncStorage.setItem('notificationsEnabled', "true");
 
 
           // navigation.navigate('BottomTabNav')
