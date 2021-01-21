@@ -12,7 +12,7 @@ import connectionString from '../../api/api';
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
 
-const Restaurants = ({ navigation }) => {
+const Restaurants = ({ navigation, route }) => {
   // const [cardSelect, setcardSelect] = useState(false);
   // const onPressCard = () => {
   //   setcardSelect(!cardSelect)
@@ -26,6 +26,7 @@ const Restaurants = ({ navigation }) => {
 
   const [query, setQuery] = useState('');
 
+ 
 
   const getResturants = async () => {
 
@@ -108,8 +109,22 @@ const Restaurants = ({ navigation }) => {
 
   React.useEffect(() => {
 
-    getResturants()
     getFavs()
+    navigation.addListener('focus', () => {
+
+      if (route && route.params && route.params.favs) {
+        setFavsOnly(true)
+        getFavsOnly()
+      }
+      else {
+        getResturants()
+      }
+
+    });
+
+
+
+
 
   }, [])
 

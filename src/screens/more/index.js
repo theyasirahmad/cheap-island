@@ -9,7 +9,7 @@ import { Colors } from '../../constants/theme';
 const WidthDevice = Dimensions.get('window').width;
 const HeightDevice = Dimensions.get('window').height;
 
-const Setting = ({navigation}) => {
+const Setting = ({ navigation }) => {
   return <View style={styles.container}>
     <GlobalHeader
       backgroundColor="#42B1F8"
@@ -24,23 +24,23 @@ const Setting = ({navigation}) => {
       </Text>
     </View>
     <ScrollView showsVerticalScrollIndicator={false}>
-      <TouchableOpacity onPress={()=> navigation.navigate('Profile')} style={styles.btnAboutus}>
-        <Text style={{color:'rgba(0,0,0,0.5)', fontSize:15}}>Profile</Text>
+      <TouchableOpacity onPress={() => navigation.navigate('Profile')} style={styles.btnAboutus}>
+        <Text style={{ color: 'rgba(0,0,0,0.5)', fontSize: 15 }}>Profile</Text>
         <AntDesign name="doubleright" color="rgba(0,0,0,0.3)" size={20} />
       </TouchableOpacity>
-      <TouchableOpacity onPress={()=> navigation.navigate('Offers')} style={[styles.btnAboutus,{marginTop:10}]}>
-        <Text style={{color:'rgba(0,0,0,0.5)', fontSize:15}}>Used Offers</Text>
+      <TouchableOpacity onPress={() => navigation.navigate('Offers')} style={[styles.btnAboutus, { marginTop: 10 }]}>
+        <Text style={{ color: 'rgba(0,0,0,0.5)', fontSize: 15 }}>Used Offers</Text>
         <AntDesign name="doubleright" color="rgba(0,0,0,0.3)" size={20} />
       </TouchableOpacity>
-      <TouchableOpacity onPress={()=> navigation.navigate('Restaurants')} style={[styles.btnAboutus,{marginTop:10}]}>
-        <Text style={{color:'rgba(0,0,0,0.5)', fontSize:15}}>Favourite Restaurants</Text>
+      <TouchableOpacity onPress={() => navigation.navigate('Restaurants', { favs: true })} style={[styles.btnAboutus, { marginTop: 10 }]}>
+        <Text style={{ color: 'rgba(0,0,0,0.5)', fontSize: 15 }}>Favourite Restaurants</Text>
         <AntDesign name="doubleright" color="rgba(0,0,0,0.3)" size={20} />
       </TouchableOpacity>
-      <TouchableOpacity onPress={()=> navigation.navigate('Settings')} style={[styles.btnAboutus,{marginTop:10}]}>
-        <Text style={{color:'rgba(0,0,0,0.5)', fontSize:15}}>Settings</Text>
+      <TouchableOpacity onPress={() => navigation.navigate('Settings')} style={[styles.btnAboutus, { marginTop: 10 }]}>
+        <Text style={{ color: 'rgba(0,0,0,0.5)', fontSize: 15 }}>Settings</Text>
         <AntDesign name="doubleright" color="rgba(0,0,0,0.3)" size={20} />
       </TouchableOpacity>
-      
+
       {/* <TouchableOpacity style={styles.btnLogout}>
         <Text style={{ color: '#fff', fontSize: 16 }}>Log Out</Text>
       </TouchableOpacity> */}
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
     height: 55,
     backgroundColor: "#fff",
     borderRadius: 5,
-    marginTop: 20, flexDirection: "row", justifyContent:"space-between",
+    marginTop: 20, flexDirection: "row", justifyContent: "space-between",
     alignItems: "center", paddingHorizontal: 20,
     borderWidth: 1,
     borderColor: Colors.borderCardColor,
