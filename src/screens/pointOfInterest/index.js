@@ -25,7 +25,14 @@ const PointOfInterest = ({ navigation }) => {
 
   const [query, setQuery] = useState('');
 
-
+  const initilization = () => {
+    setLatitude(null);
+    setLongitude(null);
+    setCity("");
+    setVendors([]);
+    setSelectedVendor(null);
+    setQuery('')
+  }
 
   const _onMapReady = () => {
     setPaddingTop(0)
@@ -36,9 +43,6 @@ const PointOfInterest = ({ navigation }) => {
     let token = await AsyncStorage.getItem('token');
 
     let myCity = city2 ? city2 : city;
-
-
-
     axios({
       url: `${connectionString}/user/get-vendor-by-city`,
       method: "POST",
@@ -83,11 +87,59 @@ const PointOfInterest = ({ navigation }) => {
     })();
 
   }
-  React.useEffect(() => {
 
-    getMyLocation()
+  const getUser = async () => {
+    // setLoading(true)
+    let tok = await AsyncStorage.getItem('token');
+
+    axios({
+      url: `${connectionString}/user/get-user`,
+      method: "POST",
+      headers: {
+        Authorization: tok
+      },
+      data: {
+        get: "latitude longitude city email fullName"
+      }
+    })
+      .then((res) => {
+        setLatitude(res.data.user.latitude)
+        setLongitude(res.data.user.longitude)
+        setCity(res.data.user.city)
+        getPOI(res.data.user.city)
+      })
+      .catch((err) => {
+        setLoading(false)
+        console.log(err);
+        alert('Error Getting Vendor Try Again Later');
+      })
+  }
+
+  React.useEffect(() => {
+    const getLocationToggle = async () => {
+      let locationToggle = await AsyncStorage.getItem('locationEnabled')
+      if (locationToggle === "true") {
+        getMyLocation()
+      }
+      else {
+        getUser()
+      }
+    }
+    // getLocationToggle()
+
+    navigation.addListener('focus', () => {
+      getLocationToggle()
+      // alert(locationToggle)
+    });
+    navigation.addListener('blur', () => {
+      initilization()
+    });
+
 
   }, [])
+
+
+
 
   return (
     <View style={styles.container}>
@@ -113,7 +165,7 @@ const PointOfInterest = ({ navigation }) => {
           onChangeText={(e) => { setQuery(e) }}
           placeholder="Search"
           style={styles.inputSearch} />
-        <TouchableOpacity onPress={() => { getPOI(myCity) }} style={styles.btnSearch}>
+        <TouchableOpacity onPress={() => { getPOI(city) }} style={styles.btnSearch}>
           <FontAwesome color="#fff" size={23} name="search" />
         </TouchableOpacity>
       </View>
@@ -125,9 +177,10 @@ const PointOfInterest = ({ navigation }) => {
             // provider={PROVIDER_GOOGLE} // remove if not using Google Maps
             showsMyLocationButton={true}
             showsUserLocation={true}
+
             initialRegion={{
-              latitude: latitude,
-              longitude: longitude,
+              latitude: parseFloat(latitude),
+              longitude: parseFloat(longitude),
               latitudeDelta: 0.0422,
               longitudeDelta: 0.0421,
             }}
