@@ -111,7 +111,6 @@ const Restaurants = ({ navigation, route }) => {
 
     getFavs()
     navigation.addListener('focus', () => {
-
       if (route && route.params && route.params.favs) {
         setFavsOnly(true)
         getFavsOnly()

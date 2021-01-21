@@ -13,7 +13,7 @@ import { ActivityIndicator } from 'react-native';
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
 
-const Offer = ({ navigation }) => {
+const Offer = ({ navigation, route }) => {
 
   const [loading, setLoading] = useState(true);
   const [toggleBtn, setToggleBtn] = useState(true);
@@ -22,6 +22,14 @@ const Offer = ({ navigation }) => {
   const [favsOnly, setFavsOnly] = useState(false);
   const [query, setQuery] = useState('')
 
+
+  const intilization = () => {
+    setQuery('');
+    setFavsOnly(false)
+    setOffers([])
+    setToggleBtn(true)
+    setLoading(true)
+  }
 
   const getUserDetails = async () => {
 
@@ -171,7 +179,21 @@ const Offer = ({ navigation }) => {
 
   React.useEffect(() => {
     getUserDetails()
-    getOffers()
+    navigation.addListener('focus', () => {
+
+      if (route && route.params && route.params.used) {
+        setToggleBtn(false)
+        getUsedOffers()
+      }
+      else {
+        getOffers()
+      }
+    });
+    navigation.addListener('blur', () => {
+      intilization()
+    });
+
+
   }, [])
 
   return (
