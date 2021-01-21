@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity, StatusBar, ScrollView, ImageBackground } from 'react-native';
 import GlobalHeader from '../../Components/GlobalHeader';
 import SettingOption from '../../Components/SettingOption';
@@ -9,6 +9,20 @@ import AsyncStorage from '@react-native-community/async-storage'
 
 const WidthDevice = Dimensions.get('window').width;
 const HeightDevice = Dimensions.get('window').height;
+
+const [locationEnabled, setLocationEnabled] = React.useState(true);
+const [notificationsEnabled, setNotificationsEnabled] = React.useState(true);
+
+React.useEffect(() => {
+
+  const getSettingsLocally = async () => {
+
+    let loc = await AsyncStorage.getItem('locationEnabled');
+    let noti = await AsyncStorage.getItem('notificationsEnabled');
+    
+  }
+
+}, [])
 
 const Setting = ({ navigation }) => {
   return <View style={styles.container}>
