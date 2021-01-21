@@ -18,7 +18,8 @@ const GasStation = () => {
 
   const [paddingTop, setPaddingTop] = useState(0);
 
-  const [locationDenied, setLocationDenied] = useState(false)
+  const [locationDenied, setLocationDenied] = useState(true);
+
 
   const [gasStations, setGasStations] = useState([]);
   const [viewStation, setViewStation] = useState(
@@ -41,6 +42,9 @@ const GasStation = () => {
   }
 
   const getMyLocation = () => {
+    if (!loading) {
+      setLoading(true)
+    }
 
     (async () => {
       try {
@@ -177,6 +181,15 @@ const GasStation = () => {
                   <Text style={{ padding: 20 }}>
                     Location Denied
                 </Text>
+
+                  <TouchableOpacity
+                    style={[styles.btnLogin, { marginBottom: 20 }]}
+                    onPress={getMyLocation}
+                  >
+                    <Text style={styles.loginTxt}>
+                      Refresh
+                    </Text>
+                  </TouchableOpacity>
                 </View>
                 :
                 <>
@@ -210,6 +223,7 @@ const GasStation = () => {
                             gasStations.map((item) => {
                               return (
                                 <Marker
+                                  key={(Math.random() * 100) + 10 * Math.random() * 12}
                                   onPress={() => {
                                     openSheet(
                                       item.name,
@@ -370,5 +384,20 @@ const styles = StyleSheet.create({
     // shadowOpacity: 0.58,
     // shadowRadius: 16.00,
     // elevation: 24,
-  }
+  },
+  btnLogin: {
+    width: '80%',
+    alignSelf: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 15,
+    backgroundColor: 'rgba(36, 142, 255, 1)',
+    marginTop: 10,
+    borderRadius: 10,
+  },
+  loginTxt: {
+    color: '#fff',
+    fontSize: 16,
+    borderColor: 'grey',
+  },
 });
