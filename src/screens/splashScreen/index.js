@@ -44,7 +44,9 @@ export default function SplashScreen(props) {
         if (emailVerified === "true") {
           delayedNavigation('BottomTabNav')
         }
-        delayedNavigation('verification')
+        else {
+          delayedNavigation('verification')
+        }
       }
       else {
         delayedNavigation('Login')

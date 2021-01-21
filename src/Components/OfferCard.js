@@ -44,6 +44,7 @@ const OfferCard = ({
       })
   }
 
+  console.log(img)
 
   return (
     <TouchableOpacity
@@ -56,13 +57,15 @@ const OfferCard = ({
         id: offer._id,
         limit: offer.limit,
         off: offer.off,
-        usedBy: offer.used
+        usedBy: offer.used,
+        address: offer.address
       })}
       style={styles.container}
     >
+
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         <Image
-          source={{ uri: img }}
+          source={{ uri: connectionString + "/" + img }}
           style={{ width: 50, height: 50, borderRadius: 30 }}
           resizeMode="cover"
         />

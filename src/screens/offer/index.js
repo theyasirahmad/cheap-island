@@ -214,7 +214,7 @@ const Offer = ({ navigation }) => {
         keyExtractor={(item) => item.id}
         renderItem={(itemData) =>
           <OfferCard
-            img={connectionString + "/" + itemData.item.logo}
+            img={itemData.item.logo}
             favourite={(favs.indexOf(itemData.item._id.toString()) !== -1)}
             navigation={navigation}
             offer={itemData.item}
