@@ -126,14 +126,18 @@ const Restaurants = ({ navigation }) => {
         favsOnly={favsOnly}
         getFavsOnly={getFavsOnly}
       />
-      <View style={styles.searchbarStyle}>
-        <TextInput onChangeText={(e) => { setQuery(e) }} placeholder="Search restaurant" style={styles.inputStyle} />
-        <TouchableOpacity
-          onPress={getResturants}
-          style={styles.btnSearch}>
-          <FontAwesome name="search" size={23} color="#fff" />
-        </TouchableOpacity>
-      </View>
+      {
+        !favsOnly &&
+        <View style={styles.searchbarStyle}>
+          <TextInput onChangeText={(e) => { setQuery(e) }} placeholder="Search restaurant" style={styles.inputStyle} />
+          <TouchableOpacity
+            onPress={getResturants}
+            style={styles.btnSearch}>
+            <FontAwesome name="search" size={23} color="#fff" />
+          </TouchableOpacity>
+        </View>
+      }
+
       <View style={styles.viewFlatlist}>
         <FlatList
           showsVerticalScrollIndicator={false}
