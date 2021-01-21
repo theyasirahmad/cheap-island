@@ -22,6 +22,9 @@ const Offer = ({ navigation }) => {
   const [favsOnly, setFavsOnly] = useState(false);
 
 
+  const [query, setQuery] = useState('')
+
+
   const getUserDetails = async () => {
 
     let token = await AsyncStorage.getItem('token');
@@ -58,11 +61,13 @@ const Offer = ({ navigation }) => {
       headers: {
         Authorization: token,
       },
+      data: {
+        query: query
+      }
     })
       .then((res) => {
         setOffers(res.data.offers)
         console.log('offersssssssssssssssss', res.data.offers)
-        // console.log(connectionString +'/'+res.data.offer.logo)
       })
       .catch((err) => {
         console.log(err);
@@ -201,12 +206,18 @@ const Offer = ({ navigation }) => {
         </TouchableOpacity>
         {/* } */}
       </View>
-      <View style={styles.searchbarStyle}>
-        <TextInput placeholder="Search offer" style={styles.inputStyle} />
-        <TouchableOpacity style={styles.btnSearch}>
-          <FontAwesome name="search" size={23} color="#fff" />
-        </TouchableOpacity>
-      </View>
+      {
+        favsOnly === false && 
+        toggleBtn &&
+        <View style={styles.searchbarStyle}>
+          <TextInput
+            onChangeText={(e) => { setQuery(e) }}
+            placeholder="Search offer" style={styles.inputStyle} />
+          <TouchableOpacity onPress={getOffers} style={styles.btnSearch}>
+            <FontAwesome name="search" size={23} color="#fff" />
+          </TouchableOpacity>
+        </View>
+      }
       <FlatList
         showsVerticalScrollIndicator={false}
         numColumns={1}
