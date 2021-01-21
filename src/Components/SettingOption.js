@@ -1,23 +1,22 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import ToggleSwitch from 'toggle-switch-react-native';
-import {Colors} from '../constants/theme'
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import { Colors } from '../constants/theme'
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
-const SettingOption = ({optionTxt, baseline}) => {
-  const [toggle, setToggle] = useState(false);
+const SettingOption = ({ optionTxt, baseline, value, setToggle }) => {
+  // const [toggle, setToggle] = useState(value);
   return (
-    <View style={[styles.container, {borderBottomWidth: baseline ? 1 : 0}]}>
-      <Text style={{color: 'grey'}}>{optionTxt}</Text>
+    <View style={[styles.container, { borderBottomWidth: baseline ? 1 : 0 }]}>
+      <Text style={{ color: 'grey' }}>{optionTxt}</Text>
       <ToggleSwitch
-        isOn={toggle}
+        isOn={value}
         onColor={Colors.LinearBlue1}
         offColor="#bbb"
         // label="Example label"
-        labelStyle={{color: 'black', fontWeight: '900'}}
+        labelStyle={{ color: 'black', fontWeight: '900' }}
         size="medium"
         onToggle={() => {
-          setToggle(!toggle);
-          // alert(toggle);
+          setToggle(!value);
         }}
       />
     </View>

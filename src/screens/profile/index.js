@@ -151,8 +151,6 @@ const Profile = ({ navigation }) => {
         setLoading(false)
         alert('error occured')
       })
-
-
   }
 
   return (

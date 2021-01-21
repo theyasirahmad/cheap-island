@@ -6,25 +6,68 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 // import Linear from 'expo-linear-gradient';
 import { Colors } from '../../constants/theme';
 import AsyncStorage from '@react-native-community/async-storage'
+import Axios from 'axios';
+import connectingString from '../../api/api'
+import { AppState } from 'react-native';
 
 const WidthDevice = Dimensions.get('window').width;
 const HeightDevice = Dimensions.get('window').height;
 
-const [locationEnabled, setLocationEnabled] = React.useState(true);
-const [notificationsEnabled, setNotificationsEnabled] = React.useState(true);
 
-React.useEffect(() => {
-
-  const getSettingsLocally = async () => {
-
-    let loc = await AsyncStorage.getItem('locationEnabled');
-    let noti = await AsyncStorage.getItem('notificationsEnabled');
-    
-  }
-
-}, [])
 
 const Setting = ({ navigation }) => {
+
+
+
+  const [locationEnabled, setLocationEnabled] = React.useState(true);
+  const [notificationsEnabled, setNotificationsEnabled] = React.useState(true);
+
+  React.useEffect(() => {
+
+    const getSettingsLocally = async () => {
+
+      let loc = await AsyncStorage.getItem('locationEnabled');
+      let noti = await AsyncStorage.getItem('notificationsEnabled');
+
+      setLocationEnabled(loc === "true")
+      setNotificationsEnabled(noti === "true")
+
+    }
+    getSettingsLocally()
+  }, [])
+
+  const updateProfile = async () => {
+
+    let token = await AsyncStorage.getItem('token')
+
+    Axios({
+      url: `${connectingString}/user/update-profile`,
+      method: "POST",
+      headers: {
+        Authorization: token
+      },
+      data: {
+        notifications: notificationsEnabled,
+        locationEnabled: locationEnabled
+      }
+    })
+      .then((res) => {
+
+        AsyncStorage.setItem('locationEnabled', locationEnabled ? "true" : "false")
+        AsyncStorage.setItem('notificationsEnabled', notificationsEnabled ? "true" : "false")
+
+      })
+      .catch((err) => {
+        console.log(err)
+        console.log(err.response)
+        alert('error occured')
+      })
+  }
+
+  React.useEffect(() => {
+    updateProfile()
+  }, [locationEnabled, notificationsEnabled])
+
   return <View style={styles.container}>
     <GlobalHeader
       backgroundColor="#42B1F8"
@@ -46,8 +89,12 @@ const Setting = ({ navigation }) => {
         <AntDesign name="doubleright" color="rgba(0,0,0,0.3)" size={20} />
       </TouchableOpacity> */}
       <View style={styles.viewOptionContainer}>
-        <SettingOption optionTxt={'Notifications'} baseline={true} />
-        <SettingOption optionTxt={'Location'} baseline={false} />
+        <SettingOption
+          setToggle={setLocationEnabled}
+          optionTxt={'Location'} baseline={true} value={locationEnabled} />
+        <SettingOption
+          setToggle={setNotificationsEnabled}
+          optionTxt={'Notifications'} baseline={false} value={notificationsEnabled} />
       </View>
       <TouchableOpacity
         onPress={() => {
