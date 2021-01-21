@@ -79,52 +79,39 @@ const Profile = ({ navigation }) => {
 
   }
 
-  const getVendor = async () => {
+  const getUser = async () => {
     setLoading(true)
     let tok = await AsyncStorage.getItem('token');
     setToken(tok)
 
     Axios({
-      url: `${connectingString}/vendor/get-vendor`,
-      method: "GET",
+      url: `${connectingString}/user/get-user`,
+      method: "POST",
       headers: {
         Authorization: tok
+      },
+      data: {
+        get: "latitude longitude city email fullName"
       }
     })
       .then((res) => {
         setLoading(false)
-        setName(res.data.vendor.name);
-        setLongitude(res.data.vendor.longitude);
-        setLatitude(res.data.vendor.latitude);
-        setEmail(res.data.vendor.email);
-        setCity(res.data.vendor.city);
-
-
-        if (res.data.vendor.type === "resturant") {
-          setType("AddRestaurant")
-        }
-        else if (res.data.vendor.type === "gasStation") {
-
-          setType("AddGasStation")
-        }
-        else if (res.data.vendor.type === "POI") {
-          setType("AddPoi")
-        }
-        else if (res.data.vendor.type === "others") {
-          setType("AddOtherShop")
-        }
-
+        setName(res.data.user.fullName);
+        setLongitude(res.data.user.longitude);
+        setLatitude(res.data.user.latitude);
+        setEmail(res.data.user.email);
+        setCity(res.data.user.city);
       })
       .catch((err) => {
         setLoading(false)
         console.log(err);
-        Alert('Error Getting Vendor Try Again Later');
+        alert('Error Getting Vendor Try Again Later');
       })
   }
 
   React.useEffect(() => {
 
-    getVendor()
+    getUser()
     getCurrentLocation()
 
 
@@ -137,7 +124,7 @@ const Profile = ({ navigation }) => {
     seteditable(false);
 
     Axios({
-      url: `${connectingString}/vendor/update-profile`,
+      url: `${connectingString}/user/update-profile`,
       method: "POST",
       headers: {
         Authorization: token
@@ -160,7 +147,7 @@ const Profile = ({ navigation }) => {
         console.log(err)
         console.log(err.response)
         seteditable(false);
-        getVendor()
+        getUser()
         setLoading(false)
         alert('error occured')
       })
@@ -344,37 +331,19 @@ const Profile = ({ navigation }) => {
 
 
         {
-          editable ?
-            <TouchableOpacity
-              style={[styles.btnLogin, { marginBottom: 20 }]}
-              onPress={() => {
-                seteditable(false);
-                getVendor()
-              }}
-            >
-              <Text style={styles.loginTxt}>
-                Cancel
+          editable &&
+          <TouchableOpacity
+            style={[styles.btnLogin, { marginBottom: 20 }]}
+            onPress={() => {
+              seteditable(false);
+              getUser()
+            }}
+          >
+            <Text style={styles.loginTxt}>
+              Cancel
               </Text>
-            </TouchableOpacity>
-            :
+          </TouchableOpacity>
 
-            <TouchableOpacity
-              disabled={loading}
-              style={[styles.btnLogin, { marginBottom: 20 }]}
-              onPress={() => {
-                if (editable) {
-                  seteditable(false);
-                  getVendor()
-                }
-                else {
-                  navigation.navigate(type, { update: true })
-                }
-              }}
-            >
-              <Text style={styles.loginTxt}>
-                Update Additional Information
-            </Text>
-            </TouchableOpacity>
         }
 
 
