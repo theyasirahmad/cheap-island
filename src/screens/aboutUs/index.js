@@ -3,7 +3,7 @@ import { View, StyleSheet, ScrollView, Text, StatusBar, ImageBackground } from '
 import GlobalHeader from '../../Components/GlobalHeader';
 import { Colors } from '../../constants/theme'
 
-const TermsConditions = () => {
+const TermsConditions = ({navigation}) => {
     return (
         <View style={styles.container}>
             {/* <StatusBar backgroundColor={Colors.LinearBlue1} /> */}

@@ -237,7 +237,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     borderWidth: 1,
     borderColor: Colors.borderCardColor,
-    backgroundColor: 'red',
+    // backgroundColor: 'red',
     marginTop: -20
     // justifyContent:"center",
     // padding:1,
