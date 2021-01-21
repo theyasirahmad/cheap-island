@@ -8,20 +8,18 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import connectionString from '../../api/api';
+import { ActivityIndicator } from 'react-native';
 
 const WIDTH = Dimensions.get('window').width;
 const HEIGHT = Dimensions.get('window').height;
 
 const Offer = ({ navigation }) => {
+
+  const [loading, setLoading] = useState(true);
   const [toggleBtn, setToggleBtn] = useState(true);
-
-
   const [offers, setOffers] = useState([]);
-
   const [favs, setFavs] = useState([]);
   const [favsOnly, setFavsOnly] = useState(false);
-
-
   const [query, setQuery] = useState('')
 
 
@@ -53,8 +51,9 @@ const Offer = ({ navigation }) => {
 
   const getOffers = async () => {
 
-    let token = await AsyncStorage.getItem('token');
+    setLoading(true);
 
+    let token = await AsyncStorage.getItem('token');
     axios({
       url: `${connectionString}/offer/get-offers`,
       method: "POST",
@@ -68,17 +67,20 @@ const Offer = ({ navigation }) => {
       .then((res) => {
         setOffers(res.data.offers)
         console.log('offersssssssssssssssss', res.data.offers)
+        setLoading(false)
+
       })
       .catch((err) => {
         console.log(err);
         alert('Internal Server Error')
+        setLoading(false)
       })
   }
 
   const getUsedOffers = async () => {
 
     let token = await AsyncStorage.getItem('token');
-
+    setLoading(true)
     axios({
       url: `${connectionString}/offer/get-used-offers`,
       method: "POST",
@@ -88,17 +90,20 @@ const Offer = ({ navigation }) => {
     })
       .then((res) => {
         setOffers(res.data.offers)
+        setLoading(false)
+
       })
       .catch((err) => {
         console.log(err);
         alert('Internal Server Error')
+        setLoading(false)
       })
   }
 
   const getFavOffers = async () => {
 
     let token = await AsyncStorage.getItem('token');
-
+    setLoading(true)
     axios({
       url: `${connectionString}/offer/get-fav-offers`,
       method: "POST",
@@ -110,10 +115,13 @@ const Offer = ({ navigation }) => {
         console.log(res.data)
         setOffers([...res.data.offers])
         setFavsOnly(true)
+        setLoading(false)
       })
       .catch((err) => {
         console.log(err);
         alert("internal server error")
+        setLoading(false)
+
       })
   }
 
@@ -182,63 +190,72 @@ const Offer = ({ navigation }) => {
         favsOnly={favsOnly}
         getFavsOnly={getFavsOnly}
       />
-      <View style={styles.topBtnsView}>
-        {/* {toggleBtn ? */}
-        <TouchableOpacity
-          onPress={() => {
-            setToggleBtn(true)
-            setFavsOnly(false)
-            getOffers()
-          }}
-          style={[styles.btnTop, { backgroundColor: toggleBtn ? Colors.LinearBlue1 : 'transparent' }]}
-        >
-          <Text style={{ color: "#fff" }}>Offers</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            setToggleBtn(false)
-            setFavsOnly(false)
-            getUsedOffers()
-          }}
-          style={[styles.btnTop, { backgroundColor: toggleBtn ? 'transparent' : Colors.LinearBlue1 }]}
-        >
-          <Text style={{ color: "#fff" }}>Used offers</Text>
-        </TouchableOpacity>
-        {/* } */}
-      </View>
       {
-        favsOnly === false && 
-        toggleBtn &&
-        <View style={styles.searchbarStyle}>
-          <TextInput
-            onChangeText={(e) => { setQuery(e) }}
-            placeholder="Search offer" style={styles.inputStyle} />
-          <TouchableOpacity onPress={getOffers} style={styles.btnSearch}>
-            <FontAwesome name="search" size={23} color="#fff" />
-          </TouchableOpacity>
-        </View>
+        loading ?
+          <ActivityIndicator
+            style={{
+            }} color={Colors.LinearBlue1} />
+          :
+          <>
+            <View style={styles.topBtnsView}>
+              {/* {toggleBtn ? */}
+              <TouchableOpacity
+                onPress={() => {
+                  setToggleBtn(true)
+                  setFavsOnly(false)
+                  getOffers()
+                }}
+                style={[styles.btnTop, { backgroundColor: toggleBtn ? Colors.LinearBlue1 : 'transparent' }]}
+              >
+                <Text style={{ color: "#fff" }}>Offers</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  setToggleBtn(false)
+                  setFavsOnly(false)
+                  getUsedOffers()
+                }}
+                style={[styles.btnTop, { backgroundColor: toggleBtn ? 'transparent' : Colors.LinearBlue1 }]}
+              >
+                <Text style={{ color: "#fff" }}>Used offers</Text>
+              </TouchableOpacity>
+              {/* } */}
+            </View>
+            {
+              favsOnly === false &&
+              toggleBtn &&
+              <View style={styles.searchbarStyle}>
+                <TextInput
+                  onChangeText={(e) => { setQuery(e) }}
+                  placeholder="Search offer" style={styles.inputStyle} />
+                <TouchableOpacity onPress={getOffers} style={styles.btnSearch}>
+                  <FontAwesome name="search" size={23} color="#fff" />
+                </TouchableOpacity>
+              </View>
+            }
+            <FlatList
+              showsVerticalScrollIndicator={false}
+              numColumns={1}
+              data={offers}
+              keyExtractor={(item) => item.id}
+              renderItem={(itemData) =>
+                <OfferCard
+                  img={itemData.item.logo}
+                  favourite={(favs.indexOf(itemData.item._id.toString()) !== -1)}
+                  navigation={navigation}
+                  offer={itemData.item}
+                  id={itemData.item._id}
+                  favs={favs}
+                  setFavs={setFavs}
+                />}
+            />
+            <ImageBackground
+              style={{ width: 100, height: 130, position: "absolute", alignSelf: "center", bottom: 10, zIndex: -1000000 }}
+              source={require('../../assets/images/inback.png')}
+              resizeMode='cover'
+            />
+          </>
       }
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        numColumns={1}
-        data={offers}
-        keyExtractor={(item) => item.id}
-        renderItem={(itemData) =>
-          <OfferCard
-            img={itemData.item.logo}
-            favourite={(favs.indexOf(itemData.item._id.toString()) !== -1)}
-            navigation={navigation}
-            offer={itemData.item}
-            id={itemData.item._id}
-            favs={favs}
-            setFavs={setFavs}
-          />}
-      />
-      <ImageBackground
-        style={{ width: 100, height: 130, position: "absolute", alignSelf: "center", bottom: 10, zIndex: -1000000 }}
-        source={require('../../assets/images/inback.png')}
-        resizeMode='cover'
-      />
     </View>
   );
 };

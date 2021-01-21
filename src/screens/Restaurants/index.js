@@ -119,13 +119,7 @@ const Restaurants = ({ navigation, route }) => {
       else {
         getResturants()
       }
-
     });
-
-
-
-
-
   }, [])
 
   return (
