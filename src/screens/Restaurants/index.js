@@ -26,7 +26,6 @@ const Restaurants = ({ navigation, route }) => {
 
   const [query, setQuery] = useState('');
 
- 
 
   const getResturants = async () => {
 
@@ -121,6 +120,8 @@ const Restaurants = ({ navigation, route }) => {
     });
   }, [])
 
+  // console.log('Restaurant',resturants.length)
+
   return (
     <View style={styles.container}>
       <GlobalHeader
@@ -145,30 +146,32 @@ const Restaurants = ({ navigation, route }) => {
           </TouchableOpacity>
         </View>
       }
-
-      <View style={styles.viewFlatlist}>
-        <FlatList
-          showsVerticalScrollIndicator={false}
-          numColumns={1}
-          data={resturants}
-          keyExtractor={(item) => item._id}
-          renderItem={(itemData) => (
-            <RestaurantCard
-              img={itemData.item.logo}
-              name={itemData.item.name}
-              description={itemData.item.description}
-              address={itemData.item.address}
-              city={itemData.item.city}
-              navigation={navigation}
-              favourite={(favs.indexOf(itemData.item._id.toString()) !== -1)}
-              menuCard={itemData.item.menuCard}
-              id={itemData.item._id}
-              setFavs={setFavs}
-              favs={favs}
-            />
-          )}
-        />
-      </View>
+      {resturants.length == 0 ?
+        <Text style={{alignSelf:'center', fontSize:22,color:"#bbb",marginTop: HEIGHT*0.25}}>No result found</Text> :
+        <View style={styles.viewFlatlist}>
+          <FlatList
+            showsVerticalScrollIndicator={false}
+            numColumns={1}
+            data={resturants}
+            keyExtractor={(item) => item._id}
+            renderItem={(itemData) => (
+              <RestaurantCard
+                img={itemData.item.logo}
+                name={itemData.item.name}
+                description={itemData.item.description}
+                address={itemData.item.address}
+                city={itemData.item.city}
+                navigation={navigation}
+                favourite={(favs.indexOf(itemData.item._id.toString()) !== -1)}
+                menuCard={itemData.item.menuCard}
+                id={itemData.item._id}
+                setFavs={setFavs}
+                favs={favs}
+              />
+            )}
+          />
+        </View>
+      }
       <ImageBackground
         style={{ width: 100, height: 130, position: "absolute", alignSelf: "center", bottom: 10, zIndex: -1000000 }}
         source={require('../../assets/images/inback.png')}

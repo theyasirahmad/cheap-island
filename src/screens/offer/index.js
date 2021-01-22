@@ -255,22 +255,27 @@ const Offer = ({ navigation, route }) => {
                 </TouchableOpacity>
               </View>
             }
-            <FlatList
-              showsVerticalScrollIndicator={false}
-              numColumns={1}
-              data={offers}
-              keyExtractor={(item) => item.id}
-              renderItem={(itemData) =>
-                <OfferCard
-                  img={itemData.item.logo}
-                  favourite={(favs.indexOf(itemData.item._id.toString()) !== -1)}
-                  navigation={navigation}
-                  offer={itemData.item}
-                  id={itemData.item._id}
-                  favs={favs}
-                  setFavs={setFavs}
-                />}
-            />
+            {
+              offers.length == 0 ?
+                <Text style={{ alignSelf: 'center', fontSize: 22, color: "#bbb", marginTop: HEIGHT * 0.2 }}>No result found</Text>
+                :
+                <FlatList
+                  showsVerticalScrollIndicator={false}
+                  numColumns={1}
+                  data={offers}
+                  keyExtractor={(item) => item.id}
+                  renderItem={(itemData) =>
+                    <OfferCard
+                      img={itemData.item.logo}
+                      favourite={(favs.indexOf(itemData.item._id.toString()) !== -1)}
+                      navigation={navigation}
+                      offer={itemData.item}
+                      id={itemData.item._id}
+                      favs={favs}
+                      setFavs={setFavs}
+                    />}
+                />
+            }
             <ImageBackground
               style={{ width: 100, height: 130, position: "absolute", alignSelf: "center", bottom: 10, zIndex: -1000000 }}
               source={require('../../assets/images/inback.png')}
