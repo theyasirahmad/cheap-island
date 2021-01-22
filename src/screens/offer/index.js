@@ -180,14 +180,16 @@ const Offer = ({ navigation, route }) => {
   React.useEffect(() => {
     getUserDetails()
     navigation.addListener('focus', () => {
-
-      if (route && route.params && route.params.used) {
-        setToggleBtn(false)
-        getUsedOffers()
-      }
-      else {
+      route.params.used ? (setToggleBtn(false), getUsedOffers())
+        :
         getOffers()
-      }
+      // if (route && route.params && route.params.used) {
+      //   setToggleBtn(false)
+      //   getUsedOffers()
+      // }
+      // else {
+      //   getOffers()
+      // }
     });
     navigation.addListener('blur', () => {
       intilization()
@@ -212,79 +214,79 @@ const Offer = ({ navigation, route }) => {
         favsOnly={favsOnly}
         getFavsOnly={getFavsOnly}
       />
-          <>
-            <View style={styles.topBtnsView}>
-              {/* {toggleBtn ? */}
-              <TouchableOpacity
-                onPress={() => {
-                  setToggleBtn(true)
-                  setFavsOnly(false)
-                  getOffers()
-                }}
-                style={[styles.btnTop, { backgroundColor: toggleBtn ? Colors.LinearBlue1 : 'transparent' }]}
-                >
-                <Text style={{ color: "#fff" }}>Offers</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {
-                  setToggleBtn(false)
-                  setFavsOnly(false)
-                  getUsedOffers()
-                }}
-                style={[styles.btnTop, { backgroundColor: toggleBtn ? 'transparent' : Colors.LinearBlue1 }]}
-                >
-                <Text style={{ color: "#fff" }}>Used offers</Text>
-              </TouchableOpacity>
-              {/* } */}
+      <>
+        <View style={styles.topBtnsView}>
+          {/* {toggleBtn ? */}
+          <TouchableOpacity
+            onPress={() => {
+              setToggleBtn(true)
+              setFavsOnly(false)
+              getOffers()
+            }}
+            style={[styles.btnTop, { backgroundColor: toggleBtn ? Colors.LinearBlue1 : 'transparent' }]}
+          >
+            <Text style={{ color: "#fff" }}>Offers</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              setToggleBtn(false)
+              setFavsOnly(false)
+              getUsedOffers()
+            }}
+            style={[styles.btnTop, { backgroundColor: toggleBtn ? 'transparent' : Colors.LinearBlue1 }]}
+          >
+            <Text style={{ color: "#fff" }}>Used offers</Text>
+          </TouchableOpacity>
+          {/* } */}
+        </View>
+        {
+          favsOnly === false &&
+          toggleBtn &&
+          <View style={styles.searchbarStyle}>
+            <TextInput
+              onChangeText={(e) => { setQuery(e) }}
+              placeholder="Search offer" style={styles.inputStyle} />
+            <TouchableOpacity onPress={getOffers} style={styles.btnSearch}>
+              <FontAwesome name="search" size={23} color="#fff" />
+            </TouchableOpacity>
+          </View>
+        }
+        {
+          loading ?
+            <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+              <ActivityIndicator size={40}
+                style={{ marginTop: -70 }}
+                color={Colors.LinearBlue1} />
             </View>
-            {
-              favsOnly === false &&
-              toggleBtn &&
-              <View style={styles.searchbarStyle}>
-                <TextInput
-                  onChangeText={(e) => { setQuery(e) }}
-                  placeholder="Search offer" style={styles.inputStyle} />
-                <TouchableOpacity onPress={getOffers} style={styles.btnSearch}>
-                  <FontAwesome name="search" size={23} color="#fff" />
-                </TouchableOpacity>
-              </View>
-            }
-            {
-              loading ?
-              <View style={{flex:1, justifyContent:"center", alignItems:"center"}}>
-                <ActivityIndicator size={40}
-                  style={{marginTop:-70}} 
-                  color={Colors.LinearBlue1} />
-              </View>
-                :
+            :
             // {
-              offers.length == 0 ?
-                <Text style={{ alignSelf: 'center', fontSize: 22, color: "#bbb", marginTop: HEIGHT * 0.2 }}>No result found</Text>
-                :
-                <FlatList
-                  showsVerticalScrollIndicator={false}
-                  numColumns={1}
-                  data={offers}
-                  keyExtractor={(item) => item.id}
-                  renderItem={(itemData) =>
-                    <OfferCard
-                      img={itemData.item.logo}
-                      favourite={(favs.indexOf(itemData.item._id.toString()) !== -1)}
-                      navigation={navigation}
-                      offer={itemData.item}
-                      id={itemData.item._id}
-                      favs={favs}
-                      setFavs={setFavs}
-                    />}
-                    />
-                  // }
-            }
-            <ImageBackground
-              style={{ width: 100, height: 130, position: "absolute", alignSelf: "center", bottom: 10, zIndex: -1000000 }}
-              source={require('../../assets/images/inback.png')}
-              resizeMode='cover'
-            />
-          </>
+            offers.length == 0 ?
+              <Text style={{ alignSelf: 'center', fontSize: 22, color: "#bbb", marginTop: HEIGHT * 0.2 }}>No result found</Text>
+              :
+              <FlatList
+                showsVerticalScrollIndicator={false}
+                numColumns={1}
+                data={offers}
+                keyExtractor={(item) => item.id}
+                renderItem={(itemData) =>
+                  <OfferCard
+                    img={itemData.item.logo}
+                    favourite={(favs.indexOf(itemData.item._id.toString()) !== -1)}
+                    navigation={navigation}
+                    offer={itemData.item}
+                    id={itemData.item._id}
+                    favs={favs}
+                    setFavs={setFavs}
+                  />}
+              />
+          // }
+        }
+        <ImageBackground
+          style={{ width: 100, height: 130, position: "absolute", alignSelf: "center", bottom: 10, zIndex: -1000000 }}
+          source={require('../../assets/images/inback.png')}
+          resizeMode='cover'
+        />
+      </>
     </View>
   );
 };
