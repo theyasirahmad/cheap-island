@@ -212,12 +212,6 @@ const Offer = ({ navigation, route }) => {
         favsOnly={favsOnly}
         getFavsOnly={getFavsOnly}
       />
-      {
-        loading ?
-          <ActivityIndicator
-            style={{
-            }} color={Colors.LinearBlue1} />
-          :
           <>
             <View style={styles.topBtnsView}>
               {/* {toggleBtn ? */}
@@ -228,7 +222,7 @@ const Offer = ({ navigation, route }) => {
                   getOffers()
                 }}
                 style={[styles.btnTop, { backgroundColor: toggleBtn ? Colors.LinearBlue1 : 'transparent' }]}
-              >
+                >
                 <Text style={{ color: "#fff" }}>Offers</Text>
               </TouchableOpacity>
               <TouchableOpacity
@@ -238,7 +232,7 @@ const Offer = ({ navigation, route }) => {
                   getUsedOffers()
                 }}
                 style={[styles.btnTop, { backgroundColor: toggleBtn ? 'transparent' : Colors.LinearBlue1 }]}
-              >
+                >
                 <Text style={{ color: "#fff" }}>Used offers</Text>
               </TouchableOpacity>
               {/* } */}
@@ -256,6 +250,14 @@ const Offer = ({ navigation, route }) => {
               </View>
             }
             {
+              loading ?
+              <View style={{flex:1, justifyContent:"center", alignItems:"center"}}>
+                <ActivityIndicator size={40}
+                  style={{marginTop:-70}} 
+                  color={Colors.LinearBlue1} />
+              </View>
+                :
+            // {
               offers.length == 0 ?
                 <Text style={{ alignSelf: 'center', fontSize: 22, color: "#bbb", marginTop: HEIGHT * 0.2 }}>No result found</Text>
                 :
@@ -274,7 +276,8 @@ const Offer = ({ navigation, route }) => {
                       favs={favs}
                       setFavs={setFavs}
                     />}
-                />
+                    />
+                  // }
             }
             <ImageBackground
               style={{ width: 100, height: 130, position: "absolute", alignSelf: "center", bottom: 10, zIndex: -1000000 }}
@@ -282,7 +285,6 @@ const Offer = ({ navigation, route }) => {
               resizeMode='cover'
             />
           </>
-      }
     </View>
   );
 };
