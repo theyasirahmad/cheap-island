@@ -94,11 +94,13 @@ const DetailDisplay = ({ route, navigation }) => {
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.viewDetail}>
           <Image
+            
             source={{
               uri:
-                // img
-                connectionString + "/" + img
+                img
+                // connectionString + "/" + img
             }}
+            resizeMode={'cover'}
             style={{ width: "100%", height: 200, backgroundColor: "transparent" }}
           />
           <View style={{ padding: 8 }}>
