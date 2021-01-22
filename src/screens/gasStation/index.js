@@ -16,10 +16,17 @@ const GasStation = () => {
   const [longitude, setLongitude] = useState(null)
   const [loading, setLoading] = useState(true);
 
+
+  const [mapLatitude, setMapLatitude] = useState(null);
+  const [mapLongitude, setMapLongitude] = useState(null);
+
+
   const [paddingTop, setPaddingTop] = useState(0);
 
   const [locationDenied, setLocationDenied] = useState(true);
+  const [showMap, setShowMap] = useState(true);
 
+  const [selectedGasId, setSelectedGasId] = useState('03032159234');
 
   const [gasStations, setGasStations] = useState([]);
   const [viewStation, setViewStation] = useState(
@@ -196,16 +203,23 @@ const GasStation = () => {
                   <View style={styles.viewMapConatiner}>
                     <View style={{ width: "100%", height: Dimensions.get('window').height * 0.5, backgroundColor: "#bbb" }}>
                       {
-                        latitude && longitude &&
+                        latitude && longitude && showMap &&
                         <MapView
                           // provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-                          showsUserLocation={true}
+                          // showsUserLocation={true}
                           initialRegion={{
-                            latitude: latitude,
-                            longitude: longitude,
+                            latitude: mapLatitude ? parseFloat(mapLatitude) : parseFloat(latitude),
+                            longitude: mapLongitude ? parseFloat(mapLongitude) : parseFloat(longitude),
                             latitudeDelta: 0.0422,
                             longitudeDelta: 0.0421,
                           }}
+                          // region={{
+                          //   latitude: parseFloat(latitude),
+                          //   longitude: parseFloat(longitude),
+                          // }}
+                          // onRegionChange={() => {
+                          //   alert('region Changed')
+                          // }}
                           style={{
                             position: 'relative',
                             minHeight: '100%',
@@ -223,6 +237,7 @@ const GasStation = () => {
                             gasStations.map((item) => {
                               return (
                                 <Marker
+                                  pinColor={item.key === selectedGasId ? Colors.LinearBlue1 : "red"}
                                   key={(Math.random() * 100) + 10 * Math.random() * 12}
                                   onPress={() => {
                                     openSheet(
@@ -233,6 +248,7 @@ const GasStation = () => {
                                       item.diesel,
                                       item.diesel_discount
                                     )
+                                    setSelectedGasId(item.key)
                                     // setCardSelected(!cardSelected),
                                     // navigation.navigate('DetailDisplay', {
                                     //   name: item.name,
@@ -265,14 +281,25 @@ const GasStation = () => {
                         renderItem={(itemData) => (
                           <TouchableOpacity
                             key={Math.random() * 1000 * Math.random() + 200}
-                            onPress={() => openSheet(
-                              itemData.item.name,
-                              itemData.item.company,
-                              itemData.item.bensin95,
-                              itemData.item.bensin95_discount,
-                              itemData.item.diesel,
-                              itemData.item.diesel_discount
-                            )}>
+                            onPress={() => {
+                              openSheet(
+                                itemData.item.name,
+                                itemData.item.company,
+                                itemData.item.bensin95,
+                                itemData.item.bensin95_discount,
+                                itemData.item.diesel,
+                                itemData.item.diesel_discount
+                              )
+                              setSelectedGasId(itemData.item.key)
+                              setShowMap(false)
+                              setMapLatitude(itemData.item.geo.lat)
+                              setMapLongitude(itemData.item.geo.lon)
+                              // setShowMap(true)
+                              setTimeout(() => {
+                                setShowMap(true)
+                              }, 100)
+                            }
+                            }>
                             <GasStationCard
                               StationName={itemData.item.name}
                               favourite={itemData.item.favourite}
