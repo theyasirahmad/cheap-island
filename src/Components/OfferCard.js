@@ -65,7 +65,8 @@ const OfferCard = ({
 
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         <Image
-          source={{ uri: connectionString + "/" + img }}
+          // source={{ uri: connectionString + "/" + img }}
+          source={{ uri: img }}
           style={{ width: 50, height: 50, borderRadius: 30 }}
           resizeMode="cover"
         />
