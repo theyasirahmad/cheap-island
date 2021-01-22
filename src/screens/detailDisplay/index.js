@@ -52,7 +52,7 @@ const DetailDisplay = ({ route, navigation }) => {
 
     let token = await AsyncStorage.getItem('token');
     // console.log(token);
-    // console.log(id)
+    console.log(id)
     axios({
       url: `${connectionString}/offer/use-offer`,
       method: "POST",
@@ -65,9 +65,12 @@ const DetailDisplay = ({ route, navigation }) => {
     })
       .then((res) => {
         if (res.data.message === "Offer Availed") {
+          alert("Offer Availed")
           setTimesUsed(timesUsed + 1)
         }
-        alert(res.data.message)
+        else{
+          alert(res.data.message)
+        }
       })
       .catch((err) => {
         console.log(err)

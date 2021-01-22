@@ -180,7 +180,7 @@ const Offer = ({ navigation, route }) => {
   React.useEffect(() => {
     getUserDetails()
     navigation.addListener('focus', () => {
-      route.params.used ? (setToggleBtn(false), getUsedOffers())
+      route && route.params && route.params.used ? (setToggleBtn(false), getUsedOffers())
         :
         getOffers()
       // if (route && route.params && route.params.used) {
