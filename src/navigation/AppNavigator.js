@@ -30,10 +30,10 @@ function RootNavigator() {
       <Stack.Screen name="DetailDisplay" component={DetailDisplay} />
       <Stack.Screen name="Profile" component={Profile} />
       <Stack.Screen name="TermsConditions" component={TermsConditions} />
-      <Stack.Screen name="Restaurant" component={Restaurant} />
-      <Stack.Screen name="Offer" component={Offer} />
+      {/* <Stack.Screen name="Restaurant" component={Restaurant} />
+      <Stack.Screen name="Offer" component={Offer} /> */}
       <Stack.Screen name="Settings" component={Settings} />
-      <Stack.Screen name="Mores" component={Mores} />
+      {/* <Stack.Screen name="Mores" component={Mores} /> */}
       <Stack.Screen name="forgetPassword" component={forgetPassword} />
 
 

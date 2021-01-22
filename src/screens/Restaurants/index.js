@@ -32,6 +32,7 @@ const Restaurants = ({ navigation, route }) => {
     let type = "resturant"
     let token = AsyncStorage.getItem('token');
 
+    setFavsOnly(false)
     axios({
       url: `${connectionString}/user/get-vendors`,
       method: "POST",
@@ -62,7 +63,7 @@ const Restaurants = ({ navigation, route }) => {
       }
     })
       .then((res) => {
-        console.log(res.data.user)
+        // console.log(res.data.user)
         let favourites = res.data.user.favourites
         setFavs(favourites)
       })
@@ -74,50 +75,46 @@ const Restaurants = ({ navigation, route }) => {
 
   const getFavsOnly = async () => {
     // setFavsOnly(true)
-    if (!favsOnly) {
+    // if (!favsOnly) {
 
+    setFavsOnly(true)
 
-      let type = "resturant"
-      let token = await AsyncStorage.getItem('token');
+    let type = "resturant"
+    let token = await AsyncStorage.getItem('token');
 
-      axios({
-        url: `${connectionString}/user/get-fav-vendors`,
-        method: "POST",
-        headers: {
-          Authorization: token,
-        },
-        data: {
-          type,
-        }
+    axios({
+      url: `${connectionString}/user/get-fav-vendors`,
+      method: "POST",
+      headers: {
+        Authorization: token,
+      },
+      data: {
+        type,
+      }
+    })
+      .then((res) => {
+        // console.log(res.data.vendors)
+        setResturants([...res.data.vendors])
+        setFavsOnly(true)
       })
-        .then((res) => {
-          // console.log(res.data.vendors)
-          setResturants([...res.data.vendors])
-          setFavsOnly(true)
-        })
-        .catch((err) => {
-          console.log(err);
-          alert("internal server error")
-        })
-    }
-    else {
-      getResturants()
-      setFavsOnly(false)
-    }
+      .catch((err) => {
+        console.log(err);
+        alert("internal server error")
+      })
+    
   }
 
   React.useEffect(() => {
 
     getFavs()
-    navigation.addListener('focus', () => {
-      if (route && route.params && route.params.favs) {
-        setFavsOnly(true)
-        getFavsOnly()
-      }
-      else {
-        getResturants()
-      }
-    });
+
+    if (route && route.params && route.params.favs) {
+
+      getFavsOnly()
+    }
+    else {
+      getResturants()
+    }
   }, [])
 
   // console.log('Restaurant',resturants.length)
@@ -133,7 +130,14 @@ const Restaurants = ({ navigation, route }) => {
         isFavouriteLoading={false}
         RightIcon={true}
         favsOnly={favsOnly}
-        getFavsOnly={getFavsOnly}
+        getFavsOnly={() => {
+          if (favsOnly) {
+            getResturants()
+          }
+          else {
+            getFavsOnly()
+          }
+        }}
       />
       {
         !favsOnly &&
@@ -147,7 +151,7 @@ const Restaurants = ({ navigation, route }) => {
         </View>
       }
       {resturants.length == 0 ?
-        <Text style={{alignSelf:'center', fontSize:22,color:"#bbb",marginTop: HEIGHT*0.25}}>No result found</Text> :
+        <Text style={{ alignSelf: 'center', fontSize: 22, color: "#bbb", marginTop: HEIGHT * 0.25 }}>No result found</Text> :
         <View style={styles.viewFlatlist}>
           <FlatList
             showsVerticalScrollIndicator={false}
@@ -156,6 +160,7 @@ const Restaurants = ({ navigation, route }) => {
             keyExtractor={(item) => item._id}
             renderItem={(itemData) => (
               <RestaurantCard
+                key={itemData.item._id}
                 img={itemData.item.logo}
                 name={itemData.item.name}
                 description={itemData.item.description}

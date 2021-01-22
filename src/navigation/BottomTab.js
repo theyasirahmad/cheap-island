@@ -19,10 +19,15 @@ const BottomTabNavigator = (props) => {
     <Tab.Navigator
       tabBarVisible={true}
       tabBar={(tabProps) => <MyTabBar {...tabProps} {...props} />}>
-      <Tab.Screen name={'Restaurants'} component={Restaurants} />
-      <Tab.Screen name={'Intresting'} component={PointOfInterest} />
+      <Tab.Screen name={'Restaurants'} component={Restaurants}
+        options={{ unmountOnBlur: true }}
+      />
+      <Tab.Screen name={'Intresting'} component={PointOfInterest}
+      />
       <Tab.Screen name={'Gas Stations'} component={GasStations} />
-      <Tab.Screen name={'Offers'} component={Offers} />
+      <Tab.Screen name={'Offers'} component={Offers}
+        options={{ unmountOnBlur: true }}
+      />
       <Tab.Screen name={'More'} component={More} />
     </Tab.Navigator>
   );
@@ -49,7 +54,7 @@ const MyTabBar = ({ state, descriptors, navigation, carts }) => {
 
           const onPress = () => {
             if (!isFocused) {
-              navigation.navigate(route.name);
+              navigation.navigate(route.name, { favs: false, used: false });
               // alert(JSON.stringify(index.length))
             }
           };

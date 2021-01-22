@@ -179,22 +179,16 @@ const Offer = ({ navigation, route }) => {
 
   React.useEffect(() => {
     getUserDetails()
-    navigation.addListener('focus', () => {
-      route && route.params && route.params.used ? (setToggleBtn(false), getUsedOffers())
-        :
-        getOffers()
-      // if (route && route.params && route.params.used) {
-      //   setToggleBtn(false)
-      //   getUsedOffers()
-      // }
-      // else {
-      //   getOffers()
-      // }
-    });
-    navigation.addListener('blur', () => {
-      intilization()
-    });
 
+    if (route && route.params && route.params.used) {
+      // console.log('GET USED OFFERS')
+      setToggleBtn(false)
+      getUsedOffers()
+    }
+    else {
+      // console.log('getOffers')
+      getOffers()
+    }
 
   }, [])
 

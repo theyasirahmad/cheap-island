@@ -32,7 +32,7 @@ const Setting = ({ navigation }) => {
         <Text style={{ color: 'rgba(0,0,0,0.5)', fontSize: 15 }}>Used Offers</Text>
         <AntDesign name="doubleright" color="rgba(0,0,0,0.3)" size={20} />
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('Restaurants', { favs: true })} style={[styles.btnAboutus, { marginTop: 10 }]}>
+      <TouchableOpacity onPress={() => navigation.navigate('Restaurants', { favs: true, randomKey: Math.random() * 1000 })} style={[styles.btnAboutus, { marginTop: 10 }]}>
         <Text style={{ color: 'rgba(0,0,0,0.5)', fontSize: 15 }}>Favourite Restaurants</Text>
         <AntDesign name="doubleright" color="rgba(0,0,0,0.3)" size={20} />
       </TouchableOpacity>
