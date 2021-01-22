@@ -206,7 +206,7 @@ const Offer = ({ navigation, route }) => {
         headingMargin={1}
         fontSize={18}
         color="#fff"
-        arrow={true}
+        arrow={false}
         BackIconColor='#fff'
         navigation={navigation}
         isFavouriteLoading={false}
