@@ -45,7 +45,7 @@ const MyTabBar = ({ state, descriptors, navigation, carts }) => {
                 ? options.title
                 : route.name;
 
-          const isFocused = state.index === index;
+          let isFocused = state.index === index;
 
           const onPress = () => {
             if (!isFocused) {

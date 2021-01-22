@@ -137,7 +137,7 @@ const SignupScreen = ({
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor={Colors.LinearBlue1} />
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView keyboardShouldPersistTaps={'always'}  showsVerticalScrollIndicator={false}>
         <View style={styles.upper}>
           <Image
             style={styles.img}
