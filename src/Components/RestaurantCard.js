@@ -72,7 +72,9 @@ const RestaurantCard = ({
           ) : (
               <Image
                 source={{
-                  uri: connectionString + "/" + img
+                  uri: img
+
+                  // uri: connecionString + "/" + img
                 }}
                 style={styles.imgstyle}
                 resizeMode="cover"
