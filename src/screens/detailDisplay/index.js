@@ -100,7 +100,7 @@ const DetailDisplay = ({ route, navigation }) => {
                 img
                 // connectionString + "/" + img
             }}
-            resizeMode={'cover'}
+            resizeMode={'contain'}
             style={{ width: "100%", height: 200, backgroundColor: "transparent" }}
           />
           <View style={{ padding: 8 }}>
