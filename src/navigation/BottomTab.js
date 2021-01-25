@@ -22,7 +22,7 @@ const BottomTabNavigator = (props) => {
       <Tab.Screen name={'Restaurants'} component={Restaurants}
         options={{ unmountOnBlur: true }}
       />
-      <Tab.Screen name={'Intresting'} component={PointOfInterest}
+      <Tab.Screen name={'Intresting Points'} component={PointOfInterest}
       />
       <Tab.Screen name={'Gas Stations'} component={GasStations} />
       <Tab.Screen name={'Offers'} component={Offers}
@@ -80,9 +80,9 @@ const MyTabBar = ({ state, descriptors, navigation, carts }) => {
               {index === 1 && (
                 <FontAwesome5
                   name="hotel"
-                  size={24}
+                  size={22}
                   color={isFocused ? Colors.LinearBlue1 : 'rgba(188, 188, 188, 1)'}
-                  style={{ marginTop: index === 2 ? 0 : -10 }}
+                  style={{ marginTop: -10 }}
                 />
 
               )}
