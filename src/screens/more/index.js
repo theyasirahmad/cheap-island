@@ -5,11 +5,48 @@ import GlobalHeader from '../../Components/GlobalHeader';
 import AntDesign from 'react-native-vector-icons/AntDesign'
 // import Linear from 'expo-linear-gradient';
 import { Colors } from '../../constants/theme';
+import axios from 'axios';
+import connectionString from '../../api/api'
+import AsyncStorage from '@react-native-community/async-storage';
 
 const WidthDevice = Dimensions.get('window').width;
 const HeightDevice = Dimensions.get('window').height;
 
 const Setting = ({ navigation }) => {
+
+
+  const [name, setName] = React.useState('');
+
+  React.useEffect(() => {
+
+    const getUserDetails = async () => {
+      let token = await AsyncStorage.getItem('token')
+
+      axios({
+        url: `${connectionString}/user/get-user`,
+        method: "POST",
+        headers: {
+          Authorization: token,
+        },
+        data: {
+          get: "fullName"
+        }
+      })
+        .then((res) => {
+          // console.log(res.data.user)
+          // let favourites = res.data.user.favourites
+          setName(res.data.user.fullName)
+        })
+        .catch((err) => {
+          console.log(err);
+          alert('Error Getting User Details')
+        })
+    }
+
+    getUserDetails()
+
+  }, [])
+
   return <View style={styles.container}>
     <GlobalHeader
       backgroundColor="#42B1F8"
@@ -20,7 +57,7 @@ const Setting = ({ navigation }) => {
     />
     <View style={styles.viewTop}>
       <Text style={{ color: '#fff', fontSize: 18 }}>
-        Gunnluger Geir Getsson
+        {name.toUpperCase()}
       </Text>
     </View>
     <ScrollView showsVerticalScrollIndicator={false}>
