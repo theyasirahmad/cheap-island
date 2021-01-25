@@ -10,9 +10,13 @@ import * as Location from 'expo-location';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import connectionString from '../../api/api';
+import { ActivityIndicator } from 'react-native';
 
 
 const PointOfInterest = ({ navigation }) => {
+
+
+  const [loading, setLoading] = useState(true);
 
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
@@ -56,6 +60,7 @@ const PointOfInterest = ({ navigation }) => {
     })
       .then((res) => {
         console.log(res.data.vendors)
+        setLoading(false)
         setVendors([...res.data.vendors])
       })
       .catch((err) => {
@@ -84,6 +89,7 @@ const PointOfInterest = ({ navigation }) => {
 
       setCity(results[0].city)
       getPOI(results[0].city)
+
     })();
 
   }
@@ -170,62 +176,67 @@ const PointOfInterest = ({ navigation }) => {
         </TouchableOpacity>
       </View>
       <View style={styles.viewMapConatiner}>
-        {/* <View style={{ width: "100%", height: Dimensions.get('window').height * 0.70}}> */}
         {
-          latitude && longitude &&
-          <MapView
-            provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-            showsMyLocationButton={true}
-            showsUserLocation={true}
+          loading ?
+            <ActivityIndicator color={Colors.LinearBlue1} style={{ marginTop: 100 }} />
+            :
+            <>
+              {
+                latitude && longitude &&
+                <MapView
+                  provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+                  showsMyLocationButton={true}
+                  showsUserLocation={true}
 
-            initialRegion={{
-              latitude: parseFloat(latitude),
-              longitude: parseFloat(longitude),
-              latitudeDelta: 0.0422,
-              longitudeDelta: 0.0421,
-            }}
-            style={{
-              position: 'relative',
-              minHeight: Dimensions.get('window').height * 0.80,
-              // zIndex:-100,
-              width: '100%',
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              marginBottom: 1,
-              borderWidth: 2,
-            }}
-            onMapReady={_onMapReady}
-          >
-            {
-              vendors.map((item) => {
-                return (
-                  <Marker
-                    onPress={() => {
-                      // setCardSelected(!cardSelected),
-                      navigation.navigate('DetailDisplay', {
-                        name: item.name,
-                        description: item.description,
-                        img: item.logo,
-                        city: item.city,
-                        address: item.address,
-                        menuCard: [],
-                        products: item.products
-                      })
-                    }}
-                    key={item.latitude.toString() + item.longitude.toString()}
-                    coordinate={{
-                      latitude: parseFloat(item.latitude),
-                      longitude: parseFloat(item.longitude)
-                    }}
-                  />
-                )
-              })
-            }
-          </MapView>
+                  initialRegion={{
+                    latitude: parseFloat(latitude),
+                    longitude: parseFloat(longitude),
+                    latitudeDelta: 0.0422,
+                    longitudeDelta: 0.0421,
+                  }}
+                  style={{
+                    position: 'relative',
+                    minHeight: Dimensions.get('window').height * 0.80,
+                    // zIndex:-100,
+                    width: '100%',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    marginBottom: 1,
+                    borderWidth: 2,
+                  }}
+                  onMapReady={_onMapReady}
+                >
+                  {
+                    vendors.map((item) => {
+                      return (
+                        <Marker
+                          onPress={() => {
+                            // setCardSelected(!cardSelected),
+                            navigation.navigate('DetailDisplay', {
+                              name: item.name,
+                              description: item.description,
+                              img: item.logo,
+                              city: item.city,
+                              address: item.address,
+                              menuCard: [],
+                              products: item.products
+                            })
+                          }}
+                          key={item.latitude.toString() + item.longitude.toString()}
+                          coordinate={{
+                            latitude: parseFloat(item.latitude),
+                            longitude: parseFloat(item.longitude)
+                          }}
+                        />
+                      )
+                    })
+                  }
+                </MapView>
+              }
+            </>
         }
-        {/* </View> */}
       </View>
 
       {/* </ScrollView> */}
@@ -284,7 +295,7 @@ const styles = StyleSheet.create({
   },
   viewMapConatiner: {
     overflow: "hidden",
-    height:'100%',
+    height: '100%',
     width: "100%",
     borderRadius: 25,
     alignSelf: "center",
