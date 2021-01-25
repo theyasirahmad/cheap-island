@@ -284,7 +284,7 @@ const styles = StyleSheet.create({
   },
   viewMapConatiner: {
     overflow: "hidden",
-    maxHeight: Dimensions.get('window').height * 0.75,
+    height:'100%',
     width: "100%",
     borderRadius: 25,
     alignSelf: "center",
