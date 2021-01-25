@@ -3,21 +3,21 @@ import { Colors } from '../constants/theme';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign'
 
-const GasStationCard = ({ StationName, favourite, latitude, longitude, geo }) => {
+const GasStationCard = ({ StationName, favourite, latitude, longitude, geo, bensin95, diesel }) => {
   // alert(cardSelect)
 
-  // const R = 6371e3; // metres
-  // const φ1 = latitude * Math.PI / 180; // φ, λ in radians
-  // const φ2 = geo.lat * Math.PI / 180;
-  // const Δφ = (geo.lat - latitude) * Math.PI / 180;
-  // const Δλ = (geo.lon - longitude) * Math.PI / 180;
+  const R = 6371e3; // metres
+  const φ1 = latitude * Math.PI / 180; // φ, λ in radians
+  const φ2 = geo.lat * Math.PI / 180;
+  const Δφ = (geo.lat - latitude) * Math.PI / 180;
+  const Δλ = (geo.lon - longitude) * Math.PI / 180;
 
-  // const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
-  //   Math.cos(φ1) * Math.cos(φ2) *
-  //   Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
-  // const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+    Math.cos(φ1) * Math.cos(φ2) *
+    Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-  // const d = R * c; // in metres
+  const d = R * c; // in metres
 
   return (
     <View style={styles.container}>
@@ -25,10 +25,17 @@ const GasStationCard = ({ StationName, favourite, latitude, longitude, geo }) =>
         {StationName}
       </Text>
 
-      <Text style={{ marginHorizontal: 10, color: "rgba(0,0,0,0.4)" }}>
-        {/* {d.toFixed(3)} m */}
-      </Text>
-
+      {/* <Text style={{ marginHorizontal: 10, color: "rgba(0,0,0,0.4)" }}>
+        {d.toFixed(3)} m
+      </Text> */}
+      <View>
+        <Text style={{ marginHorizontal: 10, color: "rgba(0,0,0,0.4)" }}>
+          {bensin95 + " kr"}
+        </Text>
+        <Text style={{ marginHorizontal: 10, color: "rgba(0,0,0,0.4)" }}>
+          {diesel + " kr"}
+        </Text>
+      </View>
       {/* <TouchableOpacity onPress={()=>{}}>
         { favourite ? 
           <AntDesign name="star" color="gold" size={20} /> :
@@ -56,7 +63,9 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.20,
     shadowRadius: 1.41,
-
     elevation: 2,
+    borderBottomColor:'#eee',
+    borderBottomWidth: 1,
+
   },
 });

@@ -317,10 +317,6 @@ const GasStation = () => {
                                   itemData.item.diesel_discount,
                                   itemData.item.geo
                                 )
-
-
-
-
                               }
                               }>
                               <GasStationCard
@@ -330,6 +326,8 @@ const GasStation = () => {
                                 latitude={latitude}
                                 longitude={longitude}
                                 geo={itemData.item.geo}
+                                bensin95={itemData.item.bensin95_discount}
+                                diesel={itemData.item.diesel_discount}
                               />
                             </TouchableOpacity>
                           </View>
