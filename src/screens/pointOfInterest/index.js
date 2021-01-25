@@ -65,6 +65,7 @@ const PointOfInterest = ({ navigation }) => {
       })
       .catch((err) => {
         console.log(err);
+        setLoading(false)
         alert("internal server error")
       })
   }
