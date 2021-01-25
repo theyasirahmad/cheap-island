@@ -54,7 +54,7 @@ const RestaurantCard = ({
     <TouchableOpacity
       key={id}
       onPress={() => {
-        setCardSelected(!cardSelected),
+        // setCardSelected(!cardSelected),
           navigation.navigate('DetailDisplay', { name, description, img, address, menuCard, city })
       }}
       style={styles.container}
