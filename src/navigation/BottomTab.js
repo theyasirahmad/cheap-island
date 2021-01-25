@@ -68,14 +68,6 @@ const MyTabBar = ({ state, descriptors, navigation, carts }) => {
               style={styles.tabButtons}
               key={index}>
               {index === 0 && (
-                <FontAwesome5
-                  name="hotel"
-                  size={24}
-                  color={isFocused ? Colors.LinearBlue1 : 'rgba(188, 188, 188, 1)'}
-                  style={{ marginTop: index === 2 ? 0 : -10 }}
-                />
-              )}
-              {index === 1 && (
                 <Image
                   style={{
                     width: 53, height: 23, marginTop: index === 2 ? 0 : -10,
@@ -84,6 +76,15 @@ const MyTabBar = ({ state, descriptors, navigation, carts }) => {
                   source={require('../assets/images/pot.png')}
                   resizeMode='cover'
                 />
+              )}
+              {index === 1 && (
+                <FontAwesome5
+                  name="hotel"
+                  size={24}
+                  color={isFocused ? Colors.LinearBlue1 : 'rgba(188, 188, 188, 1)'}
+                  style={{ marginTop: index === 2 ? 0 : -10 }}
+                />
+
               )}
               {index === 2 && (
                 <FontAwesome5
