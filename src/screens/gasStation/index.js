@@ -36,7 +36,8 @@ const GasStation = () => {
       fuel1: '',
       discount1: '',
       fuel2: '',
-      discount2: ''
+      discount2: '',
+      d: 0,
     }
   )
 
@@ -99,10 +100,28 @@ const GasStation = () => {
     return comparison;
   }
 
-  const openSheet = (StationName, company, fuel1, discount1, fuel2, discount2) => {
-    // console.log(StationName)
+  const openSheet = (StationName, company, fuel1, discount1, fuel2, discount2, geo) => {
+
+
+    const R = 6371e3; // metres
+    const φ1 = latitude * Math.PI / 180; // φ, λ in radians
+    const φ2 = geo.lat * Math.PI / 180;
+    const Δφ = (geo.lat - latitude) * Math.PI / 180;
+    const Δλ = (geo.lon - longitude) * Math.PI / 180;
+
+    const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+      Math.cos(φ1) * Math.cos(φ2) *
+      Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    const d = R * c; // in metres
+
+
+
+
+
     setViewStation(
-      { StationName, company, fuel1, discount1, fuel2, discount2 }
+      { StationName, company, fuel1, discount1, fuel2, discount2, d }
     )
     // console.log('View Stationnnnnnnnnnnnn', viewStation)
     rbSheetRef.current.open()
@@ -254,7 +273,8 @@ const GasStation = () => {
                                       item.bensin95,
                                       item.bensin95_discount,
                                       item.diesel,
-                                      item.diesel_discount
+                                      item.diesel_discount,
+                                      item.geo
                                     )
                                     // setTimeout(() => {
                                     //   setShowMap(true)
@@ -294,11 +314,13 @@ const GasStation = () => {
                                   itemData.item.bensin95,
                                   itemData.item.bensin95_discount,
                                   itemData.item.diesel,
-                                  itemData.item.diesel_discount
+                                  itemData.item.diesel_discount,
+                                  itemData.item.geo
                                 )
-                                // setTimeout(() => {
-                                //   setShowMap(true)
-                                // }, 4)
+
+
+
+
                               }
                               }>
                               <GasStationCard
@@ -315,7 +337,7 @@ const GasStation = () => {
                         )}
                       />
                     </View>
-                  </View> 
+                  </View>
                   <RBSheet
                     ref={rbSheetRef}
                     height={260}
@@ -341,6 +363,9 @@ const GasStation = () => {
                       </Text>
                       <Text style={{ fontSize: 18, fontWeight: "bold", color: 'rgba(0,0,0,0.4)' }}>
                         Name: {viewStation.StationName}
+                      </Text>
+                      <Text style={styles.txtDetail}>
+                        Distance: {viewStation.d}
                       </Text>
 
                       <View style={{ width: '90%', height: 1, backgroundColor: "rgba(0,0,0,0.1)", marginVertical: 15 }} />
