@@ -10,7 +10,6 @@ import axios from 'axios';
 import * as Location from 'expo-location';
 import { ActivityIndicator } from 'react-native';
 
-
 const GasStation = () => {
   const [latitude, setLatitude] = useState(null)
   const [longitude, setLongitude] = useState(null)
@@ -115,10 +114,6 @@ const GasStation = () => {
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
     const d = R * c; // in metres
-
-
-
-
 
     setViewStation(
       { StationName, company, fuel1, discount1, fuel2, discount2, d }
@@ -258,10 +253,8 @@ const GasStation = () => {
                             gasStations.map((item) => {
                               return (
                                 <Marker
-
                                   pinColor={item.key === selectedGasId ? Colors.LinearBlue1 : "red"}
                                   key={(Math.random() * 100) + 10 * Math.random() * 12}
-
                                   onPress={() => {
                                     // setShowMap(false)
                                     setSelectedGasId(item.key)
