@@ -26,7 +26,7 @@ const GasStation = () => {
   const [locationDenied, setLocationDenied] = useState(true);
   const [showMap, setShowMap] = useState(true);
 
-  const [selectedGasId, setSelectedGasId] = useState('03032159234');
+  const [selectedGasId, setSelectedGasId] = useState('123456789');
 
   const [gasStations, setGasStations] = useState([]);
   const [viewStation, setViewStation] = useState(
@@ -206,17 +206,19 @@ const GasStation = () => {
                         latitude && longitude && showMap &&
                         <MapView
                           provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-                          // showsUserLocation={true}
+                          showsUserLocation={true}
                           initialRegion={{
                             latitude: mapLatitude ? parseFloat(mapLatitude) : parseFloat(latitude),
                             longitude: mapLongitude ? parseFloat(mapLongitude) : parseFloat(longitude),
                             latitudeDelta: 0.0422,
                             longitudeDelta: 0.0421,
                           }}
-                          // region={{
-                          //   latitude: parseFloat(latitude),
-                          //   longitude: parseFloat(longitude),
-                          // }}
+                          region={{
+                            latitude: mapLatitude ? parseFloat(mapLatitude) : parseFloat(latitude),
+                            longitude: mapLongitude ? parseFloat(mapLongitude) : parseFloat(longitude),
+                            latitudeDelta: 0.0422,
+                            longitudeDelta: 0.0421,
+                          }}
                           // onRegionChange={() => {
                           //   alert('region Changed')
                           // }}
@@ -237,9 +239,15 @@ const GasStation = () => {
                             gasStations.map((item) => {
                               return (
                                 <Marker
+
                                   pinColor={item.key === selectedGasId ? Colors.LinearBlue1 : "red"}
                                   key={(Math.random() * 100) + 10 * Math.random() * 12}
+
                                   onPress={() => {
+                                    // setShowMap(false)
+                                    setSelectedGasId(item.key)
+                                    setMapLatitude(item.geo.lat)
+                                    setMapLongitude(item.geo.lon)
                                     openSheet(
                                       item.name,
                                       item.company,
@@ -248,17 +256,10 @@ const GasStation = () => {
                                       item.diesel,
                                       item.diesel_discount
                                     )
-                                    setSelectedGasId(item.key)
-                                    // setCardSelected(!cardSelected),
-                                    // navigation.navigate('DetailDisplay', {
-                                    //   name: item.name,
-                                    //   description: item.description,
-                                    //   img: item.logo,
-                                    //   address: item.address,
-                                    //   menuCard: []
-                                    // })
+                                    // setTimeout(() => {
+                                    //   setShowMap(true)
+                                    // }, 4)
                                   }}
-                                  key={item.geo.lat.toString() + Math.random() * 100 + item.geo.lon.toString()}
                                   coordinate={{
                                     latitude: parseFloat(item.geo.lat),
                                     longitude: parseFloat(item.geo.lon)
@@ -277,37 +278,40 @@ const GasStation = () => {
                         showsVerticalScrollIndicator={false}
                         numColumns={1}
                         data={gasStations}
-                        keyExtractor={(item) => item.id}
+                        keyExtractor={(item) => item.key}
                         renderItem={(itemData) => (
-                          <TouchableOpacity
-                            key={Math.random() * 1000 * Math.random() + 200}
-                            onPress={() => {
-                              openSheet(
-                                itemData.item.name,
-                                itemData.item.company,
-                                itemData.item.bensin95,
-                                itemData.item.bensin95_discount,
-                                itemData.item.diesel,
-                                itemData.item.diesel_discount
-                              )
-                              setSelectedGasId(itemData.item.key)
-                              setShowMap(false)
-                              setMapLatitude(itemData.item.geo.lat)
-                              setMapLongitude(itemData.item.geo.lon)
-                              // setShowMap(true)
-                              setTimeout(() => {
-                                setShowMap(true)
-                              }, 100)
-                            }
-                            }>
-                            <GasStationCard
-                              StationName={itemData.item.name}
-                              favourite={itemData.item.favourite}
-                              latitude={latitude}
-                              longitude={longitude}
-                              geo={itemData.item.geo}
-                            />
-                          </TouchableOpacity>
+                          <View>
+                            <TouchableOpacity
+                              key={Math.random() * 1000 * Math.random() + 200}
+                              onPress={() => {
+                                // setShowMap(false)
+                                setSelectedGasId(itemData.item.key)
+                                setMapLatitude(itemData.item.geo.lat)
+                                setMapLongitude(itemData.item.geo.lon)
+                                openSheet(
+                                  itemData.item.name,
+                                  itemData.item.company,
+                                  itemData.item.bensin95,
+                                  itemData.item.bensin95_discount,
+                                  itemData.item.diesel,
+                                  itemData.item.diesel_discount
+                                )
+                                // setTimeout(() => {
+                                //   setShowMap(true)
+                                // }, 4)
+                              }
+                              }>
+                              <GasStationCard
+                                backgroundBlueColor={Colors.LinearBlue1}
+                                StationName={itemData.item.name}
+                                favourite={itemData.item.favourite}
+                                latitude={latitude}
+                                longitude={longitude}
+                                geo={itemData.item.geo}
+                              />
+                            </TouchableOpacity>
+                          </View>
+
                         )}
                       />
                     </View>
@@ -316,9 +320,13 @@ const GasStation = () => {
                   <RBSheet
                     ref={rbSheetRef}
                     height={260}
-                    openDuration={250}
+                    openDuration={0}
+                    onClose={() => {
+                      setSelectedGasId('123456789')
+                    }}
                     // closeOnDragDown={true}
                     // dragFromTopOnly={true}
+                    animationType={'fade'}
                     customStyles={{
                       container: {
                         justifyContent: "center",
@@ -340,7 +348,7 @@ const GasStation = () => {
 
                       <Text style={{ fontSize: 18, fontWeight: "bold", color: 'rgba(0,0,0,0.4)' }}>
                         Bension95
-          </Text>
+                      </Text>
                       <View style={{ flexDirection: "row" }}>
                         <Text style={styles.txtDetail}>Price: {viewStation.fuel1}</Text>
                         <Text style={styles.txtDetail}>Discounted price: {viewStation.discount1}</Text>
@@ -350,7 +358,7 @@ const GasStation = () => {
 
                       <Text style={{ fontSize: 18, fontWeight: "bold", color: 'rgba(0,0,0,0.4)' }}>
                         Diesel
-          </Text>
+                      </Text>
                       <View style={{ flexDirection: "row" }}>
                         <Text style={styles.txtDetail}>Price: {viewStation.fuel2}</Text>
                         <Text style={styles.txtDetail}>Discounted price: {viewStation.discount2}</Text>
