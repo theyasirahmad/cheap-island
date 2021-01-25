@@ -36,6 +36,7 @@ const PointOfInterest = ({ navigation }) => {
     setVendors([]);
     setSelectedVendor(null);
     setQuery('')
+    setLoading(true)
   }
 
   const _onMapReady = () => {
