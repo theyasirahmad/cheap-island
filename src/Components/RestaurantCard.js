@@ -17,7 +17,9 @@ const RestaurantCard = ({
   id,
   favs,
   city,
-  setFavs
+  setFavs,
+  latitude,
+  longitude
 }) => {
 
   const [cardSelected, setCardSelected] = useState(false)
@@ -55,7 +57,17 @@ const RestaurantCard = ({
       key={id}
       onPress={() => {
         // setCardSelected(!cardSelected),
-          navigation.navigate('DetailDisplay', { name, description, img, address, menuCard, city })
+        navigation.navigate('DetailDisplay', {
+          name,
+          description,
+          img,
+          address,
+          menuCard,
+          city,
+          displayMap: true,
+          latitude,
+          longitude,
+        })
       }}
       style={styles.container}
     >

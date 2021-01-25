@@ -170,6 +170,8 @@ const Restaurants = ({ navigation, route }) => {
                 favourite={(favs.indexOf(itemData.item._id.toString()) !== -1)}
                 menuCard={itemData.item.menuCard}
                 id={itemData.item._id}
+                latitude={itemData.item.latitude}
+                longitude={itemData.item.longitude}
                 setFavs={setFavs}
                 favs={favs}
               />

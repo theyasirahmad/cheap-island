@@ -5,6 +5,8 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity, FlatList, ImageBa
 import connectionString from '../../api/api';
 import GlobalHeader from '../../Components/GlobalHeader';
 import { Colors } from '../../constants/theme';
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
+
 
 const DetailDisplay = ({ route, navigation }) => {
   const {
@@ -19,12 +21,16 @@ const DetailDisplay = ({ route, navigation }) => {
     off,
     usedBy,
     city,
-    products
+    products,
+    latitude,
+    longitude
   } = route.params;
   // console.log('navigationnnnnnnnnn', name, descrption)
 
   const [timesUsed, setTimesUsed] = useState(0)
   const [userId, setUserId] = useState(null)
+  const [paddingTop, setPaddingTop] = useState(0)
+
 
   React.useEffect(() => {
 
@@ -68,7 +74,7 @@ const DetailDisplay = ({ route, navigation }) => {
           alert("Offer Availed")
           setTimesUsed(timesUsed + 1)
         }
-        else{
+        else {
           alert(res.data.message)
         }
       })
@@ -78,6 +84,9 @@ const DetailDisplay = ({ route, navigation }) => {
       })
   }
 
+  const _onMapReady = () => {
+    setPaddingTop(0)
+  }
 
   return (
     <View style={styles.container}>
@@ -94,11 +103,11 @@ const DetailDisplay = ({ route, navigation }) => {
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.viewDetail}>
           <Image
-            
+
             source={{
               uri:
                 img
-                // connectionString + "/" + img
+              // connectionString + "/" + img
             }}
             resizeMode={'contain'}
             style={{ width: "100%", height: 200, backgroundColor: "transparent" }}
@@ -192,6 +201,42 @@ const DetailDisplay = ({ route, navigation }) => {
                 />
               )}
             />
+
+            {
+              route.params.displayMap &&
+              <MapView
+                provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+                // showsMyLocationButton={true}
+                // showsUserLocation={true}
+
+                initialRegion={{
+                  latitude: parseFloat(latitude),
+                  longitude: parseFloat(longitude),
+                  latitudeDelta: 0.0422,
+                  longitudeDelta: 0.0421,
+                }}
+                style={{
+                  position: 'relative',
+                  minHeight: Dimensions.get('window').height * 0.4,
+                  width: '100%',
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  marginBottom: 1,
+                  borderWidth: 2,
+                  marginTop: 20
+                }}
+                onMapReady={_onMapReady}
+              >
+                <Marker
+                  coordinate={{
+                    latitude: parseFloat(latitude),
+                    longitude: parseFloat(longitude)
+                  }}
+                />
+              </MapView>
+            }
           </View>
         </View>
       </ScrollView>
@@ -200,6 +245,7 @@ const DetailDisplay = ({ route, navigation }) => {
         source={require('../../assets/images/inback.png')}
         resizeMode='cover'
       />
+
     </View >
   );
 };
