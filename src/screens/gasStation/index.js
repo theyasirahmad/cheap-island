@@ -315,8 +315,7 @@ const GasStation = () => {
                         )}
                       />
                     </View>
-                    {/* </ScrollView> */}
-                  </View>
+                  </View> 
                   <RBSheet
                     ref={rbSheetRef}
                     height={260}
@@ -385,7 +384,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.backgroundBlueColor,
-    paddingBottom: 30
   },
   txtDetail: {
     width: "50%",
@@ -397,7 +395,7 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 15,
     // paddingBottom:180,
     backgroundColor: "#fff",
-    maxHeight: Dimensions.get('window').height * 0.24,
+    maxHeight: Dimensions.get('window').height * 0.4,
   },
   viewMapConatiner: {
     overflow: "hidden",
