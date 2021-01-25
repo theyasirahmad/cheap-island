@@ -55,7 +55,7 @@ const GlobalHeader = (props) => {
             },
             Platform.OS === 'ios' ? { borderBottomWidth: 0 } : {},
           ]}>
-          <Left style={{ flex: 1, marginBottom: 20 }}>
+          <Left style={{ flex: 2, marginBottom: 20 }}>
             <View style={styles.viewLeft}>
               {props.Drawer && (
                 <TouchableOpacity
@@ -71,7 +71,7 @@ const GlobalHeader = (props) => {
 
               {props.arrow === true && (
                 <TouchableOpacity
-                  style={{ paddingRight: 5, paddingTop: 10 }}
+                  // style={{ paddingRight: 5, paddingTop: 10 }}
                   // onPress={() => {
                   //   // this.props.otherNavigation
                   //   //   ? this.props.navigation.navigate.otherNavigation
@@ -95,12 +95,13 @@ const GlobalHeader = (props) => {
           <Body
             style={{
               flex: props.secondText ? 5 : 6,
-              left: 20,
+              // left: 20,
               marginBottom: 12,
               justifyContent: 'center',
               width: '100%',
               alignItems: props.headingALign ? props.headingALign : 'center',
               alignSelf: 'center',
+              // backgroundColor:'blue'
             }}>
             {props.headingText !== '' ? (
               <View
@@ -202,7 +203,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   viewLeft: {
-    width: '100%',
+    // width: '100%',
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
