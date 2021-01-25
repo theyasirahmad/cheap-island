@@ -205,7 +205,7 @@ const GasStation = () => {
                       {
                         latitude && longitude && showMap &&
                         <MapView
-                          // provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+                          provider={PROVIDER_GOOGLE} // remove if not using Google Maps
                           // showsUserLocation={true}
                           initialRegion={{
                             latitude: mapLatitude ? parseFloat(mapLatitude) : parseFloat(latitude),

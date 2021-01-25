@@ -174,7 +174,7 @@ const PointOfInterest = ({ navigation }) => {
         {
           latitude && longitude &&
           <MapView
-            // provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+            provider={PROVIDER_GOOGLE} // remove if not using Google Maps
             showsMyLocationButton={true}
             showsUserLocation={true}
 
