@@ -109,7 +109,7 @@ const PointOfInterest = ({ navigation }) => {
         getPOI(res.data.user.city)
       })
       .catch((err) => {
-        setLoading(false)
+        // setLoading(false)
         console.log(err);
         alert('Error Getting Vendor Try Again Later');
       })
