@@ -74,7 +74,7 @@ const Verification = ({
           setLoading(false)
           AsyncStorage.setItem('emailVerified', "true")
           AsyncStorage.removeItem('email')
-          navigation.navigate('BottomTabNav')
+          navigation.replace('BottomTabNav')
         }
         else {
           alert('Somthing Went Wrong Try Agin Later')
