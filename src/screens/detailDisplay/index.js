@@ -1,14 +1,24 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, FlatList, ImageBackground, Image, Dimensions } from 'react-native';
 import connectionString from '../../api/api';
 import GlobalHeader from '../../Components/GlobalHeader';
 import { Colors } from '../../constants/theme';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
+import RBSheet from "react-native-raw-bottom-sheet";
 
 
 const DetailDisplay = ({ route, navigation }) => {
+
+
+  const [intervalRef, setIntervalRef] = useState(null);
+
+  const [progress, setProgress] = useState(0)
+
+  const rbSheetRef = useRef();
+
+
   const {
     img,
     name,
@@ -47,12 +57,78 @@ const DetailDisplay = ({ route, navigation }) => {
           }
         })
       }
-
-
     }
     getUserId()
   }, [])
 
+
+  const [timer, setTimer] = useState(0)
+
+  React.useEffect(() => {
+
+    openRBSheet()
+
+  }, [])
+
+  const openRBSheet = async () => {
+
+    // rbSheetRef.current.open()
+    let timeout = await AsyncStorage.getItem('timeout')
+    let d = new Date();
+    let millisec = d.getTime()
+    let difference = parseFloat(timeout) - millisec;
+
+    if (difference > 0) {
+      rbSheetRef.current.open()
+      startTimer(difference / 1000)
+    }
+
+  }
+
+  const startTimer = (duration) => {
+    let interRef;
+
+    var start = Date.now(),
+      diff,
+      minutes,
+      seconds;
+    function timer() {
+      // get the number of seconds that have elapsed since 
+      // startTimer() was called
+
+      setProgress(((60000 - parseFloat((minutes * 60)) + parseFloat(seconds))/600000).toFixed(2))
+
+      if (parseFloat((minutes * 60)) + parseFloat(seconds) <= 0) {
+        rbSheetRef.current.close()
+        clearInterval(intervalRef)
+        clearInterval(interRef)
+
+      }
+
+      diff = duration - (((Date.now() - start) / 1000) | 0);
+
+      // does the same job as parseInt truncates the float
+      minutes = (diff / 60) | 0;
+      seconds = (diff % 60) | 0;
+
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      seconds = seconds < 10 ? "0" + seconds : seconds;
+
+      // display.textContent = minutes + ":" + seconds;
+      setTimer(minutes + ":" + seconds)
+
+      if (diff <= 0) {
+        // add one second so that the count down starts at the full duration
+        // example 05:00 not 04:59
+        start = Date.now() + 1000;
+      }
+    };
+    // we don't want to wait a full second before the timer starts
+    timer();
+    interRef = setInterval(timer, 1000);
+    setIntervalRef(interRef)
+
+  }
 
   const availOffer = async () => {
 
@@ -71,8 +147,13 @@ const DetailDisplay = ({ route, navigation }) => {
     })
       .then((res) => {
         if (res.data.message === "Offer Availed") {
-          alert("Offer Availed")
+          // alert("Offer Availed")
           setTimesUsed(timesUsed + 1)
+          let d = new Date();
+          let millisec = d.getTime();
+          millisec = millisec + 60000
+          AsyncStorage.setItem('timeout', JSON.stringify(millisec))
+          openRBSheet()
         }
         else {
           alert(res.data.message)
@@ -245,6 +326,48 @@ const DetailDisplay = ({ route, navigation }) => {
         source={require('../../assets/images/inback.png')}
         resizeMode='cover'
       />
+      <RBSheet
+        ref={rbSheetRef}
+        height={260}
+        openDuration={0}
+        // onClose={() => {
+        //   setSelectedGasId('123456789')
+        // }}
+        closeOnPressMask={false}
+        // closeOnDragDown={true}
+        // dragFromTopOnly={true}
+        animationType={'fade'}
+        customStyles={{
+          container: {
+            borderTopLeftRadius: 20,
+            borderTopRightRadius: 20
+            // alignItems: "center"
+          }
+        }}
+      >
+        <View style={{ alignItems: 'center', }}>
+
+  
+          <Text style={{
+            color: Colors.LinearBlue1,
+            fontSize: 25,
+            fontWeight: 'bold',
+            marginTop: 10
+          }}>
+            OFFER AVAILED
+          </Text>
+
+          <Text style={{
+            color: Colors.LinearBlue1,
+            fontSize: 25,
+            fontWeight: 'bold',
+            marginTop: 10
+          }}>
+            {timer}
+          </Text>
+
+        </View>
+      </RBSheet>
 
     </View >
   );
