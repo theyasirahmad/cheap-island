@@ -58,7 +58,8 @@ const OfferCard = ({
         limit: offer.limit,
         off: offer.off,
         usedBy: offer.used,
-        address: offer.address
+        address: offer.address,
+        offerScreen: true
       })}
       style={styles.container}
     >

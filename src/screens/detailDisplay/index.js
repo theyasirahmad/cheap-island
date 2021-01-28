@@ -19,6 +19,11 @@ const DetailDisplay = ({ route, navigation }) => {
   const rbSheetRef = useRef();
 
 
+  const [offerName, setOfferName] = useState('"setOfferName"');
+  const [offerOff, setOfferOff] = useState('"setOfferOff"');
+  const [offerDescription, setOfferDescription] = useState('"setOfferDescription"');
+
+
   const {
     img,
     name,
@@ -33,7 +38,8 @@ const DetailDisplay = ({ route, navigation }) => {
     city,
     products,
     latitude,
-    longitude
+    longitude,
+    offerScreen
   } = route.params;
   // console.log('navigationnnnnnnnnn', name, descrption)
 
@@ -66,14 +72,20 @@ const DetailDisplay = ({ route, navigation }) => {
 
   React.useEffect(() => {
 
-    openRBSheet()
+    if(route.params.offerScreen){
+      openRBSheet()
+    }
 
   }, [])
 
   const openRBSheet = async () => {
 
     // rbSheetRef.current.open()
-    let timeout = await AsyncStorage.getItem('timeout')
+    let timeout = await AsyncStorage.getItem('timeout');
+    let offerNameVar = await AsyncStorage.getItem('offerName');
+    let offerOffVar = await AsyncStorage.getItem('offerOff');
+    let offerDescriptionVar = await AsyncStorage.getItem('offerDescription');
+
     let d = new Date();
     let millisec = d.getTime()
     let difference = parseFloat(timeout) - millisec;
@@ -81,6 +93,10 @@ const DetailDisplay = ({ route, navigation }) => {
     if (difference > 0) {
       rbSheetRef.current.open()
       startTimer(difference / 1000)
+      setOfferName(offerNameVar);
+      setOfferOff(offerOffVar)
+      setOfferDescription(offerDescriptionVar)
+
     }
 
   }
@@ -96,12 +112,14 @@ const DetailDisplay = ({ route, navigation }) => {
       // get the number of seconds that have elapsed since 
       // startTimer() was called
 
-      setProgress(((60000 - parseFloat((minutes * 60)) + parseFloat(seconds))/600000).toFixed(2))
+      setProgress(((60000 - parseFloat((minutes * 60)) + parseFloat(seconds)) / 600000).toFixed(2))
 
       if (parseFloat((minutes * 60)) + parseFloat(seconds) <= 0) {
-        rbSheetRef.current.close()
-        clearInterval(intervalRef)
-        clearInterval(interRef)
+        if(rbSheetRef.current){
+          rbSheetRef.current.close()
+          clearInterval(intervalRef)
+          clearInterval(interRef)
+        }
 
       }
 
@@ -153,6 +171,10 @@ const DetailDisplay = ({ route, navigation }) => {
           let millisec = d.getTime();
           millisec = millisec + 60000
           AsyncStorage.setItem('timeout', JSON.stringify(millisec))
+          AsyncStorage.setItem('offerName', JSON.stringify(name));
+          AsyncStorage.setItem('offerOff', JSON.stringify(off));
+          AsyncStorage.setItem('offerDescription', JSON.stringify(description));
+
           openRBSheet()
         }
         else {
@@ -347,7 +369,7 @@ const DetailDisplay = ({ route, navigation }) => {
       >
         <View style={{ alignItems: 'center', }}>
 
-  
+
           <Text style={{
             color: Colors.LinearBlue1,
             fontSize: 25,
@@ -365,6 +387,31 @@ const DetailDisplay = ({ route, navigation }) => {
           }}>
             {timer}
           </Text>
+
+          <Text style={{
+            color: Colors.LinearBlue1,
+            fontSize: 20,
+            fontWeight: 'bold',
+            marginTop: 10
+          }}>
+            {offerName ? JSON.parse(offerName) : ""}
+          </Text>
+          <Text style={{
+            color: Colors.LinearBlue1,
+            fontSize: 20,
+            fontWeight: 'bold',
+            marginTop: 10
+          }}>
+            {offerOff}
+          </Text>
+          {/* <Text style={{
+            color: Colors.LinearBlue1,
+            fontSize: 20,
+            fontWeight: 'bold',
+            marginTop: 10
+          }}>
+            {offerDescription ? JSON.parse(offerDescription) : ""}
+          </Text> */}
 
         </View>
       </RBSheet>
