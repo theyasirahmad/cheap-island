@@ -127,7 +127,11 @@ const SignupScreen = ({
         .catch((err) => {
           setLoading(false)
           // alert("Some error occured while Registering user")
-          alert(err)
+          alert(err.response.data.message)
+
+          // console.log(err)
+
+          // alert(err)
         })
       // setLoading(false);
     }

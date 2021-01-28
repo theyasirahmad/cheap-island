@@ -71,7 +71,7 @@ const LoginScreen = ({
           AsyncStorage.setItem('token', res.data.token)
           if (res.data.user.emailVerified) {
             AsyncStorage.setItem('emailVerified', "true")
-            navigation.navigate('BottomTabNav')
+            navigation.replace('BottomTabNav')
           } else {
             AsyncStorage.setItem('emailVerified', "false")
             navigation.navigate('verification')
@@ -86,7 +86,12 @@ const LoginScreen = ({
         })
         .catch((err) => {
           setLoading(false)
-          alert(err)
+          alert(err.response.data.message)
+          // console.log()
+          // console.log(err.data)
+
+          // alert('"Email not valid or "W"' )
+
         })
     }
     // setLoading(false);
@@ -137,7 +142,7 @@ const LoginScreen = ({
             navigation.navigate('forgetPassword');
           }}>
           <Text style={styles.text2}>
-            Forgort password?
+            Forgot password?
           </Text>
         </TouchableOpacity>
         <Animatable.View animation={'fadeInDown'}>
