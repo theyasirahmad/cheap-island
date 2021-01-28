@@ -356,7 +356,7 @@ const GasStation = () => {
                         Name: {viewStation.StationName}
                       </Text>
                       <Text style={styles.txtDetail}>
-                        Distance: {viewStation.d}
+                        Distance: {(viewStation.d/1000).toFixed(1) +  " km"}
                       </Text>
 
                       <View style={{ width: '90%', height: 1, backgroundColor: "rgba(0,0,0,0.1)", marginVertical: 15 }} />
