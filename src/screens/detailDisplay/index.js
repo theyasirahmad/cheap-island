@@ -298,7 +298,7 @@ const DetailDisplay = ({ route, navigation }) => {
                 <Image
                   source={{
                     uri:
-                      connectionString + "/" + itemData.item
+                     itemData.item
                   }}
                   resizeMode={"contain"}
                   style={{
