@@ -68,8 +68,8 @@ const OfferCard = ({
         <Image
           // source={{ uri: connectionString + "/" + img }}
           source={{ uri: img }}
-          style={{ width: 50, height: 50, borderRadius: 30 }}
-          resizeMode="cover"
+          style={{ width: 50, height: 50, borderRadius: 30, overflow:'hidden' }}
+          resizeMode="contain"
         />
         <View style={{ marginHorizontal: 12 }}>
           <Text style={{ color: "rgba(0,0,0,0.5)" }}>{offer.name}</Text>
