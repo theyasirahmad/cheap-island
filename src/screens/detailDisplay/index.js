@@ -18,6 +18,7 @@ const DetailDisplay = ({ route, navigation }) => {
 
   const rbSheetRef = useRef();
 
+  const [loading, setLoading] = useState(false);
 
   const [offerName, setOfferName] = useState('"setOfferName"');
   const [offerOff, setOfferOff] = useState('"setOfferOff"');
@@ -72,7 +73,7 @@ const DetailDisplay = ({ route, navigation }) => {
 
   React.useEffect(() => {
 
-    if(route.params.offerScreen){
+    if (route.params.offerScreen) {
       openRBSheet()
     }
 
@@ -115,7 +116,7 @@ const DetailDisplay = ({ route, navigation }) => {
       setProgress(((60000 - parseFloat((minutes * 60)) + parseFloat(seconds)) / 600000).toFixed(2))
 
       if (parseFloat((minutes * 60)) + parseFloat(seconds) <= 0) {
-        if(rbSheetRef.current){
+        if (rbSheetRef.current) {
           rbSheetRef.current.close()
           clearInterval(intervalRef)
           clearInterval(interRef)
@@ -152,6 +153,7 @@ const DetailDisplay = ({ route, navigation }) => {
 
     let token = await AsyncStorage.getItem('token');
     // console.log(token);
+    setLoading(true)
     console.log(id)
     axios({
       url: `${connectionString}/offer/use-offer`,
@@ -164,6 +166,7 @@ const DetailDisplay = ({ route, navigation }) => {
       }
     })
       .then((res) => {
+        setLoading(false)
         if (res.data.message === "Offer Availed") {
           // alert("Offer Availed")
           setTimesUsed(timesUsed + 1)
@@ -183,6 +186,7 @@ const DetailDisplay = ({ route, navigation }) => {
       })
       .catch((err) => {
         console.log(err)
+        setLoading(false)
         alert('Internal Server Error')
       })
   }
@@ -218,6 +222,7 @@ const DetailDisplay = ({ route, navigation }) => {
           <View style={{ padding: 8 }}>
             {offerAvail !== null && offerAvail !== undefined && offerAvail === true ?
               <TouchableOpacity
+                disabled={loading}
                 onPress={availOffer}
                 style={styles.btnAvail}>
                 <Text style={{ color: "#fff" }}>Use offer</Text>
