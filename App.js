@@ -5,13 +5,15 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/src/integration/react';
 import { store, persister } from './src/redux/store';
 import RootNavigator from './src/navigation/AppNavigator';
-
+import { Root } from 'native-base'
 export default function App() {
   return (
     <Provider store={store}>
       <PersistGate persistor={persister}>
         <NavigationContainer>
-          <RootNavigator />
+          <Root>
+            <RootNavigator />
+          </Root>
         </NavigationContainer>
       </PersistGate>
     </Provider>

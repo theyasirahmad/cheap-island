@@ -1,14 +1,16 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import React, { useState, useRef } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, FlatList, ImageBackground, Image, Dimensions } from 'react-native';
+import { View, Modal, Text, StyleSheet, ScrollView, TouchableOpacity, FlatList, ImageBackground, Image, Dimensions } from 'react-native';
 import connectionString from '../../api/api';
 import GlobalHeader from '../../Components/GlobalHeader';
 import { Colors } from '../../constants/theme';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps'; // remove PROVIDER_GOOGLE import if not using Google Maps
 import RBSheet from "react-native-raw-bottom-sheet";
-
-
+import ImageViewer from 'react-native-image-zoom-viewer';
+import { Toast } from 'native-base'
+import * as Font from 'expo-font';
+import { Ionicons, Entypo } from '@expo/vector-icons';
 const DetailDisplay = ({ route, navigation }) => {
 
 
@@ -42,6 +44,9 @@ const DetailDisplay = ({ route, navigation }) => {
     longitude,
     offerScreen
   } = route.params;
+
+  const [imageSelected, setImageSelected] = useState(null);
+
   // console.log('navigationnnnnnnnnn', name, descrption)
 
   const [timesUsed, setTimesUsed] = useState(0)
@@ -65,6 +70,15 @@ const DetailDisplay = ({ route, navigation }) => {
         })
       }
     }
+
+    const loadFont = async () => {
+      await Font.loadAsync({
+        'Roboto': require('../../../node_modules/native-base/Fonts/Roboto_medium.ttf'),
+        'Roboto_medium': require('../../../node_modules/native-base/Fonts/Roboto_medium.ttf'),
+        ...Ionicons.font,
+      })
+    }
+    loadFont()
     getUserId()
   }, [])
 
@@ -295,18 +309,29 @@ const DetailDisplay = ({ route, navigation }) => {
               horizontal={true}
               pagingEnabled={true}
               renderItem={(itemData) => (
-                <Image
-                  source={{
-                    uri:
-                     itemData.item
-                  }}
-                  resizeMode={"contain"}
-                  style={{
-                    width: Dimensions.get('window').width * .9 - 16,
-                    height: Dimensions.get('window').width * .9 - 16,
-                    backgroundColor: "transparent"
-                  }}
-                />
+                <TouchableOpacity onPress={() => {
+
+                  Toast.show({
+                    text: 'Swipe Down Image To Close Fullscreen',
+                    buttonText: '',
+                    type: "danger"
+                  })
+                  setImageSelected(itemData.item)
+
+                }}>
+                  <Image
+                    source={{
+                      uri:
+                        itemData.item
+                    }}
+                    resizeMode={"contain"}
+                    style={{
+                      width: Dimensions.get('window').width * .9 - 16,
+                      height: Dimensions.get('window').width * .9 - 16,
+                      backgroundColor: "black"
+                    }}
+                  />
+                </TouchableOpacity>
               )}
             />
 
@@ -420,7 +445,28 @@ const DetailDisplay = ({ route, navigation }) => {
 
         </View>
       </RBSheet>
+      {
+        imageSelected &&
+        <Modal visible={true} transparent={true} >
+          {/* <View style={{backgroundColor:'rgba(0,0,0,0.6)'}}> */}
+          <View style={{ backgroundColor: 'rgba(0,0,0,0.6)', flexDirection: 'row-reverse', }}>
+            <TouchableOpacity onPress={() => { setImageSelected(null) }}>
+              <Entypo style={{ backgroundColor: 'transparent', padding: 10 }}
+                size={30}
+                color="white"
+                name={'cross'}
+              />
+            </TouchableOpacity>
+          </View>
+          <ImageViewer
+            renderIndicator={() => { return null }}
+            backgroundColor='rgba(0,0,0,0.6)'
+            enableSwipeDown={true}
+            onCancel={() => { setImageSelected(null) }} imageUrls={[{ url: imageSelected }]} />
 
+          {/* </View> */}
+        </Modal>
+      }
     </View >
   );
 };
