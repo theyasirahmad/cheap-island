@@ -198,7 +198,7 @@ const PointOfInterest = ({ navigation }) => {
                   }}
                   style={{
                     position: 'relative',
-                    minHeight: Dimensions.get('window').height * 0.80,
+                    minHeight: Dimensions.get('window').height * 1,
                     // zIndex:-100,
                     width: '100%',
                     top: 0,
