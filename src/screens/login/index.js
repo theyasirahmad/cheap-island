@@ -137,7 +137,7 @@ const LoginScreen = ({
             navigation.navigate('forgetPassword');
           }}>
           <Text style={styles.text2}>
-            Forget password?
+            Forgort password?
           </Text>
         </TouchableOpacity>
         <Animatable.View animation={'fadeInDown'}>
@@ -157,7 +157,7 @@ const LoginScreen = ({
 
         <Animatable.View animation={'fadeInDown'} style={styles.bot}>
           <Text style={styles.text3}>
-            Dont have an account?
+            Don't have an account?
           </Text>
           <TouchableOpacity
             onPress={() => {
