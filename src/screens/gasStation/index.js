@@ -288,6 +288,7 @@ const GasStation = () => {
                     {/* <ScrollView style={styles.containerList} showsVerticalScrollIndicator={false}> */}
                     <View style={styles.containerList}>
                       <FlatList
+                        style={{ marginBottom: 100 }}
                         showsVerticalScrollIndicator={false}
                         numColumns={1}
                         data={gasStations}
@@ -319,8 +320,8 @@ const GasStation = () => {
                                 latitude={latitude}
                                 longitude={longitude}
                                 geo={itemData.item.geo}
-                                bensin95={itemData.item.bensin95_discount}
-                                diesel={itemData.item.diesel_discount}
+                                bensin95={itemData.item.bensin95}
+                                diesel={itemData.item.diesel}
                               />
                             </TouchableOpacity>
                           </View>
@@ -356,7 +357,7 @@ const GasStation = () => {
                         Name: {viewStation.StationName}
                       </Text>
                       <Text style={styles.txtDetail}>
-                        Distance: {(viewStation.d/1000).toFixed(1) +  " km"}
+                        Distance: {(viewStation.d / 1000).toFixed(1) + " km"}
                       </Text>
 
                       <View style={{ width: '90%', height: 1, backgroundColor: "rgba(0,0,0,0.1)", marginVertical: 15 }} />
@@ -411,7 +412,6 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 15,
     // paddingBottom:180,
     backgroundColor: "#fff",
-    maxHeight: Dimensions.get('window').height * 0.4,
   },
   viewMapConatiner: {
     overflow: "hidden",
