@@ -363,7 +363,7 @@ const GasStation = () => {
                       <View style={{ width: '90%', height: 1, backgroundColor: "rgba(0,0,0,0.1)", marginVertical: 15 }} />
 
                       <Text style={{ fontSize: 18, fontWeight: "bold", color: 'rgba(0,0,0,0.4)' }}>
-                        Bension95
+                        Petrol
                       </Text>
                       <View style={{ flexDirection: "row" }}>
                         <Text style={styles.txtDetail}>Price: {viewStation.fuel1}</Text>
