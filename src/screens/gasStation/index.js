@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { View, StyleSheet, Text, TouchableOpacity, FlatList, Dimensions, StatusBar, ImageBackground } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, FlatList, Dimensions, TouchableHighlight, ImageBackground } from 'react-native';
 import GlobalHeader from '../../Components/GlobalHeader';
 import GasStationCard from '../../Components/GasStataionCard'
 import { StationList as STATIONLIST } from '../../dummyData/dummyData'
@@ -290,35 +290,37 @@ const GasStation = () => {
                       data={gasStations}
                       keyExtractor={(item) => item.key}
                       renderItem={(itemData) => (
-                            <TouchableOpacity
-                              key={Math.random() * 1000 * Math.random() + 200}
-                              onPress={() => {
-                                // setShowMap(false)
-                                setSelectedGasId(itemData.item.key)
-                                setMapLatitude(itemData.item.geo.lat)
-                                setMapLongitude(itemData.item.geo.lon)
-                                openSheet(
-                                  itemData.item.name,
-                                  itemData.item.company,
-                                  itemData.item.bensin95,
-                                  itemData.item.bensin95_discount,
-                                  itemData.item.diesel,
-                                  itemData.item.diesel_discount,
-                                  itemData.item.geo
-                                )
-                              }
-                              }>
-                              <GasStationCard
-                                backgroundBlueColor={Colors.LinearBlue1}
-                                StationName={itemData.item.name}
-                                favourite={itemData.item.favourite}
-                                latitude={latitude}
-                                longitude={longitude}
-                                geo={itemData.item.geo}
-                                bensin95={itemData.item.bensin95}
-                                diesel={itemData.item.diesel}
-                              />
-                            </TouchableOpacity>
+                        <TouchableHighlight
+                          onPress={() => {
+                            // setShowMap(false)
+
+
+                            setSelectedGasId(itemData.item.key)
+                            setMapLatitude(itemData.item.geo.lat)
+                            setMapLongitude(itemData.item.geo.lon)
+                            openSheet(
+                              itemData.item.name,
+                              itemData.item.company,
+                              itemData.item.bensin95,
+                              itemData.item.bensin95_discount,
+                              itemData.item.diesel,
+                              itemData.item.diesel_discount,
+                              itemData.item.geo
+                            )
+                          }
+                          }>
+                          <GasStationCard
+                            backgroundBlueColor={Colors.LinearBlue1}
+                            StationName={itemData.item.name}
+                            favourite={itemData.item.favourite}
+                            latitude={latitude}
+                            longitude={longitude}
+                            geo={itemData.item.geo}
+                            bensin95={itemData.item.bensin95}
+                            diesel={itemData.item.diesel}
+                          />
+                        </TouchableHighlight>
+
                       )}
                     />
                   </View>
@@ -331,7 +333,7 @@ const GasStation = () => {
                     }}
                     // closeOnDragDown={true}
                     // dragFromTopOnly={true}
-                    animationType={'fade'}
+                    animationType={'none'}
                     customStyles={{
                       container: {
                         justifyContent: "center",
