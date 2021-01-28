@@ -30,10 +30,10 @@ const GasStationCard = ({ StationName, favourite, latitude, longitude, geo, bens
       </Text> */}
       <View>
         <Text style={{ marginHorizontal: 10, color: "rgba(0,0,0,0.4)" }}>
-          {bensin95 + " kr"}
+          {"Petrol " + bensin95 + " kr"}
         </Text>
         <Text style={{ marginHorizontal: 10, color: "rgba(0,0,0,0.4)" }}>
-          {diesel + " kr"}
+          {"Diesel " + diesel + " kr"}
         </Text>
       </View>
       {/* <TouchableOpacity onPress={()=>{}}>
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.20,
     shadowRadius: 1.41,
     elevation: 2,
-    borderBottomColor:'#eee',
+    borderBottomColor: '#eee',
     borderBottomWidth: 1,
 
   },
