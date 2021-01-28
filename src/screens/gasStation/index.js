@@ -215,7 +215,7 @@ const GasStation = () => {
                 :
                 <>
                   <View style={styles.viewMapConatiner}>
-                    <View style={{ width: "100%", height: Dimensions.get('window').height * 0.5, backgroundColor: "#bbb" }}>
+                    <View style={{ width: "100%", backgroundColor: "#bbb" }}>
                       {
                         latitude && longitude && showMap &&
                         <MapView
@@ -238,12 +238,8 @@ const GasStation = () => {
                           // }}
                           style={{
                             position: 'relative',
-                            minHeight: '100%',
+                            height: '100%',
                             width: '100%',
-                            top: 0,
-                            left: 0,
-                            right: 0,
-                            bottom: 0,
                             marginBottom: 1,
                             borderWidth: 2,
                           }}
@@ -285,16 +281,15 @@ const GasStation = () => {
                         </MapView>
                       }
                     </View>
-                    {/* <ScrollView style={styles.containerList} showsVerticalScrollIndicator={false}> */}
-                    <View style={styles.containerList}>
-                      <FlatList
-                        style={{ marginBottom: 100 }}
-                        showsVerticalScrollIndicator={false}
-                        numColumns={1}
-                        data={gasStations}
-                        keyExtractor={(item) => item.key}
-                        renderItem={(itemData) => (
-                          <View>
+                  </View>
+                  {/* <ScrollView style={styles.containerList} showsVerticalScrollIndicator={false}> */}
+                  <View style={[styles.containerList,]}>
+                    <FlatList
+                      showsVerticalScrollIndicator={false}
+                      numColumns={1}
+                      data={gasStations}
+                      keyExtractor={(item) => item.key}
+                      renderItem={(itemData) => (
                             <TouchableOpacity
                               key={Math.random() * 1000 * Math.random() + 200}
                               onPress={() => {
@@ -324,11 +319,8 @@ const GasStation = () => {
                                 diesel={itemData.item.diesel}
                               />
                             </TouchableOpacity>
-                          </View>
-
-                        )}
-                      />
-                    </View>
+                      )}
+                    />
                   </View>
                   <RBSheet
                     ref={rbSheetRef}
@@ -411,11 +403,12 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 15,
     borderBottomRightRadius: 15,
     // paddingBottom:180,
+    // maxHeight:100,
     backgroundColor: "#fff",
+    // maxHeight: Dimensions.get('window').height * 0.5
   },
   viewMapConatiner: {
-    overflow: "hidden",
-    // maxHeight: Dimensions.get('window').height*0.68,
+    height: Dimensions.get('window').height * 0.5,
     width: "100%",
     marginTop: -20,
     borderRadius: 20,
