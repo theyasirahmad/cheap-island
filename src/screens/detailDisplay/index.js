@@ -406,33 +406,47 @@ const DetailDisplay = ({ route, navigation }) => {
             fontWeight: 'bold',
             marginTop: 10
           }}>
-            OFFER AVAILED
+            OFFER IS ACTIVE
           </Text>
-
           <Text style={{
-            color: Colors.LinearBlue1,
-            fontSize: 25,
+            color: 'black',
+            fontSize: 14,
             fontWeight: 'bold',
-            marginTop: 10
+            marginTop: 0
           }}>
-            {timer}
-          </Text>
-
-          <Text style={{
-            color: Colors.LinearBlue1,
-            fontSize: 20,
-            fontWeight: 'bold',
-            marginTop: 10
-          }}>
-            {offerName ? JSON.parse(offerName) : ""}
+            Show Employee Your screen
           </Text>
           <Text style={{
             color: Colors.LinearBlue1,
             fontSize: 20,
             fontWeight: 'bold',
+            marginTop: 10,
+            paddingLeft:15,
+            paddingRight:15
+          }}>
+           You have {timer} to show Employee your screen
+          </Text>
+
+          <Text style={{
+            color: Colors.LinearBlue1,
+            fontSize: 14,
+            fontWeight: 'bold',
             marginTop: 10
           }}>
-            {offerOff}
+         <Text style={{color:'black'}}>
+         Offer Name:
+         </Text> {offerName ? JSON.parse(offerName) : ""}
+          </Text>
+          <Text style={{
+            color: Colors.LinearBlue1,
+            fontSize: 14,
+            fontWeight: 'bold',
+            marginTop: 10,
+            textAlign:'center'
+          }}>
+          <Text style={{color:"black"}}>
+          Discount Percentage:
+            </Text> {offerOff}
           </Text>
           {/* <Text style={{
             color: Colors.LinearBlue1,
