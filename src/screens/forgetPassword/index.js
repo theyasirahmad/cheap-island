@@ -275,7 +275,7 @@ const ForgetPassword = ({ navigation }) => {
                     />
                     <View style={styles.mid}>
                         <Animatable.Text animation={'fadeInDown'} style={styles.txtSignup}>
-                            FORGET PASSWORD
+                            FORGOT PASSWORD
                     </Animatable.Text>
                     </View>
                 </View>
