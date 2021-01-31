@@ -69,6 +69,7 @@ const GasStation = () => {
           setLongitude(location.coords.longitude)
           setLoading(false)
           setLocationDenied(false)
+          getGasStations(location.coords.latitude,location.coords.longitude)
         }
 
       } catch (error) {
@@ -99,7 +100,7 @@ const GasStation = () => {
     return comparison;
   }
 
-  const openSheet = (StationName, company, fuel1, discount1, fuel2, discount2, geo) => {
+  const openSheet = (StationName, company, fuel1, discount1, fuel2, discount2, geo,distance) => {
 
 
     const R = 6371e3; // metres
@@ -116,14 +117,14 @@ const GasStation = () => {
     const d = R * c; // in metres
 
     setViewStation(
-      { StationName, company, fuel1, discount1, fuel2, discount2, d }
+      { StationName, company, fuel1, discount1, fuel2, discount2, d:distance }
     )
     // console.log('View Stationnnnnnnnnnnnn', viewStation)
     rbSheetRef.current.open()
     // gasStations.filter((key)=>)
   }
 
-  const getGasStations = () => {
+  const getGasStations = (lat1,lon1) => {
 
     axios({
       url: 'https://raw.githubusercontent.com/gasvaktin/gasvaktin/master/vaktin/gas.min.json',
@@ -138,18 +139,33 @@ const GasStation = () => {
 
         tempArr.map((item) => {
 
-          const R = 6371e3; // metres
-          const φ1 = latitude * Math.PI / 180; // φ, λ in radians
-          const φ2 = item.geo.lat * Math.PI / 180;
-          const Δφ = (item.geo.lat - latitude) * Math.PI / 180;
-          const Δλ = (item.geo.lon - longitude) * Math.PI / 180;
+          // const R = 6371e3; // metres
+          // const φ1 = latitude * Math.PI / 180; // φ, λ in radians
+          // const φ2 = item.geo.lat * Math.PI / 180;
+          // const Δφ = (item.geo.lat - latitude) * Math.PI / 180;
+          // const Δλ = (item.geo.lon - longitude) * Math.PI / 180;
 
+          // const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+          //   Math.cos(φ1) * Math.cos(φ2) *
+          //   Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+          // const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+          // const d = R * c; // in metres
+
+
+          const R = 6371e3; // metres
+          const φ1 = (lat1 * Math.PI) / 180; // φ, λ in radians
+          const φ2 = (item.geo.lat * Math.PI) / 180;
+          const Δφ = (item.geo.lat - lat1) * Math.PI / 180;
+          const Δλ = (item.geo.lon - lon1) * Math.PI / 180;
+      
           const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
             Math.cos(φ1) * Math.cos(φ2) *
             Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
           const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
+      
           const d = R * c; // in metres
+      
 
           tempArr2.push({ station: item, distance: d })
 
@@ -160,10 +176,12 @@ const GasStation = () => {
 
         tempArr3.map((item) => {
 
-          tempArr4.push(item.station)
+          tempArr4.push({ ...item.station,distance:item.distance})
         })
 
         setGasStations([...tempArr4])
+
+        console.table(tempArr4)
 
       })
       .catch((err) => {
@@ -173,7 +191,7 @@ const GasStation = () => {
   }
 
   React.useEffect(() => {
-    getGasStations()
+    // getGasStations()
     getMyLocation()
   }, [])
 
@@ -263,7 +281,8 @@ const GasStation = () => {
                                       item.bensin95_discount,
                                       item.diesel,
                                       item.diesel_discount,
-                                      item.geo
+                                      item.geo,
+                                      item.distance
                                     )
                                     // setTimeout(() => {
                                     //   setShowMap(true)
@@ -305,7 +324,8 @@ const GasStation = () => {
                               itemData.item.bensin95_discount,
                               itemData.item.diesel,
                               itemData.item.diesel_discount,
-                              itemData.item.geo
+                              itemData.item.geo,
+                              itemData.item.distance
                             )
                           }
                           }>
@@ -318,6 +338,7 @@ const GasStation = () => {
                             geo={itemData.item.geo}
                             bensin95={itemData.item.bensin95}
                             diesel={itemData.item.diesel}
+                            distance={itemData.item.distance}
                           />
                         </TouchableHighlight>
 

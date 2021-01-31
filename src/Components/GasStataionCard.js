@@ -3,7 +3,7 @@ import { Colors } from '../constants/theme';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign'
 
-const GasStationCard = ({ StationName, favourite, latitude, longitude, geo, bensin95, diesel }) => {
+const GasStationCard = ({ StationName, favourite, latitude, longitude, geo, bensin95, diesel, distance}) => {
   // alert(cardSelect)
 
   const R = 6371e3; // metres
@@ -35,6 +35,9 @@ const GasStationCard = ({ StationName, favourite, latitude, longitude, geo, bens
         <Text style={{ marginHorizontal: 10, color: "rgba(0,0,0,0.4)" }}>
           {"Diesel " + diesel + " kr"}
         </Text>
+        {/* <Text style={{ marginHorizontal: 10, color: "rgba(0,0,0,0.4)" }}>
+          {"Distance " + distance + " m"}
+        </Text> */}
       </View>
       {/* <TouchableOpacity onPress={()=>{}}>
         { favourite ? 
