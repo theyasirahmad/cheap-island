@@ -263,11 +263,15 @@ const styles = StyleSheet.create({
   },
   btnSearch: {
     paddingHorizontal: 12, backgroundColor: "#bbb",
-    height: Dimensions.get('window').height * 0.09,
+    // height: Dimensions.get('window').height * 0.09,
+    height:50,
     alignItems: "center", justifyContent: "center"
   },
   inputSearch: {
-    backgroundColor: "#fff", height: Dimensions.get('window').height * 0.09,
+    backgroundColor: "#fff", 
+    
+    // height: Dimensions.get('window').height * 0.09,
+    height:50,
     flex: 1, paddingHorizontal: 15, paddingVertical: 0
   },
   viewSearch: {
@@ -277,7 +281,8 @@ const styles = StyleSheet.create({
     // alignItems: "center",
     // position: "absolute", top: 80, zIndex: 100
     backgroundColor: '#fff',
-    height: Dimensions.get('window').height * 0.09,
+    // height: Dimensions.get('window').height * 0.09,
+    height:50,
     width: Dimensions.get('window').width * 0.9,
     alignSelf: "center",
     borderRadius: 8,

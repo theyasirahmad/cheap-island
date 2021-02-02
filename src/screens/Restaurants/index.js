@@ -219,7 +219,8 @@ const styles = StyleSheet.create({
   },
   searchbarStyle: {
     backgroundColor: '#fff',
-    height: HEIGHT * 0.09,
+    // height: HEIGHT * 0.09,
+    height:50,
     width: WIDTH * 0.9,
     alignSelf: "center",
     borderRadius: 8,
@@ -233,12 +234,15 @@ const styles = StyleSheet.create({
   inputStyle: {
     flex: 1,
     backgroundColor: "#fff",
-    height: HEIGHT * 0.09,
+    // height: HEIGHT * 0.09,
     paddingHorizontal: 15,
-    paddingVertical: 0
+    paddingVertical: 0,
+    height:50
   },
   btnSearch: {
     backgroundColor: "#bbb", justifyContent: "center", alignItems: "center",
-    paddingHorizontal: 12, height: HEIGHT * 0.09
+    paddingHorizontal: 12, 
+    // height: HEIGHT * 0.09,
+    height:50,
   }
 });
