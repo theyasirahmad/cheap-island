@@ -260,8 +260,9 @@ const GasStation = () => {
                             position: 'relative',
                             height: '100%',
                             width: '100%',
-                            marginBottom: 1,
-                            borderWidth: 2,
+                            borderWidth:0
+                            // marginBottom: 1,
+                            // borderWidth: 2,
                           }}
                           onMapReady={_onMapReady}
                         >
@@ -435,11 +436,13 @@ const styles = StyleSheet.create({
   viewMapConatiner: {
     height: Dimensions.get('window').height * 0.5,
     width: "100%",
-    marginTop: -20,
-    borderRadius: 20,
+    marginTop: -30,
+    borderRadius: 25,
+    overflow:'hidden',
     alignSelf: "center",
-    borderWidth: 1,
+    borderWidth: 0,
     borderColor: Colors.borderCardColor,
+
     // justifyContent:"center",
     // padding:1,
     // paddingBottom:10,
