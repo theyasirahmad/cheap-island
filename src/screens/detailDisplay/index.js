@@ -416,7 +416,7 @@ const DetailDisplay = ({ route, navigation }) => {
             fontWeight: 'bold',
             marginTop: 0
           }}>
-            Show Employee Your screen
+            Show employee your screen
           </Text>
           <Text style={{
             color: Colors.LinearBlue1,
@@ -424,9 +424,12 @@ const DetailDisplay = ({ route, navigation }) => {
             fontWeight: 'bold',
             marginTop: 10,
             paddingLeft:15,
-            paddingRight:15
+            paddingRight:15,
+            textAlign:'center',
+            width:'100%',
+
           }}>
-           You have {timer} to show Employee your screen
+           You have {timer} to show employee your screen
           </Text>
 
           <Text style={{
