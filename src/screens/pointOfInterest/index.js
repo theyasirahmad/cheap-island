@@ -182,14 +182,14 @@ const PointOfInterest = ({ navigation }) => {
       <View style={styles.viewMapConatiner}>
         {
           loading ?
-            <ActivityIndicator color={Colors.LinearBlue1} style={{ marginTop: 100 }} />
+            <ActivityIndicator color={Colors.LinearBlue1} style={{ marginTop: 130 }} />
             :
             <>
               {
                 latitude && longitude &&
                 <MapView
                   provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-                  showsMyLocationButton={true}
+                  // showsMyLocationButton={true}
                   showsUserLocation={true}
 
                   initialRegion={{
@@ -207,8 +207,8 @@ const PointOfInterest = ({ navigation }) => {
                     left: 0,
                     right: 0,
                     bottom: 0,
-                    marginBottom: 1,
-                    borderWidth: 2,
+                    // marginBottom: 1,
+                    // borderWidth: 2,
                   }}
                   onMapReady={_onMapReady}
                 >
@@ -271,11 +271,25 @@ const styles = StyleSheet.create({
     flex: 1, paddingHorizontal: 15, paddingVertical: 0
   },
   viewSearch: {
-    width: Dimensions.get('window').width * 0.9, height: Dimensions.get('window').height * 0.08,
-    backgroundColor: "#fff", alignSelf: "center", marginBottom: 10, borderRadius: 8,
-    borderWidth: 1, borderColor: 'rgba(0,0,0,0.1)', overflow: "hidden", flexDirection: "row",
-    alignItems: "center",
-    position: "absolute", top: 80, zIndex: 100
+    // width: Dimensions.get('window').width * 0.9, height: Dimensions.get('window').height * 0.08,
+    // backgroundColor: "#fff", alignSelf: "center", marginBottom: 10, borderRadius: 8,
+    // borderWidth: 1, borderColor: 'rgba(0,0,0,0.1)', overflow: "hidden", flexDirection: "row",
+    // alignItems: "center",
+    // position: "absolute", top: 80, zIndex: 100
+    backgroundColor: '#fff',
+    height: Dimensions.get('window').height * 0.09,
+    width: Dimensions.get('window').width * 0.9,
+    alignSelf: "center",
+    borderRadius: 8,
+    flexDirection: "row",
+    overflow: "hidden",
+    marginBottom: 10,
+    borderWidth: 1,
+    borderColor: 'rgba(0,0,0,0.1)',
+    padding: 0,
+    position:"absolute",
+    top:110,
+    zIndex: 100
   },
   containerList: {
     // padding:10,
@@ -303,10 +317,10 @@ const styles = StyleSheet.create({
     width: "100%",
     borderRadius: 25,
     alignSelf: "center",
-    borderWidth: 1,
-    borderColor: Colors.borderCardColor,
+    borderWidth: 0,
+    // borderColor: Colors.borderCardColor,
     // backgroundColor: 'red',
-    marginTop: -20
+    marginTop: -30
     // justifyContent:"center",
     // padding:1,
     // paddingBottom:10,

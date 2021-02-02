@@ -32,6 +32,9 @@ const GlobalHeader = (props) => {
       style={{
         // overflow: 'hidden',
         // backgroundColor: '#42B1F8',
+
+        // backgroundColor: Colors.LinearBlue1,
+        backgroundColor:"transparent"
       }}>
       <ImageBackground style={{ width: "100%", height: 110 }} resizeMode='stretch' source={require('../assets/images/tab.png')}>
         <Header
