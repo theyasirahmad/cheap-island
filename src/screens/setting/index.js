@@ -79,6 +79,9 @@ const Setting = ({ navigation }) => {
       BackIconColor='#fff'
       navigation={navigation}
     />
+      <StatusBar backgroundColor={'transparent'} translucent={true} />
+
+
     <ScrollView showsVerticalScrollIndicator={false}>
       <TouchableOpacity onPress={() => navigation.navigate('TermsConditions')} style={styles.btnAboutus}>
         <Text style={{ color: 'rgba(0,0,0,0.5)', fontSize: 15 }}>About Us</Text>

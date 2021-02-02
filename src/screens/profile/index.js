@@ -156,10 +156,12 @@ const Profile = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor={Colors.LinearBlue1} />
+      {/* <StatusBar backgroundColor={'transparent'} translucent={true} /> */}
+
 
       <TouchableOpacity
         onPress={() => navigation.goBack()}
-        style={{ position: 'absolute', top: 20, left: 15, zIndex: 100 }}>
+        style={{ position: 'absolute', top: 30, left: 15, zIndex: 100 }}>
         <MaterialIcons
           name={'arrow-back'}
           size={28}

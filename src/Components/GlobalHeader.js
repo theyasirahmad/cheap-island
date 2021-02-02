@@ -33,8 +33,10 @@ const GlobalHeader = (props) => {
         // overflow: 'hidden',
         // backgroundColor: '#42B1F8',
       }}>
-      <ImageBackground style={{ width: "100%", height: 80 }} resizeMode='stretch' source={require('../assets/images/tab.png')}>
+      <ImageBackground style={{ width: "100%", height: 110 }} resizeMode='stretch' source={require('../assets/images/tab.png')}>
         <Header
+        translucent={true}
+        transparent={true}
           style={[
             {
               shadowOffset: { height: 0, width: 0 },
@@ -43,19 +45,22 @@ const GlobalHeader = (props) => {
               width: '100%',
               alignItems: 'center',
               justifyContent: 'center',
-              paddingTop: 10,
-              height: 60,
+              // paddingTop: 10,
+              // height: 60,
+              height:"100%",
               zIndex: -10,
               borderRadius: 20,
-              backgroundColor: 'transparent'
+              backgroundColor: 'transparent',
+              
+              // backgroundColor:'red'
               // backgroundColor: props.backgroundColor
               //   ? props.backgroundColor
               //   : '#fff',
               //   height: this.props.height ? this.props.height : 70,
             },
-            Platform.OS === 'ios' ? { borderBottomWidth: 0 } : {},
+            Platform.OS === 'ios' ? { borderBottomWidth: 0,paddingBottom:15 } : {},
           ]}>
-          <Left style={{ flex: 2, marginBottom: 20 }}>
+          <Left style={{ flex: 2, marginBottom: 20 , }}>
             <View style={styles.viewLeft}>
               {props.Drawer && (
                 <TouchableOpacity
@@ -162,7 +167,7 @@ const GlobalHeader = (props) => {
                 <AntDesign
                   name={props.favsOnly ? "star" : "staro"}
 
-                  size={33} color="gold" style={{ marginTop: -10 }} />
+                  size={30} color="gold" style={{ marginTop: -10 }} />
               </TouchableOpacity>
             ) : null}
           </Right>

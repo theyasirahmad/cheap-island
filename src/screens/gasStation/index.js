@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { View, StyleSheet, Text, TouchableOpacity, FlatList, Dimensions, TouchableHighlight, ImageBackground } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, FlatList, Dimensions, TouchableHighlight, ImageBackground,StatusBar } from 'react-native';
 import GlobalHeader from '../../Components/GlobalHeader';
 import GasStationCard from '../../Components/GasStataionCard'
 import { StationList as STATIONLIST } from '../../dummyData/dummyData'
@@ -207,6 +207,8 @@ const GasStation = () => {
       // isFavouriteLoading={false}
       // RightIcon={true}
       />
+      <StatusBar backgroundColor={'transparent'} translucent={true} />
+
       {
         loading ?
           <ActivityIndicator

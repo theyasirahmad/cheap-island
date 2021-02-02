@@ -17,6 +17,8 @@ const TermsConditions = ({navigation}) => {
                 BackIconColor='#fff'
                 navigation={navigation}
             />
+      <StatusBar backgroundColor={'transparent'} translucent={true} />
+
             <ScrollView style={{ paddingHorizontal: 20 }} showsVerticalScrollIndicator={false}>
                 <Text style={styles.txtHeading1}>About Us</Text>
                 <Text style={{ color: "rgba(0,0,0,0.5)", marginTop: 10 }}>

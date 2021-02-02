@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Dimensions, FlatList, ScrollView, ImageBackground, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, FlatList, StatusBar, ImageBackground, TextInput, TouchableOpacity } from 'react-native';
 import GlobalHeader from '../../Components/GlobalHeader';
 import RestaurantCard from '../../Components/RestaurantCard';
 import { Colors } from '../../constants/theme';
@@ -121,6 +121,7 @@ const Restaurants = ({ navigation, route }) => {
 
   return (
     <View style={styles.container}>
+
       <GlobalHeader
         backgroundColor="#42B1F8"
         headingText="RESTAURANTS"
@@ -139,6 +140,7 @@ const Restaurants = ({ navigation, route }) => {
           }
         }}
       />
+      <StatusBar backgroundColor={'transparent'} translucent={true} />
       {
         !favsOnly &&
         <View style={styles.searchbarStyle}>

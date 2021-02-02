@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, FlatList, TextInput, Dimensions, ImageBackground } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, FlatList, TextInput, Dimensions, ImageBackground,StatusBar } from 'react-native';
 import GlobalHeader from '../../Components/GlobalHeader';
 import OfferCard from '../../Components/OfferCard';
 import { OfferList as OFFERLIST } from '../../dummyData/dummyData';
@@ -208,6 +208,8 @@ const Offer = ({ navigation, route }) => {
         favsOnly={favsOnly}
         getFavsOnly={getFavsOnly}
       />
+      <StatusBar backgroundColor={'transparent'} translucent={true} />
+      
       <>
         <View style={styles.topBtnsView}>
           {/* {toggleBtn ? */}

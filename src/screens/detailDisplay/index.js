@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import React, { useState, useRef } from 'react';
-import { View, Modal, Text, StyleSheet, ScrollView, TouchableOpacity, FlatList, ImageBackground, Image, Dimensions } from 'react-native';
+import { View, Modal, Text, StyleSheet, ScrollView, TouchableOpacity, FlatList, ImageBackground, Image, Dimensions, StatusBar } from 'react-native';
 import connectionString from '../../api/api';
 import GlobalHeader from '../../Components/GlobalHeader';
 import { Colors } from '../../constants/theme';
@@ -221,6 +221,8 @@ const DetailDisplay = ({ route, navigation }) => {
         BackIconColor='#fff'
         navigation={navigation}
       />
+      <StatusBar backgroundColor={'transparent'} translucent={true} />
+
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.viewDetail}>
           <Image

@@ -55,6 +55,8 @@ const Setting = ({ navigation }) => {
       fontSize={18}
       color="#fff"
     />
+      <StatusBar backgroundColor={'transparent'} translucent={true} />
+    
     <View style={styles.viewTop}>
       <Text style={{ color: '#fff', fontSize: 18 }}>
         {name.toUpperCase()}
@@ -132,7 +134,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 20,
     borderBottomRightRadius: 20,
     borderBottomLeftRadius: 20,
-    marginTop: -20,
+    marginTop: -27,
     justifyContent: 'center',
     alignItems: 'center',
   },

@@ -168,6 +168,8 @@ const PointOfInterest = ({ navigation }) => {
             <FontAwesome color="#fff" size={23} name="search" />
           </TouchableOpacity>
         </View> */}
+      <StatusBar backgroundColor={'transparent'} translucent={true} />
+
       <View style={styles.viewSearch}>
         <TextInput
           onChangeText={(e) => { setQuery(e) }}
