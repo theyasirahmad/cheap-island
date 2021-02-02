@@ -127,7 +127,7 @@ const DetailDisplay = ({ route, navigation }) => {
       // get the number of seconds that have elapsed since 
       // startTimer() was called
 
-      setProgress(((60000 - parseFloat((minutes * 60)) + parseFloat(seconds)) / 600000).toFixed(2))
+      setProgress(((600000 - parseFloat((minutes * 60)) + parseFloat(seconds)) / 6000000).toFixed(2))
 
       if (parseFloat((minutes * 60)) + parseFloat(seconds) <= 0) {
         if (rbSheetRef.current) {
@@ -186,7 +186,7 @@ const DetailDisplay = ({ route, navigation }) => {
           setTimesUsed(timesUsed + 1)
           let d = new Date();
           let millisec = d.getTime();
-          millisec = millisec + 60000
+          millisec = millisec + 600000
           AsyncStorage.setItem('timeout', JSON.stringify(millisec))
           AsyncStorage.setItem('offerName', JSON.stringify(name));
           AsyncStorage.setItem('offerOff', JSON.stringify(off));
