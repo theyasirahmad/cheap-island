@@ -481,9 +481,9 @@ const DetailDisplay = ({ route, navigation }) => {
           {/* <View style={{backgroundColor:'rgba(0,0,0,0.6)'}}> */}
           <View style={{ backgroundColor: 'rgba(0,0,0,0.6)', flexDirection: 'row-reverse', }}>
             <TouchableOpacity onPress={() => { setImageSelected(null) }}>
-              <Entypo style={{ backgroundColor: 'transparent', padding: 10 }}
+              <Entypo style={{ backgroundColor: 'transparent', padding: 20, paddingRight: 10 }}
                 size={30}
-                color="white"
+                color="red"
                 name={'cross'}
               />
             </TouchableOpacity>
