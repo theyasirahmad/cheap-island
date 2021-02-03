@@ -461,7 +461,9 @@ const DetailDisplay = ({ route, navigation }) => {
           }}>
             {offerDescription ? JSON.parse(offerDescription) : ""}
           </Text> */}
-
+          <TouchableOpacity style={{paddingHorizontal:20, marginTop:20, paddingVertical:7, borderRadius:5, backgroundColor:Colors.LinearBlue1}}>
+            <Text style={{color:'#fff', fontWeight:'bold'}}>Exit offer</Text>
+          </TouchableOpacity>
         </View>
       </RBSheet>
       {
