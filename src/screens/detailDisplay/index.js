@@ -186,8 +186,8 @@ const DetailDisplay = ({ route, navigation }) => {
           setTimesUsed(timesUsed + 1)
           let d = new Date();
           let millisec = d.getTime();
-          millisec = millisec + 600000
-          AsyncStorage.setItem('timeout', JSON.stringify(millisec))
+          millisec = millisec + 600000;
+          AsyncStorage.setItem('timeout', JSON.stringify(millisec));
           AsyncStorage.setItem('offerName', JSON.stringify(name));
           AsyncStorage.setItem('offerOff', JSON.stringify(off));
           AsyncStorage.setItem('offerDescription', JSON.stringify(description));
@@ -423,13 +423,13 @@ const DetailDisplay = ({ route, navigation }) => {
             fontSize: 20,
             fontWeight: 'bold',
             marginTop: 10,
-            paddingLeft:15,
-            paddingRight:15,
-            textAlign:'center',
-            width:'100%',
+            paddingLeft: 15,
+            paddingRight: 15,
+            textAlign: 'center',
+            width: '100%',
 
           }}>
-           You have {timer} to show employee your screen
+            You have {timer} to show employee your screen
           </Text>
 
           <Text style={{
@@ -438,8 +438,8 @@ const DetailDisplay = ({ route, navigation }) => {
             fontWeight: 'bold',
             marginTop: 10
           }}>
-         <Text style={{color:'black'}}>
-         Offer Name:
+            <Text style={{ color: 'black' }}>
+              Offer Name:
          </Text> {offerName ? JSON.parse(offerName) : ""}
           </Text>
           <Text style={{
@@ -447,10 +447,10 @@ const DetailDisplay = ({ route, navigation }) => {
             fontSize: 14,
             fontWeight: 'bold',
             marginTop: 10,
-            textAlign:'center'
+            textAlign: 'center'
           }}>
-          <Text style={{color:"black"}}>
-          Discount Percentage:
+            <Text style={{ color: "black" }}>
+              Discount Percentage:
             </Text> {offerOff}
           </Text>
           {/* <Text style={{
@@ -461,8 +461,17 @@ const DetailDisplay = ({ route, navigation }) => {
           }}>
             {offerDescription ? JSON.parse(offerDescription) : ""}
           </Text> */}
-          <TouchableOpacity style={{paddingHorizontal:20, marginTop:20, paddingVertical:7, borderRadius:5, backgroundColor:Colors.LinearBlue1}}>
-            <Text style={{color:'#fff', fontWeight:'bold'}}>Exit offer</Text>
+          <TouchableOpacity
+
+            onPress={() => {
+
+              let d = new Date();
+              let millisec = d.getTime();
+              AsyncStorage.setItem('timeout', JSON.stringify(millisec))
+              rbSheetRef.current.close()
+            }}
+            style={{ paddingHorizontal: 20, marginTop: 20, paddingVertical: 7, borderRadius: 5, backgroundColor: Colors.LinearBlue1 }}>
+            <Text style={{ color: '#fff', fontWeight: 'bold' }}>Exit offer</Text>
           </TouchableOpacity>
         </View>
       </RBSheet>
