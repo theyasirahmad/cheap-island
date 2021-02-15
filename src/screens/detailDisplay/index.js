@@ -423,13 +423,13 @@ const DetailDisplay = ({ route, navigation }) => {
             fontSize: 20,
             fontWeight: 'bold',
             marginTop: 10,
-            paddingLeft:15,
-            paddingRight:15,
-            textAlign:'center',
-            width:'100%',
+            paddingLeft: 15,
+            paddingRight: 15,
+            textAlign: 'center',
+            width: '100%',
 
           }}>
-           You have {timer} to show employee your screen
+            You have {timer} to show employee your screen
           </Text>
 
           <Text style={{
@@ -438,8 +438,8 @@ const DetailDisplay = ({ route, navigation }) => {
             fontWeight: 'bold',
             marginTop: 10
           }}>
-         <Text style={{color:'black'}}>
-         Offer Name:
+            <Text style={{ color: 'black' }}>
+              Offer Name:
          </Text> {offerName ? JSON.parse(offerName) : ""}
           </Text>
           <Text style={{
@@ -447,10 +447,10 @@ const DetailDisplay = ({ route, navigation }) => {
             fontSize: 14,
             fontWeight: 'bold',
             marginTop: 10,
-            textAlign:'center'
+            textAlign: 'center'
           }}>
-          <Text style={{color:"black"}}>
-          Discount Percentage:
+            <Text style={{ color: "black" }}>
+              Discount Percentage:
             </Text> {offerOff}
           </Text>
           {/* <Text style={{
@@ -468,15 +468,19 @@ const DetailDisplay = ({ route, navigation }) => {
         imageSelected &&
         <Modal visible={true} transparent={true} >
           {/* <View style={{backgroundColor:'rgba(0,0,0,0.6)'}}> */}
-          <View style={{ backgroundColor: 'rgba(0,0,0,0.6)', flexDirection: 'row-reverse', }}>
-            <TouchableOpacity onPress={() => { setImageSelected(null) }}>
-              <Entypo style={{ backgroundColor: 'transparent', padding: 10 }}
-                size={30}
-                color="white"
-                name={'cross'}
-              />
-            </TouchableOpacity>
-          </View>
+          {/* <View style={{ backgroundColor: 'rgba(0,0,0,0.6)', flexDirection: 'row-reverse', }}>
+           
+          </View> */}
+          <TouchableOpacity
+            style={{ position: 'absolute', zIndex: 999999, top: 50, right: 20 }}
+            onPress={() => { setImageSelected(null) }}>
+            <Entypo style={{ backgroundColor: 'transparent', padding: 10 }}
+              size={30}
+              color="red"
+              name={'cross'}
+            />
+          </TouchableOpacity>
+
           <ImageViewer
             renderIndicator={() => { return null }}
             backgroundColor='rgba(0,0,0,0.6)'
