@@ -467,8 +467,10 @@ const DetailDisplay = ({ route, navigation }) => {
 
               let d = new Date();
               let millisec = d.getTime();
+              console.log(JSON.stringify(millisec))
               AsyncStorage.setItem('timeout', JSON.stringify(millisec))
               rbSheetRef.current.close()
+              navigation.goBack()
             }}
             style={{ paddingHorizontal: 20, marginTop: 20, paddingVertical: 7, borderRadius: 5, backgroundColor: Colors.LinearBlue1 }}>
             <Text style={{ color: '#fff', fontWeight: 'bold' }}>Exit offer</Text>
