@@ -19,6 +19,7 @@
       "bundleIdentifier": "com.cheapiceland.deco"
     },
     "android": {
+      "useNextNotificationsApi": true,
       "config": {
         "googleMaps": {
           "apiKey": "AIzaSyAxJGcykMkAzG34ts2n_Fz35knlRiCZvBo"
