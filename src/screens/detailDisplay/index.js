@@ -186,8 +186,8 @@ const DetailDisplay = ({ route, navigation }) => {
           setTimesUsed(timesUsed + 1)
           let d = new Date();
           let millisec = d.getTime();
-          millisec = millisec + 600000
-          AsyncStorage.setItem('timeout', JSON.stringify(millisec))
+          millisec = millisec + 600000;
+          AsyncStorage.setItem('timeout', JSON.stringify(millisec));
           AsyncStorage.setItem('offerName', JSON.stringify(name));
           AsyncStorage.setItem('offerOff', JSON.stringify(off));
           AsyncStorage.setItem('offerDescription', JSON.stringify(description));
@@ -461,26 +461,33 @@ const DetailDisplay = ({ route, navigation }) => {
           }}>
             {offerDescription ? JSON.parse(offerDescription) : ""}
           </Text> */}
+          <TouchableOpacity
 
+            onPress={() => {
+
+              let d = new Date();
+              let millisec = d.getTime();
+              AsyncStorage.setItem('timeout', JSON.stringify(millisec))
+              rbSheetRef.current.close()
+            }}
+            style={{ paddingHorizontal: 20, marginTop: 20, paddingVertical: 7, borderRadius: 5, backgroundColor: Colors.LinearBlue1 }}>
+            <Text style={{ color: '#fff', fontWeight: 'bold' }}>Exit offer</Text>
+          </TouchableOpacity>
         </View>
       </RBSheet>
       {
         imageSelected &&
         <Modal visible={true} transparent={true} >
           {/* <View style={{backgroundColor:'rgba(0,0,0,0.6)'}}> */}
-          {/* <View style={{ backgroundColor: 'rgba(0,0,0,0.6)', flexDirection: 'row-reverse', }}>
-           
-          </View> */}
-          <TouchableOpacity
-            style={{ position: 'absolute', zIndex: 999999, top: 50, right: 20 }}
-            onPress={() => { setImageSelected(null) }}>
-            <Entypo style={{ backgroundColor: 'transparent', padding: 10 }}
-              size={30}
-              color="red"
-              name={'cross'}
-            />
-          </TouchableOpacity>
-
+          <View style={{ backgroundColor: 'rgba(0,0,0,0.6)', flexDirection: 'row-reverse', }}>
+            <TouchableOpacity onPress={() => { setImageSelected(null) }}>
+              <Entypo style={{ backgroundColor: 'transparent', padding: 20, paddingRight: 10 }}
+                size={30}
+                color="red"
+                name={'cross'}
+              />
+            </TouchableOpacity>
+          </View>
           <ImageViewer
             renderIndicator={() => { return null }}
             backgroundColor='rgba(0,0,0,0.6)'
