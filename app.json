@@ -4,9 +4,9 @@
     "slug": "CheapIsland_expo",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/rounded.png",
     "notification":{
-      "icon":"./assets/favicon.png"
+      "icon":"./assets/rounded.png"
    },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -26,13 +26,13 @@
         }
       },
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/rounded.png",
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.theyasirahmad.CheapIsland_expo"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/rounded.png"
     }
   }
 }
