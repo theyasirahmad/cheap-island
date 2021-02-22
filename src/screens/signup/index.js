@@ -37,9 +37,9 @@ const SignupScreen = ({
 
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
-  const [CurrentLatitude, setCurrentLatitude] = useState(null)
-  const [CurrentLongitude, setCurrentLongitude] = useState(null)
-  const [locationResults, setLocationResults] = useState(null)
+  // const [CurrentLatitude, setCurrentLatitude] = useState(null)
+  // const [CurrentLongitude, setCurrentLongitude] = useState(null)
+  // const [locationResults, setLocationResults] = useState(null)
 
   useEffect(() => {
     (async () => {
@@ -49,15 +49,15 @@ const SignupScreen = ({
         return;
       }
 
-      let location = await Location.getCurrentPositionAsync({});
-      setLocation(location);
-      setCurrentLatitude(location.coords.latitude)
-      setCurrentLongitude(location.coords.longitude)
+      // let location = await Location.getCurrentPositionAsync({});
+      // setLocation(location);
+      // setCurrentLatitude(location.coords.latitude)
+      // setCurrentLongitude(location.coords.longitude)
 
       // console.log('Locationnnnn '+CurrentLatitude, CurrentLongitude)
-      let results = await Location.reverseGeocodeAsync({ latitude: location.coords.latitude, longitude: location.coords.longitude });
+      // let results = await Location.reverseGeocodeAsync({ latitude: location.coords.latitude, longitude: location.coords.longitude });
       // alert(JSON.stringify(results.city))
-      setLocationResults(results[0].city)
+      // setLocationResults(results[0].city)
 
     })();
   }, []);
@@ -99,7 +99,7 @@ const SignupScreen = ({
         url: `${connectionString}/auth/signup`,
         method: 'POST',
         data: {
-          fullName, email, password, confirmPassword, CurrentLatitude, CurrentLongitude, locationResults
+          fullName, email, password, confirmPassword, /*CurrentLatitude, CurrentLongitude, locationResults*/
         }
 
       })
@@ -196,7 +196,7 @@ const SignupScreen = ({
         {passDontMatchErr && (
           <Text style={styles.errTxt}>Password does not match</Text>
         )}
-        <TextInput
+        {/* <TextInput
           placeholder='Latitude'
           style={styles.input}
           value={'Latitude - ' + CurrentLatitude}
@@ -213,7 +213,7 @@ const SignupScreen = ({
           style={styles.input}
           value={locationResults}
           editable={false}
-        />
+        /> */}
         {/* <Text>{JSON.stringify(location)}</Text>
         <Text>{JSON.stringify(locationResults[0].city)}</Text> */}
         {/* <Text>{JSON.stringify(location.opt)}</Text> */}
