@@ -12,7 +12,7 @@ const TermsConditions = ({ navigation }) => {
                 headingText="ABOUT US"
                 headingMargin={1}
                 fontSize={18}
-                color="#fff"
+                color="#ffffff"
                 arrow={true}
                 BackIconColor='#fff'
                 navigation={navigation}
