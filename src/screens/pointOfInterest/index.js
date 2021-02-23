@@ -11,12 +11,15 @@ import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import connectionString from '../../api/api';
 import { ActivityIndicator } from 'react-native';
+import { Overlay } from 'react-native-elements';
+import { Button } from 'native-base';
 
 
 const PointOfInterest = ({ navigation }) => {
 
 
   const [loading, setLoading] = useState(true);
+  const [locationNotAvialable, setLocationNotAvailable] = useState(false);
 
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
@@ -111,10 +114,15 @@ const PointOfInterest = ({ navigation }) => {
       }
     })
       .then((res) => {
-        setLatitude(res.data.user.latitude)
-        setLongitude(res.data.user.longitude)
+        if (res.data.user.latitude && res.data.user.longitude) {
+            setLatitude(res.data.user.latitude) 
+        setLongitude(res.data.user.longitude) 
+        setLocationNotAvailable(!false)
         setCity(res.data.user.city)
-        getPOI(res.data.user.city)
+        getPOI(res.data.user.city) 
+      } 
+       
+       
       })
       .catch((err) => {
         // setLoading(false)
@@ -146,7 +154,11 @@ const PointOfInterest = ({ navigation }) => {
 
   }, [])
 
+  const [visible, setVisible] = useState(true);
 
+  const toggleOverlay = () => {
+    setVisible(!visible);
+  };
 
 
   return (
@@ -184,9 +196,18 @@ const PointOfInterest = ({ navigation }) => {
           loading ?
             <ActivityIndicator color={Colors.LinearBlue1} style={{ marginTop: 130 }} />
             :
+            locationNotAvialable ?
+            <Overlay isVisible={visible} onBackdropPress={toggleOverlay} fullScreen = {true}>
+             <Text>Location Not Available</Text>
+             <Button onClick = {toggleOverlay} style = {{backgroundColor: 'blue'}}>
+               <Text>Ok</Text>
+             </Button>
+            </Overlay>
+            :
             <>
               {
                 latitude && longitude &&
+              
                 <MapView
                   provider={PROVIDER_GOOGLE} // remove if not using Google Maps
                   // showsMyLocationButton={true}
@@ -238,7 +259,9 @@ const PointOfInterest = ({ navigation }) => {
                     })
                   }
                 </MapView>
-              }
+              
+              
+            }
             </>
         }
       </View>

@@ -32,50 +32,50 @@ const Profile = ({ navigation }) => {
   const [type, setType] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  // const [latitude, setLatitude] = useState('');
-  // const [longitude, setLongitude] = useState('');
-  // const [city, setCity] = useState('');
+  const [latitude, setLatitude] = useState('');
+  const [longitude, setLongitude] = useState('');
+  const [city, setCity] = useState('');
 
   const [token, setToken] = useState('');
 
 
-  // const [currentLatitude, setCurrentLatitude] = useState('');
-  // const [currentLongitude, setCurrentLongitude] = useState('');
-  // const [curentCity, setCurrentCity] = useState('');
+  const [currentLatitude, setCurrentLatitude] = useState('');
+  const [currentLongitude, setCurrentLongitude] = useState('');
+  const [curentCity, setCurrentCity] = useState('');
 
   const [locationLoading, setLocationLoading] = useState(false);
 
 
   const getCurrentLocation = () => {
 
-    // (async () => {
-    //   setLocationLoading(true)
-    //   let { status } = await Location.requestPermissionsAsync();
-    //   if (status !== 'granted') {
-    //     // setErrorMsg('Permission to access location was denied');
-    //     setLocationLoading(false)
-    //     alert('Permission to access location was denied')
-    //     return;
-    //   }
+    (async () => {
+      setLocationLoading(true)
+      let { status } = await Location.requestPermissionsAsync();
+      if (status !== 'granted') {
+        // setErrorMsg('Permission to access location was denied');
+        setLocationLoading(false)
+        alert('Permission to access location was denied')
+        return;
+      }
 
-    //   let location = await Location.getCurrentPositionAsync({});
+      let location = await Location.getCurrentPositionAsync({});
 
-    //   setCurrentLatitude(location.coords.latitude)
-    //   setCurrentLongitude(location.coords.longitude)
+      setCurrentLatitude(location.coords.latitude)
+      setCurrentLongitude(location.coords.longitude)
 
-    //   // console.log('Locationnnnn ' + location.coords.latitude)
-    //   let results = await Location.reverseGeocodeAsync({ latitude: location.coords.latitude, longitude: location.coords.longitude });
-    //   // alert(JSON.stringify(results.city))
-    //   setCurrentCity(results[0].city)
-    //   setLocationLoading(false)
-    // })();
+      // console.log('Locationnnnn ' + location.coords.latitude)
+      let results = await Location.reverseGeocodeAsync({ latitude: location.coords.latitude, longitude: location.coords.longitude });
+      // alert(JSON.stringify(results.city))
+      setCurrentCity(results[0].city)
+      setLocationLoading(false)
+    })();
   }
 
   const updateCurrentLocation = () => {
 
-    // setLatitude(currentLatitude);
-    // setLongitude(currentLongitude);
-    // setCity(curentCity);
+    setLatitude(currentLatitude);
+    setLongitude(currentLongitude);
+    setCity(curentCity);
 
   }
 
@@ -240,7 +240,7 @@ const Profile = ({ navigation }) => {
         } */}
               {/* {emailErr && <Text style={styles.errTxt}>Invalid email</Text>} */}
 
-{/* 
+
               {editable ?
                 <TextInput
                   //   value={email}
@@ -254,10 +254,10 @@ const Profile = ({ navigation }) => {
                   <Text style={{ fontSize: 16, color: "rgba(0,0,0,0.5)" }}>latitude: </Text>
                   <Text style={{ fontSize: 18, color: "#bbb", marginLeft: 5 }}>{latitude}</Text>
                 </View>
-              } */}
+              }
 
 
-              {/* {editable ?
+              {editable ?
                 <TextInput
                   //   value={email}
                   //   onChangeText={(text) => setEmail(text)}
@@ -270,10 +270,10 @@ const Profile = ({ navigation }) => {
                   <Text style={{ fontSize: 16, color: "rgba(0,0,0,0.5)" }}>Longitude: </Text>
                   <Text style={{ fontSize: 18, color: "#bbb", marginLeft: 5 }}>{longitude}</Text>
                 </View>
-              } */}
+              }
 
 
-              {/* {editable ?
+              {editable ?
                 <TextInput
                   //   value={email}
                   //   onChangeText={(text) => setEmail(text)}
@@ -286,7 +286,7 @@ const Profile = ({ navigation }) => {
                   <Text style={{ fontSize: 16, color: "rgba(0,0,0,0.5)" }}>City: </Text>
                   <Text style={{ fontSize: 18, color: "#bbb", marginLeft: 5 }}>{city}</Text>
                 </View>
-              } */}
+              }
             </>
         }
         {
