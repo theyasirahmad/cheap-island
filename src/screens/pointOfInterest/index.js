@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, ScrollView, TextInput, TouchableOpacity, Dimensions, StatusBar, ImageBackground, Text } from 'react-native';
+import { View, StyleSheet, ScrollView, TextInput, TouchableOpacity, Dimensions, StatusBar, ImageBackground, Text, Modal, Pressable } from 'react-native';
 import GlobalHeader from '../../Components/GlobalHeader';
 import GasStationCard from '../../Components/GasStataionCard'
 import { PointList as STATIONLIST } from '../../dummyData/dummyData'
@@ -19,7 +19,8 @@ const PointOfInterest = ({ navigation }) => {
 
 
   const [loading, setLoading] = useState(true);
-  const [locationNotAvialable, setLocationNotAvailable] = useState(false);
+
+  const [locationNotAvialable, setLocationNotAvailable] = useState(true);
 
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
@@ -40,6 +41,7 @@ const PointOfInterest = ({ navigation }) => {
     setSelectedVendor(null);
     setQuery('')
     setLoading(true)
+    setLocationNotAvailable(true)
   }
 
   const _onMapReady = () => {
@@ -76,6 +78,7 @@ const PointOfInterest = ({ navigation }) => {
 
   const getMyLocation = async () => {
 
+
     (async () => {
       let { status } = await Location.requestPermissionsAsync();
       if (status !== 'granted') {
@@ -94,6 +97,7 @@ const PointOfInterest = ({ navigation }) => {
 
       setCity(results[0].city)
       getPOI(results[0].city)
+      setLocationNotAvailable(false)
 
     })();
 
@@ -101,6 +105,9 @@ const PointOfInterest = ({ navigation }) => {
 
   const getUser = async () => {
     // setLoading(true)
+
+    console.log('getUser')
+
     let tok = await AsyncStorage.getItem('token');
 
     axios({
@@ -115,14 +122,17 @@ const PointOfInterest = ({ navigation }) => {
     })
       .then((res) => {
         if (res.data.user.latitude && res.data.user.longitude) {
-            setLatitude(res.data.user.latitude) 
-        setLongitude(res.data.user.longitude) 
-        setLocationNotAvailable(!false)
-        setCity(res.data.user.city)
-        getPOI(res.data.user.city) 
-      } 
-       
-       
+          setLatitude(res.data.user.latitude)
+          setLongitude(res.data.user.longitude)
+          setLocationNotAvailable(false)
+          setCity(res.data.user.city)
+          getPOI(res.data.user.city)
+        }
+        else {
+          setLocationNotAvailable(true)
+          setLoading(false)
+        }
+
       })
       .catch((err) => {
         // setLoading(false)
@@ -154,11 +164,12 @@ const PointOfInterest = ({ navigation }) => {
 
   }, [])
 
-  const [visible, setVisible] = useState(true);
+  // const [visible, setVisible] = useState(true);
+  const [modalVisible, setModalVisible] = useState(true);
 
-  const toggleOverlay = () => {
-    setVisible(!visible);
-  };
+  // const toggleOverlay = () => {
+  //   setVisible(!visible);
+  // };
 
 
   return (
@@ -197,72 +208,96 @@ const PointOfInterest = ({ navigation }) => {
             <ActivityIndicator color={Colors.LinearBlue1} style={{ marginTop: 130 }} />
             :
             locationNotAvialable ?
-            <Overlay isVisible={visible} onBackdropPress={toggleOverlay} fullScreen = {true}>
-             <Text>Location Not Available</Text>
-             <Button onClick = {toggleOverlay} style = {{backgroundColor: 'blue'}}>
-               <Text>Ok</Text>
-             </Button>
-            </Overlay>
-            :
-            <>
-              {
-                latitude && longitude &&
-              
-                <MapView
-                  provider={PROVIDER_GOOGLE} // remove if not using Google Maps
-                  // showsMyLocationButton={true}
-                  showsUserLocation={true}
 
-                  initialRegion={{
-                    latitude: parseFloat(latitude),
-                    longitude: parseFloat(longitude),
-                    latitudeDelta: 0.0422,
-                    longitudeDelta: 0.0421,
-                  }}
-                  style={{
-                    position: 'relative',
-                    minHeight: Dimensions.get('window').height * 1,
-                    // zIndex:-100,
-                    width: '100%',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    // marginBottom: 1,
-                    // borderWidth: 2,
-                  }}
-                  onMapReady={_onMapReady}
-                >
-                  {
-                    vendors.map((item) => {
-                      return (
-                        <Marker
-                          onPress={() => {
-                            // setCardSelected(!cardSelected),
-                            navigation.navigate('DetailDisplay', {
-                              name: item.name,
-                              description: item.description,
-                              img: item.logo,
-                              city: item.city,
-                              address: item.address,
-                              menuCard: [],
-                              products: item.products
-                            })
-                          }}
-                          key={item.latitude.toString() + item.longitude.toString()}
-                          coordinate={{
-                            latitude: parseFloat(item.latitude),
-                            longitude: parseFloat(item.longitude)
-                          }}
-                        />
-                      )
-                    })
-                  }
-                </MapView>
-              
-              
-            }
-            </>
+              <View style={styles.centeredView}>
+                <View style={styles.modalView}>
+                  <Text style={styles.modalText}>User Location Not Available</Text>
+                  <Pressable
+                    style={[styles.button, styles.buttonClose]}
+                    // onPress={() => setModalVisible(!modalVisible)}
+                    onPress={() => { navigation.navigate('Profile') }}
+                  >
+                    <Text style={styles.textStyle}>Update Location</Text>
+                  </Pressable>
+                </View>
+              </View>
+              // <Modal
+              //   animationType="slide"
+              //   transparent={true}
+              //   visible={true}
+              //   onRequestClose={() => {
+              //     Alert.alert("Modal has been closed.");
+              //     setModalVisible(!modalVisible);
+              //   }}
+              // >
+
+              // </Modal>
+              // <Overlay isVisible={visible} onBackdropPress={toggleOverlay} fullScreen = {true} style = {{justifyContent: "center", alignContent:"center", alignItems: "center"}}>
+              //  <Text>Location Not Available</Text>
+              //  <Button onClick = {toggleOverlay} style = {{backgroundColor: 'blue', width: '30%',}}>
+              //    <Text style = {{color: "white"}}>Ok</Text>
+              //  </Button>
+              // </Overlay>
+              :
+              <>
+                {
+                  latitude && longitude &&
+
+                  <MapView
+                    provider={PROVIDER_GOOGLE} // remove if not using Google Maps
+                    // showsMyLocationButton={true}
+                    showsUserLocation={true}
+
+                    initialRegion={{
+                      latitude: parseFloat(latitude),
+                      longitude: parseFloat(longitude),
+                      latitudeDelta: 0.0422,
+                      longitudeDelta: 0.0421,
+                    }}
+                    style={{
+                      position: 'relative',
+                      minHeight: Dimensions.get('window').height * 1,
+                      // zIndex:-100,
+                      width: '100%',
+                      top: 0,
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      // marginBottom: 1,
+                      // borderWidth: 2,
+                    }}
+                    onMapReady={_onMapReady}
+                  >
+                    {
+                      vendors.map((item) => {
+                        return (
+                          <Marker
+                            onPress={() => {
+                              // setCardSelected(!cardSelected),
+                              navigation.navigate('DetailDisplay', {
+                                name: item.name,
+                                description: item.description,
+                                img: item.logo,
+                                city: item.city,
+                                address: item.address,
+                                menuCard: [],
+                                products: item.products
+                              })
+                            }}
+                            key={item.latitude.toString() + item.longitude.toString()}
+                            coordinate={{
+                              latitude: parseFloat(item.latitude),
+                              longitude: parseFloat(item.longitude)
+                            }}
+                          />
+                        )
+                      })
+                    }
+                  </MapView>
+
+
+                }
+              </>
         }
       </View>
 
@@ -287,14 +322,14 @@ const styles = StyleSheet.create({
   btnSearch: {
     paddingHorizontal: 12, backgroundColor: "#bbb",
     // height: Dimensions.get('window').height * 0.09,
-    height:50,
+    height: 50,
     alignItems: "center", justifyContent: "center"
   },
   inputSearch: {
-    backgroundColor: "#fff", 
-    
+    backgroundColor: "#fff",
+
     // height: Dimensions.get('window').height * 0.09,
-    height:50,
+    height: 50,
     flex: 1, paddingHorizontal: 15, paddingVertical: 0
   },
   viewSearch: {
@@ -305,7 +340,7 @@ const styles = StyleSheet.create({
     // position: "absolute", top: 80, zIndex: 100
     backgroundColor: '#fff',
     // height: Dimensions.get('window').height * 0.09,
-    height:50,
+    height: 50,
     width: Dimensions.get('window').width * 0.9,
     alignSelf: "center",
     borderRadius: 8,
@@ -315,8 +350,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'rgba(0,0,0,0.1)',
     padding: 0,
-    position:"absolute",
-    top:110,
+    position: "absolute",
+    top: 110,
     zIndex: 100
   },
   containerList: {
@@ -360,5 +395,48 @@ const styles = StyleSheet.create({
     // shadowOpacity: 0.58,
     // shadowRadius: 16.00,
     // elevation: 24,
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 22
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 35,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5
+  },
+  button: {
+    borderRadius: 10,
+    width: '40%',
+    padding: 10,
+    elevation: 2
+  },
+  buttonOpen: {
+    backgroundColor: "#F194FF",
+  },
+  buttonClose: {
+    backgroundColor: "#2196F3",
+  },
+  textStyle: {
+    color: "white",
+    fontWeight: "bold",
+    textAlign: "center"
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center",
+    fontSize: 18
   }
 });

@@ -130,8 +130,12 @@ const BottomTabNavigator = (props) => {
         options={{ unmountOnBlur: true }}
       />
       <Tab.Screen name={'Intresting Points'} component={PointOfInterest}
+        // options={{ unmountOnBlur: true }}
       />
-      <Tab.Screen name={'Gas Stations'} component={GasStations} />
+      <Tab.Screen name={'Gas Stations'} component={GasStations} 
+        options={{ unmountOnBlur: true }}
+      
+      />
       <Tab.Screen name={'Offers'} component={Offers}
         options={{ unmountOnBlur: true }}
       />

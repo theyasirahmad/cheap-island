@@ -246,7 +246,7 @@ const Profile = ({ navigation }) => {
                   //   value={email}
                   //   onChangeText={(text) => setEmail(text)}
                   placeholder='Latitude'
-                  value={latitude.toString()}
+                  value={latitude === undefined ? "" : latitude.toString()}
                   editable={false}
                   style={styles.input}
                 /> :
@@ -263,7 +263,9 @@ const Profile = ({ navigation }) => {
                   //   onChangeText={(text) => setEmail(text)}
                   placeholder='Longitude'
                   editable={false}
-                  value={longitude.toString()}
+                  // value={longitude.toString()}
+                  value={longitude === undefined ? "" : longitude.toString()}
+
                   style={styles.input}
                 /> :
                 <View style={styles.viewDetail}>
@@ -279,7 +281,7 @@ const Profile = ({ navigation }) => {
                   //   onChangeText={(text) => setEmail(text)}
                   editable={false}
                   placeholder='City'
-                  value={city.toString()}
+                  value={city === undefined ? "" : city.toString()}
                   style={styles.input}
                 /> :
                 <View style={styles.viewDetail}>
