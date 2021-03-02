@@ -60,7 +60,8 @@ const GasStation = () => {
         if (status !== 'granted') {
           setLocationDenied(true)
           setLoading(false)
-          setErrorMsg('Permission to access location was denied');
+          // setErrorMsg('Permission to access location was denied');
+          alert('Permission to access location was denied')
           return;
         }
         else {

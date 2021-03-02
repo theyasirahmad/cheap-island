@@ -82,7 +82,8 @@ const PointOfInterest = ({ navigation }) => {
     (async () => {
       let { status } = await Location.requestPermissionsAsync();
       if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
+        // setErrorMsg('Permission to access location was denied');
+        alert('Permission to access location was denied')
         return;
       }
 
